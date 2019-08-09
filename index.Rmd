@@ -8,7 +8,6 @@ output:
     number_sections: false
     toc_depth: 1
     #code_folding: hide
-    font-size: 6
 ---
 
 <style type="text/css">
@@ -17,7 +16,7 @@ output:
 }
 
 #getting-started img {
-  margin-right: 5px;
+  margin-right: 8px;
 }
 body{ /* Normal  */
       font-size: 14px;
@@ -52,7 +51,7 @@ pre { /* Code block - determines code spacing between lines */
 </style>
 
 <div class="row" style="padding-top: 10px;">
-<div class="col-sm-7">
+<div class="col-sm-9">
 
 ## **Project Portfolio**
 
