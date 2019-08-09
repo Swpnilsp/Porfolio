@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Swapnil" />
+
+
+<title>MachineLearning algorithm performance benchmarking in solving a binary classification problem</title>
+
+<script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.2/htmlwidgets.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.4/datatables.js"></script>
+<link href="site_libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Portfolio</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="About.html">About</a>
+</li>
+<li>
+  <a href="binaryClassification.html">BinaryClassification</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">MachineLearning algorithm performance benchmarking in solving a binary classification problem</h1>
+<h4 class="author"><em>Swapnil</em></h4>
+<h4 class="date"><em>3/10/2018</em></h4>
+
+</div>
+
+
+<div id="comparative-study-of-machine-learning-aglorithms-for-a-binary-classfication-problem" class="section level2">
+<h2>Comparative study of machine learning aglorithms for a binary classfication problem</h2>
+<p>The purpose of this project is to compare performance of top machine learning alorithms in solving binary classification problem. The data used for this project pertains to bankruptcy. The objective is to predict if an organization will go bankrupt or not. False possitive predictions are penalized 15 times False negative prediction.</p>
+<p><strong>Following are the alorithms that wil be considered for comparison :</strong></p>
+<ul>
+<li><strong>Logistic Regression</strong></li>
+<li><strong>Lasso Regression -L1 Norm Regularization</strong></li>
+<li><strong>Classification Tree</strong></li>
+<li><strong>RandomForest</strong></li>
+<li><strong>Generalized Additive Model</strong></li>
+<li><strong>Neural Nets</strong></li>
+<li><strong>Linear discriminant analysis</strong></li>
+<li><strong>Boosting Algorithms</strong></li>
+</ul>
+<div id="packages-required-" class="section level3">
+<h3>Packages Required-</h3>
+<pre class="r"><code>library(rpart)
+library(caret)
+library(tidyverse)
+library(data.table)
+library(GGally)
+library(corrplot)
+library(verification)
+library(ROCR)
+library(maptree)
+library(glmnet)
+library(gridExtra)
+library(randomForest)
+library(mgcv)
+library(nnet)
+library(pROC)
+library(gbm)
+library(e1071)
+library(xgboost)
+library(DT)
+library(NeuralNetTools)
+library(rpart.plot)</code></pre>
+</div>
+<div id="getting-the-sense-of-the-data" class="section level3">
+<h3>Getting the sense of the data</h3>
+<pre class="r"><code>setwd(&quot;~/Study/MS-Bana/DM 2/Case Study 1&quot;)
+bankruptcy&lt;-fread(&#39;bankruptcy.csv&#39;)
+colSums(is.na(bankruptcy))</code></pre>
+<pre><code>## FYEAR DLRSN CUSIP    R1    R2    R3    R4    R5    R6    R7    R8    R9 
+##     0     0     0     0     0     0     0     0     0     0     0     0 
+##   R10 
+##     0</code></pre>
+<pre class="r"><code>str(bankruptcy)</code></pre>
+<pre><code>## Classes &#39;data.table&#39; and &#39;data.frame&#39;:   5436 obs. of  13 variables:
+##  $ FYEAR: int  1999 1999 1999 1994 1999 1999 1999 1999 1987 1999 ...
+##  $ DLRSN: int  0 0 0 1 0 0 0 0 1 0 ...
+##  $ CUSIP: chr  &quot;00036020&quot; &quot;00036110&quot; &quot;00037520&quot; &quot;00078110&quot; ...
+##  $ R1   : num  0.307 0.761 -0.514 -0.466 2.023 ...
+##  $ R2   : num  0.887 0.592 0.338 0.371 0.215 ...
+##  $ R3   : num  1.648 0.453 0.299 0.496 0.183 ...
+##  $ R4   : num  -0.1992 -0.3699 -0.0291 -0.3734 6.6954 ...
+##  $ R5   : num  1.093 0.186 -0.433 -0.267 -1.148 ...
+##  $ R6   : num  -0.3133 0.0396 0.83 0.9778 -1.5059 ...
+##  $ R7   : num  -0.197 0.327 -0.708 -0.611 2.876 ...
+##  $ R8   : num  1.207 0.428 0.476 0.457 0.287 ...
+##  $ R9   : num  0.282 1.107 2.179 0.152 -0.986 ...
+##  $ R10  : num  0.1589 0.7934 2.4846 0.0478 0.7911 ...
+##  - attr(*, &quot;.internal.selfref&quot;)=&lt;externalptr&gt;</code></pre>
+<pre class="r"><code>datatable(head(bankruptcy))</code></pre>
+<p><div id="htmlwidget-2e2bc35ccb8438bea3b2" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2e2bc35ccb8438bea3b2">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],[1999,1999,1999,1994,1999,1999],[0,0,0,1,0,0],["00036020","00036110","00037520","00078110","00079X10","00086T10"],[0.307139483,0.760736496,-0.513596083,-0.466129332,2.023422271,0.907498517],[0.887005715,0.592493372,0.337614773,0.370746659,0.214876406,0.386879734],[1.647680762,0.453002755,0.299014546,0.496066653,0.182594782,0.477891386],[-0.199157597,-0.369890143,-0.029079962,-0.373428966,6.6953604,-0.34715872],[1.092963959,0.186153945,-0.432604675,-0.267423988,-1.148338079,1.407989257],[-0.313288673,0.039619071,0.82999324,0.977798881,-1.505889267,-0.483902305],[-0.196793318,0.327497319,-0.707786127,-0.610975074,2.876476871,0.070259441],[1.206762812,0.428418062,0.476153279,0.456809847,0.287374933,0.52781095],[0.282470912,1.106965205,2.179175451,0.15195105,-0.986442053,0.502465945],[0.158896251,0.793442755,2.4845845,0.047788514,0.791076735,-0.164648016]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>FYEAR<\/th>\n      <th>DLRSN<\/th>\n      <th>CUSIP<\/th>\n      <th>R1<\/th>\n      <th>R2<\/th>\n      <th>R3<\/th>\n      <th>R4<\/th>\n      <th>R5<\/th>\n      <th>R6<\/th>\n      <th>R7<\/th>\n      <th>R8<\/th>\n      <th>R9<\/th>\n      <th>R10<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,4,5,6,7,8,9,10,11,12,13]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script> There are no missing values in the data, all columns are integer or numeric except for CUSIP</p>
+<p>We change DLRSN, which is the dependent variable, to factor</p>
+<pre class="r"><code>bankruptcy$DLRSN&lt;-as.factor(bankruptcy$DLRSN)
+summary(bankruptcy)</code></pre>
+<pre><code>##      FYEAR      DLRSN       CUSIP                 R1         
+##  Min.   :1980   0:4660   Length:5436        Min.   :-4.3828  
+##  1st Qu.:1999   1: 776   Class :character   1st Qu.:-0.7501  
+##  Median :1999            Mode  :character   Median :-0.2220  
+##  Mean   :1998                               Mean   :-0.2352  
+##  3rd Qu.:1999                               3rd Qu.: 0.4821  
+##  Max.   :1999                               Max.   : 2.0234  
+##        R2                R3                 R4                 R5         
+##  Min.   :-2.2418   Min.   :-2.06423   Min.   :-0.42712   Min.   :-1.3639  
+##  1st Qu.:-1.0805   1st Qu.:-1.07887   1st Qu.:-0.38752   1st Qu.:-0.8748  
+##  Median : 0.1337   Median : 0.06858   Median :-0.30754   Median :-0.3508  
+##  Mean   :-0.2915   Mean   :-0.24411   Mean   : 0.23903   Mean   :-0.1338  
+##  3rd Qu.: 0.5103   3rd Qu.: 0.50070   3rd Qu.: 0.02746   3rd Qu.: 0.2878  
+##  Max.   : 1.4854   Max.   : 2.14246   Max.   : 6.69536   Max.   : 4.0362  
+##        R6                  R7                 R8         
+##  Min.   :-1.505889   Min.   :-1.23340   Min.   :-2.2082  
+##  1st Qu.:-0.656827   1st Qu.:-0.77996   1st Qu.:-1.0054  
+##  Median : 0.003493   Median :-0.43205   Median : 0.2053  
+##  Mean   : 0.195707   Mean   :-0.09612   Mean   :-0.2272  
+##  3rd Qu.: 0.608376   3rd Qu.: 0.17578   3rd Qu.: 0.5289  
+##  Max.   : 5.110424   Max.   : 2.87648   Max.   : 2.0006  
+##        R9                R10         
+##  Min.   :-2.76356   Min.   :-2.2140  
+##  1st Qu.:-0.66606   1st Qu.:-0.6413  
+##  Median : 0.06219   Median : 0.1230  
+##  Mean   : 0.02538   Mean   : 0.1806  
+##  3rd Qu.: 0.81215   3rd Qu.: 0.9878  
+##  Max.   : 2.17918   Max.   : 2.4846</code></pre>
+<p>Checking CUSIP- CUSIP Uniquely identifies each row, we drop the CUSIP column and use it as rownames</p>
+<pre class="r"><code>sum(duplicated(bankruptcy$CUSIP))</code></pre>
+<pre><code>## [1] 0</code></pre>
+<pre class="r"><code>rownames(bankruptcy)&lt;-bankruptcy$CUSIP
+bankruptcy$CUSIP&lt;-NULL</code></pre>
+</div>
+<div id="dividing-test-and-train-dataset" class="section level3">
+<h3>Dividing test and train dataset</h3>
+<pre class="r"><code>set.seed(222)
+indexes&lt;-sample(nrow(bankruptcy),0.8*nrow(bankruptcy),replace = F)
+train&lt;-bankruptcy[indexes,]
+test&lt;-bankruptcy[-indexes,]
+dim(train)</code></pre>
+<pre><code>## [1] 4348   12</code></pre>
+<pre class="r"><code>dim(test)</code></pre>
+<pre><code>## [1] 1088   12</code></pre>
+</div>
+<div id="exploratory-data-analysis-" class="section level3">
+<h3>Exploratory data analysis-</h3>
+<pre class="r"><code>summary(train)</code></pre>
+<pre><code>##      FYEAR      DLRSN          R1                R2         
+##  Min.   :1980   0:3740   Min.   :-4.3828   Min.   :-2.2418  
+##  1st Qu.:1999   1: 608   1st Qu.:-0.7524   1st Qu.:-1.1229  
+##  Median :1999            Median :-0.2160   Median : 0.1314  
+##  Mean   :1998            Mean   :-0.2396   Mean   :-0.2979  
+##  3rd Qu.:1999            3rd Qu.: 0.4894   3rd Qu.: 0.5103  
+##  Max.   :1999            Max.   : 2.0234   Max.   : 1.4854  
+##        R3                 R4                 R5         
+##  Min.   :-2.06423   Min.   :-0.42712   Min.   :-1.3639  
+##  1st Qu.:-1.07777   1st Qu.:-0.38660   1st Qu.:-0.8763  
+##  Median : 0.07217   Median :-0.30662   Median :-0.3454  
+##  Mean   :-0.24211   Mean   : 0.24552   Mean   :-0.1338  
+##  3rd Qu.: 0.50130   3rd Qu.: 0.02556   3rd Qu.: 0.2907  
+##  Max.   : 2.14246   Max.   : 6.69536   Max.   : 4.0362  
+##        R6                 R7                R8                R9          
+##  Min.   :-1.50589   Min.   :-1.2334   Min.   :-2.2082   Min.   :-2.76356  
+##  1st Qu.:-0.66619   1st Qu.:-0.7813   1st Qu.:-1.0332   1st Qu.:-0.66436  
+##  Median : 0.00168   Median :-0.4311   Median : 0.2014   Median : 0.05877  
+##  Mean   : 0.20447   Mean   :-0.0943   Mean   :-0.2345   Mean   : 0.02148  
+##  3rd Qu.: 0.60984   3rd Qu.: 0.1739   3rd Qu.: 0.5286   3rd Qu.: 0.80647  
+##  Max.   : 5.11042   Max.   : 2.8765   Max.   : 2.0006   Max.   : 2.17918  
+##       R10         
+##  Min.   :-2.2140  
+##  1st Qu.:-0.6347  
+##  Median : 0.1249  
+##  Mean   : 0.1845  
+##  3rd Qu.: 0.9884  
+##  Max.   : 2.4846</code></pre>
+<pre class="r"><code>cormat&lt;-cor(train[,-&#39;DLRSN&#39;])
+corrplot(cormat,method=&#39;number&#39;)</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-6-1.png" width="960" /></p>
+<p>Strong correlation between R6 and R1, R8 and R3– We need to take this into consideration while building models</p>
+<pre class="r"><code>cor.test(train$R1,train$R6)</code></pre>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  train$R1 and train$R6
+## t = -72.753, df = 4346, p-value &lt; 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  -0.7541402 -0.7273222
+## sample estimates:
+##        cor 
+## -0.7410266</code></pre>
+<pre class="r"><code>cor.test(train$R3,train$R8)</code></pre>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  train$R3 and train$R8
+## t = 127.11, df = 4346, p-value &lt; 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.8812344 0.8938453
+## sample estimates:
+##       cor 
+## 0.8877062</code></pre>
+<pre class="r"><code>p1&lt;-ggplot(data = train,aes(R3,R8,col=DLRSN))+geom_point(alpha=0.5)
+p2&lt;-ggplot(data = train,aes(R1,R6,col=DLRSN))+geom_point(alpha=0.5)
+grid.arrange(p1,p2)</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-7-1.png" width="960" /></p>
+</div>
+<div id="now-we-plot-each-feature-against-dlrsn" class="section level3">
+<h3>Now we plot each feature against DLRSN</h3>
+<pre class="r"><code>p1&lt;-ggplot(data = train,aes(x = DLRSN,y = R1,fill=DLRSN))+geom_boxplot()
+p2&lt;-ggplot(data = train,aes(x = DLRSN,y = R2,fill=DLRSN))+geom_boxplot()
+p3&lt;-ggplot(data = train,aes(x = DLRSN,y = R3,fill=DLRSN))+geom_boxplot()
+p4&lt;-ggplot(data = train,aes(x = DLRSN,y = R4,fill=DLRSN))+geom_boxplot()
+p5&lt;-ggplot(data = train,aes(x = DLRSN,y = R5,fill=DLRSN))+geom_boxplot()
+p6&lt;-ggplot(data = train,aes(x = DLRSN,y = R6,fill=DLRSN))+geom_boxplot()
+p7&lt;-ggplot(data = train,aes(x = DLRSN,y = R7,fill=DLRSN))+geom_boxplot()
+p8&lt;-ggplot(data = train,aes(x = DLRSN,y = R8,fill=DLRSN))+geom_boxplot()
+p9&lt;-ggplot(data = train,aes(x = DLRSN,y = R9,fill=DLRSN))+geom_boxplot()
+p10&lt;-ggplot(data = train,aes(x = DLRSN,y = R10,fill=DLRSN))+geom_boxplot()
+p11&lt;-ggplot(data = train,aes(x = DLRSN,y = FYEAR,fill=DLRSN))+geom_boxplot()
+
+grid.arrange(p1,p2,p3,p4,p5,p6,nrow=3)</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-8-1.png" width="960" /></p>
+<pre class="r"><code>grid.arrange(p7,p8,p9,p10,p11,nrow=3)</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-8-2.png" width="960" /></p>
+<pre class="r"><code>rm(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11)</code></pre>
+</div>
+<div id="it-can-be-seen-that-all-the-values-of-dlrsn-in-the-year-1999-were-0." class="section level3">
+<h3>It can be seen that all the values of DLRSN in the year 1999 were 0.</h3>
+<pre class="r"><code>table(train$FYEAR,train$DLRSN) </code></pre>
+<pre><code>##       
+##           0    1
+##   1980    0   18
+##   1981    0   31
+##   1982    0   14
+##   1983    0   31
+##   1984    0   44
+##   1985    0   34
+##   1986    0   39
+##   1987    0   34
+##   1988    0   39
+##   1989    0   53
+##   1990    0   60
+##   1991    0   39
+##   1992    0   27
+##   1993    0   27
+##   1994    0   25
+##   1995    0   35
+##   1996    0   36
+##   1997    0   21
+##   1998    0    1
+##   1999 3740    0</code></pre>
+<p>This is an intersting find, let’s not use YEAR for the prediction. For the prediction, we define the cost function as we assign the cost of 15 when a bad observation is predicted as good and weight 1, when a good obesrvation is predicted as bad. We also define another cost function to get area under the ROC curve.</p>
+<pre class="r"><code>## Cost function
+cost1 &lt;- function(actual, predicted) {
+  weight1 = 15
+  weight0 = 1
+  c1 = (actual == 1) &amp; (predicted &lt; cutoff)  #logical vector - true if actual bad but predicted good
+  c0 = (actual == 0) &amp; (predicted &gt; cutoff)  #logical vecotr - true if actual good but predicted bad
+  return(mean(weight1 * c1 + weight0 * c0))
+}
+
+## Area under the ROC Curve used as cost function. We will need this later
+
+## Cost function
+cost2 &lt;- function(actual, predicted) {
+return(auc(roc(actual,predicted))[1])
+}
+## Prob thresholds to be used for ROC Curve
+thresh&lt;-seq(0,1,0.001)</code></pre>
+</div>
+<div id="modeling" class="section level3">
+<h3>Modeling</h3>
+<p><strong>Logistic Regression-</strong></p>
+<pre class="r"><code>full.log.probit&lt;-glm(data = train,DLRSN~.,family = binomial(link=probit))</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<p>We get error because of the fact that all values of DLRSN are 0 for the year 1999. We need to remove YEAR.</p>
+<pre class="r"><code>full.log.probit&lt;-glm(data = train[,-&#39;FYEAR&#39;],DLRSN~.,family = binomial(link=probit))
+summary(full.log.probit)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = DLRSN ~ ., family = binomial(link = probit), data = train[, 
+##     -&quot;FYEAR&quot;])
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.2349  -0.4801  -0.2327  -0.0762   3.4715  
+## 
+## Coefficients:
+##              Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept) -1.412044   0.037421 -37.734  &lt; 2e-16 ***
+## R1           0.122991   0.041286   2.979 0.002892 ** 
+## R2           0.308690   0.043588   7.082 1.42e-12 ***
+## R3          -0.266177   0.055855  -4.765 1.88e-06 ***
+## R4          -0.031184   0.047528  -0.656 0.511746    
+## R5          -0.007465   0.030691  -0.243 0.807823    
+## R6           0.179008   0.031271   5.724 1.04e-08 ***
+## R7          -0.195039   0.052671  -3.703 0.000213 ***
+## R8          -0.141398   0.048756  -2.900 0.003731 ** 
+## R9           0.198532   0.058369   3.401 0.000671 ***
+## R10         -0.837702   0.053462 -15.669  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 3518.9  on 4347  degrees of freedom
+## Residual deviance: 2411.6  on 4337  degrees of freedom
+## AIC: 2433.6
+## 
+## Number of Fisher Scoring iterations: 7</code></pre>
+<pre class="r"><code>full.log.probit.prediction&lt;-predict(full.log.probit,type = &quot;response&quot;)
+roc.plot(x = train$DLRSN == &quot;1&quot;, pred = full.log.probit.prediction,thresholds = thresh)$roc.vol</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-12-1.png" width="960" /></p>
+<pre><code>##      Model    Area       p.value binorm.area
+## 1 Model  1 0.87412 2.704709e-193          NA</code></pre>
+<p>We can see that r4 and r5 are not significant.</p>
+<p><strong>Lasso Variable selection-</strong> We need to select variables that are most important</p>
+<pre class="r"><code>## We need to standardize all the variables before we can go for LASSO variable selection
+X&lt;-scale(train[,-c(&#39;DLRSN&#39;,&#39;FYEAR&#39;)])
+X&lt;-as.matrix(X)
+Y&lt;- as.matrix(train[,&#39;DLRSN&#39;])
+lasso.fit&lt;- glmnet(x=X, y=Y, family = &quot;binomial&quot;, alpha = 1)
+plot(lasso.fit, xvar = &quot;lambda&quot;)</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-13-1.png" width="960" /> We need to decide optimum value of lambda using Cross Validation, we go for 10 fold cross validation.</p>
+<pre class="r"><code>cv.lasso&lt;- cv.glmnet(x=X, y=Y,family = &quot;binomial&quot;, alpha = 1, nfolds = 10)
+plot(cv.lasso)</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-14-1.png" width="960" /> In the above graph, the left vertical line is the value of lambda that gives gives smallest cross-validation error and the right is the value of lambda with CV error within 1 standard deviation of smallest CV error.</p>
+<pre class="r"><code>cv.lasso$lambda.min</code></pre>
+<pre><code>## [1] 0.0005856352</code></pre>
+<pre class="r"><code>cv.lasso$lambda.1se</code></pre>
+<pre><code>## [1] 0.007923925</code></pre>
+<pre class="r"><code>## we decide to go for lambda=0.007923925
+# Checking the coefficients
+coef(lasso.fit, s=cv.lasso$lambda.1se)</code></pre>
+<pre><code>## 11 x 1 sparse Matrix of class &quot;dgCMatrix&quot;
+##                       1
+## (Intercept) -2.51005378
+## R1           .         
+## R2           0.25541472
+## R3          -0.24865520
+## R4          -0.11304099
+## R5           0.04130583
+## R6           0.20290115
+## R7          -0.14357340
+## R8          -0.21434882
+## R9           0.17226666
+## R10         -1.36080668</code></pre>
+<pre class="r"><code>coef(lasso.fit, s=cv.lasso$lambda.mi)</code></pre>
+<pre><code>## 11 x 1 sparse Matrix of class &quot;dgCMatrix&quot;
+##                      1
+## (Intercept) -2.7683553
+## R1           0.2622309
+## R2           0.6035406
+## R3          -0.5378433
+## R4          -0.1764557
+## R5           .        
+## R6           0.3612399
+## R7          -0.4283044
+## R8          -0.3217076
+## R9           0.3973100
+## R10         -1.6863493</code></pre>
+<pre class="r"><code>## Predictions using, s=cv.lasso$lambda.1se
+pred.lasso&lt;- predict(lasso.fit, newx = X, s=cv.lasso$lambda.1se,type = &#39;response&#39;)
+
+roc.plot(x = train$DLRSN == &quot;1&quot;, pred = pred.lasso,thresholds = thresh)$roc.vol</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-15-1.png" width="960" /></p>
+<pre><code>##      Model      Area      p.value binorm.area
+## 1 Model  1 0.8716762 8.28191e-191          NA</code></pre>
+<p><strong>Classification Tree-</strong> Now we try to fill the classification tree for the data.</p>
+<pre class="r"><code>full.rpart&lt;-rpart(data = train[,-&#39;FYEAR&#39;],DLRSN~.,method = &#39;class&#39;)
+rpart.plot(full.rpart)</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-16-1.png" width="960" /></p>
+<pre class="r"><code>plotcp(full.rpart)</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-16-2.png" width="960" /></p>
+<pre class="r"><code>printcp(full.rpart)</code></pre>
+<pre><code>## 
+## Classification tree:
+## rpart(formula = DLRSN ~ ., data = train[, -&quot;FYEAR&quot;], method = &quot;class&quot;)
+## 
+## Variables actually used in tree construction:
+## [1] R10 R2  R3  R4  R5  R6 
+## 
+## Root node error: 608/4348 = 0.13983
+## 
+## n= 4348 
+## 
+##         CP nsplit rel error  xerror     xstd
+## 1 0.050987      0   1.00000 1.00000 0.037613
+## 2 0.037829      3   0.84704 0.91283 0.036190
+## 3 0.021382      4   0.80921 0.88487 0.035711
+## 4 0.011513      6   0.76645 0.86184 0.035308
+## 5 0.010000      8   0.74342 0.83717 0.034867</code></pre>
+<pre class="r"><code>rpart.prediction&lt;-predict(full.rpart,type = &#39;prob&#39;)
+roc.plot(x = train$DLRSN == &quot;1&quot;, pred = rpart.prediction[,2],thresholds = thresh)$roc.vol</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-16-3.png" width="960" /></p>
+<pre><code>##      Model      Area       p.value binorm.area
+## 1 Model  1 0.8018075 4.722865e-201          NA</code></pre>
+<p><strong>Random Forest</strong></p>
+<pre class="r"><code>full.randomForest&lt;-randomForest(data=train[,-&#39;FYEAR&#39;],DLRSN~.,ntree=1000)
+plot(full.randomForest)</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-17-1.png" width="960" /></p>
+<pre class="r"><code>rf.predicted&lt;-predict(full.randomForest,type = &#39;prob&#39;)
+roc.plot(x = train$DLRSN == &quot;1&quot;, pred = rf.predicted[,2],thresholds = thresh)$roc.vol</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-17-2.png" width="960" /></p>
+<pre><code>##      Model      Area       p.value binorm.area
+## 1 Model  1 0.8910791 2.070555e-211          NA</code></pre>
+<p><strong>GAM-</strong> Generalized additive model</p>
+<pre class="r"><code>full.gam&lt;-gam(data=train,DLRSN~s(R1)+s(R2)+s(R3)+s(R4)+s(R5)+s(R6)+s(R7)+s(R8)+
+                s(R9)+s(R10),family = &#39;binomial&#39;)
+summary(full.gam)</code></pre>
+<pre><code>## 
+## Family: binomial 
+## Link function: logit 
+## 
+## Formula:
+## DLRSN ~ s(R1) + s(R2) + s(R3) + s(R4) + s(R5) + s(R6) + s(R7) + 
+##     s(R8) + s(R9) + s(R10)
+## 
+## Parametric coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  -3.0685     0.1188  -25.83   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Approximate significance of smooth terms:
+##          edf Ref.df  Chi.sq  p-value    
+## s(R1)  1.000  1.000   2.571  0.10892    
+## s(R2)  4.495  5.500  85.568 3.24e-16 ***
+## s(R3)  1.663  2.090  13.833  0.00115 ** 
+## s(R4)  1.001  1.002   1.505  0.22009    
+## s(R5)  3.378  4.187   5.411  0.25938    
+## s(R6)  4.191  5.167  87.903  &lt; 2e-16 ***
+## s(R7)  1.262  1.474   0.557  0.54776    
+## s(R8)  5.383  6.452  60.143 1.11e-10 ***
+## s(R9)  2.904  3.680  23.760 7.52e-05 ***
+## s(R10) 2.141  2.736 116.324  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## R-sq.(adj) =   0.36   Deviance explained = 37.7%
+## UBRE = -0.48289  Scale est. = 1         n = 4348</code></pre>
+<pre class="r"><code>full.gam.prediction&lt;-predict(full.gam,type = &#39;response&#39;)</code></pre>
+<p>We can remove smoothing for non significant features</p>
+<pre class="r"><code>gam.reduced&lt;-gam(data=train,DLRSN~R1+s(R2)+s(R3)+s(R6)+R7+s(R8)+
+                s(R9)+s(R10),family = &#39;binomial&#39;)
+summary(gam.reduced)</code></pre>
+<pre><code>## 
+## Family: binomial 
+## Link function: logit 
+## 
+## Formula:
+## DLRSN ~ R1 + s(R2) + s(R3) + s(R6) + R7 + s(R8) + s(R9) + s(R10)
+## 
+## Parametric coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept) -3.02593    0.11597 -26.091   &lt;2e-16 ***
+## R1           0.12476    0.07695   1.621    0.105    
+## R7          -0.10763    0.12210  -0.881    0.378    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Approximate significance of smooth terms:
+##          edf Ref.df Chi.sq  p-value    
+## s(R2)  4.669  5.698  88.93  &lt; 2e-16 ***
+## s(R3)  1.900  2.407  14.82  0.00112 ** 
+## s(R6)  4.302  5.302  95.32  &lt; 2e-16 ***
+## s(R8)  5.448  6.520  60.50 1.05e-10 ***
+## s(R9)  2.722  3.455  24.71 3.67e-05 ***
+## s(R10) 2.145  2.737 193.41  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## R-sq.(adj) =  0.358   Deviance explained = 37.5%
+## UBRE = -0.48268  Scale est. = 1         n = 4348</code></pre>
+<pre class="r"><code>gam.reduced.prediction&lt;-predict(gam.reduced,type = &#39;response&#39;)</code></pre>
+<p>Comparing AUC for both</p>
+<pre class="r"><code>roc.plot(x = train$DLRSN==&quot;1&quot;,pred = cbind(full.gam.prediction,gam.reduced.prediction),thresholds = thresh,
+         legend = TRUE,leg.text = c(&quot;Full GAM&quot;,&quot;Reduced GAM&quot;))$roc.vol</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-20-1.png" width="960" /></p>
+<pre><code>##      Model      Area       p.value binorm.area
+## 1 Model  1 0.8988672 2.196498e-219          NA
+## 2 Model  2 0.8979304 2.288964e-218          NA</code></pre>
+<p>We can see, they have almost same ROC.</p>
+<p><strong>Neural Networks-</strong> for Neural Nets, we need to standardise all numeric variables</p>
+<pre class="r"><code>train.std&lt;-train
+for (i in 3:12)
+{
+  train.std[,i]&lt;-scale(train.std[,..i])
+}
+summary(train.std)</code></pre>
+<pre><code>##      FYEAR      DLRSN          R1                 R2         
+##  Min.   :1980   0:3740   Min.   :-3.41589   Min.   :-1.7146  
+##  1st Qu.:1999   1: 608   1st Qu.:-0.42277   1st Qu.:-0.7277  
+##  Median :1999            Median : 0.01942   Median : 0.3787  
+##  Mean   :1998            Mean   : 0.00000   Mean   : 0.0000  
+##  3rd Qu.:1999            3rd Qu.: 0.60098   3rd Qu.: 0.7129  
+##  Max.   :1999            Max.   : 1.86574   Max.   : 1.5730  
+##        R3                R4                R5                R6         
+##  Min.   :-1.6491   Min.   :-0.4510   Min.   :-1.1879   Min.   :-1.2966  
+##  1st Qu.:-0.7563   1st Qu.:-0.4239   1st Qu.:-0.7170   1st Qu.:-0.6600  
+##  Median : 0.2844   Median :-0.3702   Median :-0.2044   Median :-0.1537  
+##  Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000  
+##  3rd Qu.: 0.6728   3rd Qu.:-0.1475   3rd Qu.: 0.4099   3rd Qu.: 0.3073  
+##  Max.   : 2.1581   Max.   : 4.3249   Max.   : 4.0270   Max.   : 3.7191  
+##        R7                R8                R9                R10          
+##  Min.   :-1.0823   Min.   :-1.7086   Min.   :-2.53649   Min.   :-2.12636  
+##  1st Qu.:-0.6527   1st Qu.:-0.6914   1st Qu.:-0.62463   1st Qu.:-0.72624  
+##  Median :-0.3200   Median : 0.3774   Median : 0.03397   Median :-0.05285  
+##  Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.00000   Mean   : 0.00000  
+##  3rd Qu.: 0.2548   3rd Qu.: 0.6606   3rd Qu.: 0.71494   3rd Qu.: 0.71272  
+##  Max.   : 2.8226   Max.   : 1.9350   Max.   : 1.96514   Max.   : 2.03919</code></pre>
+<p><strong>Tunning Neural Net</strong> For neural nets, we have tunning paramets such as number of hidden layers and weight decay- For now, we just consider the training data for cross validation, 5 fold cross validation.</p>
+<pre class="r"><code>avgTrainROC&lt;-NULL
+avgTestROC&lt;-NULL
+for ( j in 1:10 )
+{
+  trainRoc&lt;-NULL
+  testRoc&lt;-NULL
+  for ( i in 1:5)
+  {
+    set.seed(22*i)
+    flags&lt;-sample(nrow(train.std),0.8*nrow(train.std),replace = F)
+    nnet.train&lt;-train.std[flags,]
+    nnet.test&lt;-train.std[-flags,]
+    model&lt;-nnet(data=nnet.train[,-c(&#39;FYEAR&#39;)],DLRSN~.,size=j,lineout=F,decay=0,maxit=10000)
+    train.pred&lt;-predict(model)
+    test.pred&lt;-predict(model,nnet.test)
+    trainRoc[i]&lt;-cost2(nnet.train$DLRSN,as.numeric(train.pred))
+    testRoc[i]&lt;-cost2(nnet.test$DLRSN,as.numeric(test.pred))
+  }
+  avgTrainROC[j]&lt;-mean(trainRoc)
+  avgTestROC[j]&lt;-mean(testRoc)
+}
+
+ggplot(data = NULL,aes(x = 1:10,y = avgTrainROC,col=&#39;Train&#39;))+geom_line()+
+  geom_line(aes(y=avgTestROC,col=&#39;Test&#39;))+labs(x=&quot;Hidden Layers&quot;,y=&#39;Average AUC&#39;)+
+  scale_x_continuous(limits = c(1,10),breaks =seq(1,10,1) )</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-22-1.png" width="960" /></p>
+<pre class="r"><code>h&lt;-which(avgTestROC==max(avgTestROC))</code></pre>
+<p>As we can see, the AUC for train keeps increasing as we add more hidden layers but the test AUC starts decreasing after 8 th layer. So we finalize 8 hidden layers.</p>
+<p>Now, we need to decide, weight decay,</p>
+<pre class="r"><code>avgTrainROC&lt;-NULL
+avgTestROC&lt;-NULL
+d&lt;-NULL
+for ( j in 1:30 )
+{
+  trainRoc&lt;-NULL
+  testRoc&lt;-NULL
+  wt&lt;-j/1000
+  d[j]&lt;-wt
+  for ( i in 1:5)
+  {
+    set.seed(22*i)
+    flags&lt;-sample(nrow(train.std),0.8*nrow(train.std),replace = F)
+    nnet.train&lt;-train.std[flags,]
+    nnet.test&lt;-train.std[-flags,]
+    model&lt;-nnet(data=nnet.train[,-c(&#39;FYEAR&#39;)],DLRSN~.,size=h,lineout=F,decay=wt,maxit=10000)
+    train.pred&lt;-predict(model)
+    test.pred&lt;-predict(model,nnet.test)
+    trainRoc[i]&lt;-cost2(nnet.train$DLRSN,as.numeric(train.pred))
+    testRoc[i]&lt;-cost2(nnet.test$DLRSN,as.numeric(test.pred))
+  }
+  avgTrainROC[j]&lt;-mean(trainRoc)
+  avgTestROC[j]&lt;-mean(testRoc)
+}
+
+ggplot(data = NULL,aes(x = d,y = avgTrainROC,col=&#39;Train&#39;))+geom_line()+
+  geom_line(aes(y=avgTestROC,col=&#39;Test&#39;))+labs(x=&quot;Weight Decay&quot;,y=&#39;Average AUC&#39;)+
+  scale_x_continuous(limits = c(0,0.03),breaks =seq(0,0.03,0.005) )</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-23-1.png" width="960" /></p>
+<pre class="r"><code>## Finding out value of weight decay for which test error was minimum
+d[which(avgTestROC==max(avgTestROC))]
+dcay&lt;-d[which(avgTestROC==max(avgTestROC))]</code></pre>
+<p>We decide to build model with wight decay=0.027 and number of hiddne layers=3</p>
+<pre class="r"><code>nnet.model&lt;-nnet(data=train[,-&#39;FYEAR&#39;],DLRSN~.,size=3,decay=dcay,lineout=F,maxit=10000)</code></pre>
+<pre><code>## # weights:  37
+## initial  value 2356.022224 
+## iter  10 value 1243.005101
+## iter  20 value 1161.216188
+## iter  30 value 1154.705631
+## iter  40 value 1138.136049
+## iter  50 value 1122.923523
+## iter  60 value 1102.322335
+## iter  70 value 1082.141447
+## iter  80 value 1076.637268
+## iter  90 value 1074.841966
+## iter 100 value 1069.083018
+## iter 110 value 1058.902304
+## iter 120 value 1057.307336
+## iter 130 value 1056.689693
+## iter 140 value 1056.601707
+## final  value 1056.601408 
+## converged</code></pre>
+<pre class="r"><code>nnet.prediction&lt;-predict(nnet.model)
+roc.plot(x=train$DLRSN==&quot;1&quot;,pred=nnet.prediction,thresholds = thresh)$roc.vol</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-24-1.png" width="960" /></p>
+<pre><code>##      Model      Area       p.value binorm.area
+## 1 Model  1 0.9093794 5.680755e-231          NA</code></pre>
+<p><strong>Structure of NeuralNet</strong></p>
+<pre class="r"><code>plotnet(nnet.model)</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-25-1.png" width="960" /> <strong>Linear Discriminant Analysis</strong></p>
+<pre class="r"><code>model.lda&lt;-lda(data=train[,-&#39;FYEAR&#39;],DLRSN~.)
+lda.predicted&lt;-predict(model.lda)$posterior[,2]
+roc.plot(x=train$DLRSN==&quot;1&quot;,pred=lda.predicted,thresholds = thresh)$roc.vol</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-26-1.png" width="960" /></p>
+<pre><code>##      Model      Area       p.value binorm.area
+## 1 Model  1 0.8649931 4.302628e-184          NA</code></pre>
+</div>
+<div id="boosting-algorithms-" class="section level3">
+<h3>Boosting algorithms-</h3>
+<ul>
+<li><strong>GBM</strong>- Gradient Boosting Machine We need to tune depth of trees for better prediction and avoiding overfitting. We go for a 5 fold cross validation.</li>
+</ul>
+<pre class="r"><code>avgAUC&lt;-NULL
+for (i in 2:9)
+{
+  model&lt;-gbm(data=train[,-&#39;FYEAR&#39;],as.character(DLRSN)~.,distribution = &quot;bernoulli&quot;,n.trees = 5000,
+                 interaction.depth = i,cv.folds = 5)
+  model.prediction&lt;-predict(model,newdata = train[,-&#39;FYEAR&#39;],n.trees = 5000,type = &#39;response&#39;)
+  avgAUC[i]&lt;-cost2(train$DLRSN,model.prediction)
+}
+
+ggplot(data = NULL,aes(x = 2:9,y = avgAUC[2:9]))+geom_line()</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-27-1.png" width="960" /></p>
+<pre class="r"><code>gbm.model&lt;-gbm(data=train[,-&#39;FYEAR&#39;],as.character(DLRSN)~.,distribution = &quot;bernoulli&quot;,n.trees = 5000,
+           interaction.depth = 8)
+gbm.model.prediction&lt;-predict(gbm.model,newdata = train[,-&#39;FYEAR&#39;],n.trees = 5000,type = &#39;response&#39;)
+
+roc.plot(x=train$DLRSN==&quot;1&quot;,pred=gbm.model.prediction,thresholds = thresh)$roc.vol</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-27-2.png" width="960" /></p>
+<pre><code>##      Model      Area       p.value binorm.area
+## 1 Model  1 0.9372375 3.911126e-263          NA</code></pre>
+<p>Now we check the performance of test data</p>
+<pre class="r"><code>gbm.test.prediction&lt;-predict(gbm.model,newdata = test[,-&#39;FYEAR&#39;],n.trees = 5000,type = &#39;response&#39;)
+roc.plot(x=test$DLRSN==&quot;1&quot;,pred=gbm.test.prediction,thresholds = thresh)$roc.vol</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-28-1.png" width="960" /></p>
+<pre><code>##      Model      Area     p.value binorm.area
+## 1 Model  1 0.9113742 6.08541e-65          NA</code></pre>
+</div>
+<div id="xgboost--extreme-gradient-boosting" class="section level3">
+<h3><strong>XGBoost-</strong> eXtreme Gradient Boosting</h3>
+<p>We need to create matrix for test and train. On-hot encoding is not required as there are no important factors We will not touch test data assuming we are working on real world problem. For tunning, we divide training dataset into two parts, xtrain and xtest.</p>
+<pre class="r"><code>set.seed(100)
+flag&lt;-sample(nrow(train),0.8*nrow(train),replace = F)
+xtrain&lt;-train[flag,]
+xtest&lt;-train[-flag,]
+train_mat&lt;-sparse.model.matrix(data = xtrain[,-&#39;FYEAR&#39;],DLRSN~.-1)
+head(train_mat)
+test_mat&lt;-sparse.model.matrix(data = xtest[,-&#39;FYEAR&#39;],DLRSN~.-1)
+head(test_mat)
+train_label&lt;-as.numeric(xtrain$DLRSN)-1
+test_label&lt;-as.numeric(xtest$DLRSN)-1
+
+# We need to conver data to DMatrix form
+train_dMatrix&lt;-xgb.DMatrix(data = as.matrix(train_mat),label=train_label)
+test_dMatrix&lt;-xgb.DMatrix(data = as.matrix(test_mat),label=test_label)
+
+
+## Modeling
+params &lt;- list(&quot;objective&quot; = &quot;reg:logistic&quot;,
+                   &quot;eval_metric&quot; = &quot;auc&quot;)
+watchlist &lt;- list(train = train_dMatrix, test = test_dMatrix)
+
+# eXtreme Gradient Boosting Model
+xgb_model &lt;- xgb.train(params = params,
+                       data = train_dMatrix,
+                       nrounds = 2000,
+                       watchlist = watchlist,
+                       eta = 0.02,
+                       max.depth = 4,
+                       gamma = 0,
+                       subsample = 1,
+                       colsample_bytree = 1,
+                       missing = NA,
+                       seed = 222)
+
+tunning&lt;-as.data.frame(xgb_model$evaluation_log)
+ggplot(data = NULL,aes(x = tunning$iter,y = tunning$train_auc,col=&#39;train&#39;))+geom_line()+
+  geom_line(aes(y = tunning$test_auc,col=&#39;test&#39;))</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-29-1.png" width="960" /></p>
+<p>As we can see, test AUC decreases after some time. Optimum number of rounds are to be used for modeling-</p>
+<pre class="r"><code>rounds&lt;-which(tunning$test_auc==max(tunning$test_auc))
+
+xgb_model &lt;- xgb.train(params = params,
+                       data = train_dMatrix,
+                       nrounds = rounds[1],
+                       watchlist = watchlist,
+                       eta = 0.02,
+                       max.depth = 4,
+                       gamma = 0,
+                       subsample = 1,
+                       colsample_bytree = 1,
+                       missing = NA,
+                       seed = 222)
+
+### Training prediction-
+train_matrix&lt;-sparse.model.matrix(data = train[,-&#39;FYEAR&#39;],DLRSN~.-1)
+train_label&lt;-as.numeric(train$DLRSN)-1
+train_matrix&lt;-xgb.DMatrix(data = as.matrix(train_matrix),label=train_label)
+
+xgb_prediction.train&lt;-predict(xgb_model, newdata = train_matrix)
+## Prediction on test data-
+# creating test Matrix
+test_matrix&lt;-sparse.model.matrix(data = test[,-&#39;FYEAR&#39;],DLRSN~.-1)
+test_label&lt;-as.numeric(test$DLRSN)-1
+test_matrix&lt;-xgb.DMatrix(data = as.matrix(test_matrix),label=test_label)
+
+xgb_prediction&lt;-predict(xgb_model, newdata = test_matrix)
+
+## AUC-
+roc.plot(x = test$DLRSN==&quot;1&quot;,pred = xgb_prediction,thresholds = thresh)$roc.vol</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-30-1.png" width="960" /></p>
+</div>
+<div id="feature-importance-" class="section level3">
+<h3>Feature Importance-</h3>
+<p>XGB also describes which features were most important. Feature importance</p>
+<pre class="r"><code>imp &lt;- xgb.importance(colnames(train_dMatrix), model = xgb_model)
+print(imp)</code></pre>
+<pre><code>##     Feature       Gain      Cover  Frequency
+##  1:     R10 0.38533472 0.26270735 0.13625192
+##  2:      R6 0.11673771 0.11774888 0.11121352
+##  3:      R4 0.09844553 0.13018128 0.12027650
+##  4:      R2 0.07942843 0.07034012 0.08617512
+##  5:      R3 0.07727496 0.08016070 0.09370200
+##  6:      R9 0.07176248 0.11970026 0.12304147
+##  7:      R8 0.06572374 0.10381741 0.11397849
+##  8:      R5 0.04052285 0.05197845 0.07265745
+##  9:      R1 0.03553723 0.03552643 0.07649770
+## 10:      R7 0.02923235 0.02783911 0.06620584</code></pre>
+<pre class="r"><code>xgb.plot.importance(imp)</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-31-1.png" width="960" /> As we can see, R10 is the most important feature.</p>
+</div>
+<div id="comparing-performance-of-all-models-on-training-data" class="section level3">
+<h3>Comparing Performance of all models on training data</h3>
+<pre class="r"><code>roc.plot(x=train$DLRSN==&quot;1&quot;,pred=cbind(full.log.probit.prediction,pred.lasso,
+                                       rpart.prediction[,2],rf.predicted[,2],full.gam.prediction,nnet.prediction,
+                                       lda.predicted,gbm.model.prediction,xgb_prediction.train),legend = T,
+                                        leg.text = c(&quot;Logistic&quot;,&quot;Lasso&quot;,&quot;DecisionTree&quot;,
+                                         &quot;RandomForest&quot;,&quot;G. Additive Model&quot;,&quot;NeuralNets&quot;,&quot;LDA&quot;,
+                                         &quot;GBM&quot;,&quot;XGB&quot;),thresholds = thresh)$roc.vol</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-32-1.png" width="960" /></p>
+<pre><code>##      Model      Area       p.value binorm.area
+## 1 Model  1 0.8741200 2.704709e-193          NA
+## 2 Model  2 0.8716762 8.281910e-191          NA
+## 3 Model  3 0.8018075 4.722865e-201          NA
+## 4 Model  4 0.8910791 2.070555e-211          NA
+## 5 Model  5 0.8988672 2.196498e-219          NA
+## 6 Model  6 0.9093794 5.680755e-231          NA
+## 7 Model  7 0.8649931 4.302628e-184          NA
+## 8 Model  8 0.9372375 3.911126e-263          NA
+## 9 Model  9 0.9575447 6.548363e-288          NA</code></pre>
+</div>
+<div id="comparison-of-model-auc-for-test-data" class="section level3">
+<h3>Comparison of model AUC for test data</h3>
+<pre class="r"><code>X&lt;-scale(test[,-c(&#39;DLRSN&#39;,&#39;FYEAR&#39;)])
+X&lt;-as.matrix(X)
+
+logit.test.pred&lt;-predict(full.log.probit,test,type = &#39;response&#39;)
+lasso.test.pred&lt;-predict(lasso.fit, newx = X, s=cv.lasso$lambda.1se,type = &#39;response&#39;)
+rpart.test.pred&lt;-predict(full.rpart,test,type = &#39;prob&#39;)
+rf.test.pred&lt;-predict(full.randomForest,test,type = &#39;prob&#39;)[,2]
+gam.test.pred&lt;-predict(full.gam,test,type = &#39;response&#39;)
+nnet.test.pred&lt;-predict(nnet.model,test)
+lda.test.pred&lt;-predict(model.lda,test)$posterior[,2]
+
+roc.plot(x=test$DLRSN==&quot;1&quot;,pred=cbind(logit.test.pred,lasso.test.pred,
+                                      rpart.test.pred[,2],rf.test.pred,gam.test.pred,nnet.test.pred,
+                                      lda.test.pred,gbm.test.prediction,xgb_prediction),legend = T,
+         leg.text = c(&quot;Logistic&quot;,&quot;Lasso&quot;,&quot;DecisionTree&quot;,
+                      &quot;RandomForest&quot;,&quot;G. Additive Model&quot;,&quot;NeuralNets&quot;,&quot;LDA&quot;,&quot;GBM&quot;,&quot;XGB&quot;),thresholds = thresh)$roc.vol</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-33-1.png" width="960" /></p>
+<pre><code>##      Model      Area      p.value binorm.area
+## 1 Model  1 0.8942223 8.180486e-60          NA
+## 2 Model  2 0.8977614 7.453058e-61          NA
+## 3 Model  3 0.8120406 1.168601e-59          NA
+## 4 Model  4 0.9018795 4.240485e-62          NA
+## 5 Model  5 0.8957751 2.866906e-60          NA
+## 6 Model  6 0.8942417 8.074172e-60          NA
+## 7 Model  7 0.8825699 1.875970e-56          NA
+## 8 Model  8 0.9113742 6.085410e-65          NA
+## 9 Model  9 0.9029050 2.206549e-62          NA</code></pre>
+<pre class="r"><code>models&lt;-c(&#39;Logistic Reg&#39;,&quot;Lasso Reg&quot;,&quot;DecisionTree&quot;,&quot;RandomForest&quot;,&quot;Additive Model&quot;,&quot;Neural Net&quot;,&quot;LDA&quot;,&quot;GBM&quot;,&quot;XGB&quot;)
+TrainAuc&lt;-c(cost2(train$DLRSN,as.numeric(full.log.probit.prediction)),cost2(train$DLRSN,as.numeric(pred.lasso)),
+            cost2(train$DLRSN,as.numeric(rpart.prediction[,2])),cost2(train$DLRSN,as.numeric(rf.predicted[,2])),
+            cost2(train$DLRSN,as.numeric(full.gam.prediction)),cost2(train$DLRSN,as.numeric(nnet.prediction)),
+            cost2(train$DLRSN,as.numeric(lda.predicted)),cost2(train$DLRSN,as.numeric(gbm.model.prediction)),
+            cost2(train$DLRSN,as.numeric(xgb_prediction.train)))
+
+TestAuc&lt;-c(cost2(test$DLRSN,as.numeric(logit.test.pred)),cost2(test$DLRSN,as.numeric(lasso.test.pred)),
+           cost2(test$DLRSN,as.numeric(rpart.test.pred[,2])),cost2(test$DLRSN,as.numeric(rf.test.pred)),
+           cost2(test$DLRSN,as.numeric(gam.test.pred)),cost2(test$DLRSN,as.numeric(nnet.test.pred)),
+           cost2(test$DLRSN,as.numeric(lda.test.pred)),cost2(test$DLRSN,as.numeric(gbm.test.prediction)),
+           cost2(test$DLRSN,as.numeric(xgb_prediction)))
+
+results&lt;-as.data.frame(cbind(models,TrainAuc,TestAuc))
+results&lt;-results%&gt;%arrange(desc(TestAuc))
+datatable(results)</code></pre>
+<div id="htmlwidget-234236ba1e40b8f511d2" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-234236ba1e40b8f511d2">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9"],["GBM","XGB","RandomForest","Lasso Reg","Additive Model","Neural Net","Logistic Reg","LDA","DecisionTree"],["0.937237457782156","0.957544680551647","0.891079061708415","0.871676224317478","0.898867154517309","0.909379397692091","0.874120021812553","0.864993051646496","0.801807451449479"],["0.911374223602484","0.902905020703934","0.901879528985507","0.897761387163561","0.895775103519669","0.894241718426501","0.894222308488613","0.882569875776398","0.812040631469979"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>models<\/th>\n      <th>TrainAuc<\/th>\n      <th>TestAuc<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}]}},"evals":[],"jsHooks":[]}</script>
+<p>As we can see, GBM has the highest AUC for test data.</p>
+</div>
+<div id="defining-optimum-cutoff-probability-for-minimizing-the-cost-function-" class="section level3">
+<h3>Defining optimum cutoff probability for minimizing the cost function-</h3>
+<pre class="r"><code>probs&lt;-seq(0,1,0.001)
+cost&lt;-NULL
+for (i in 1:1000)
+{
+  cutoff&lt;-probs[i]
+  predicted&lt;-ifelse(gbm.model.prediction&gt;cutoff,1,0)
+  cost[i]&lt;-cost1(train$DLRSN,predicted)
+}
+plot(1:1000,cost)</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-35-1.png" width="960" /></p>
+<pre class="r"><code>cutoffProb&lt;-probs[which(cost==min(cost))]
+cutoffProb</code></pre>
+<pre><code>## [1] 0.085</code></pre>
+<pre class="r"><code>predicted&lt;-ifelse(gbm.test.prediction&gt;cutoffProb,1,0)
+cm&lt;-confusionMatrix(factor(predicted),test$DLRSN)
+cm[2]</code></pre>
+<pre><code>## $table
+##           Reference
+## Prediction   0   1
+##          0 694  16
+##          1 226 152</code></pre>
+<pre class="r"><code>cm[3]$overall[1]</code></pre>
+<pre><code>##  Accuracy 
+## 0.7775735</code></pre>
+<pre class="r"><code>cost1(test$DLRSN,predicted)</code></pre>
+<pre><code>## [1] 0.4283088</code></pre>
+<p>Note that the accuracy may not be high for the test set, however, the cost is lowest.</p>
+<p>If we were to go for accuracy, we can define new cost function as-</p>
+<pre class="r"><code>cost3 &lt;- function(actual, predicted) {
+m&lt;-mean(actual==predicted)
+return(m)
+}
+
+
+### Defining optimum cutoff probability for minimizing the cost function-
+probs&lt;-seq(0,1,0.001)
+cost&lt;-NULL
+for (i in 1:1000)
+{
+  cutoff&lt;-probs[i]
+  predicted&lt;-ifelse(gbm.model.prediction&gt;cutoff,1,0)
+  cost[i]&lt;-cost3(train$DLRSN,predicted)
+}
+plot(1:1000,cost)</code></pre>
+<p><img src="binaryClassification_files/figure-html/unnamed-chunk-36-1.png" width="960" /></p>
+<pre class="r"><code>cutoffProb&lt;-probs[which(cost==max(cost))]
+cutoffProb</code></pre>
+<pre><code>## [1] 0.421</code></pre>
+<pre class="r"><code>predicted&lt;-ifelse(gbm.test.prediction&gt;cutoffProb,1,0)
+cm&lt;-confusionMatrix(factor(predicted),test$DLRSN)
+cm[2]</code></pre>
+<pre><code>## $table
+##           Reference
+## Prediction   0   1
+##          0 885  78
+##          1  35  90</code></pre>
+<pre class="r"><code>cm[3]$overall[1]</code></pre>
+<pre><code>##  Accuracy 
+## 0.8961397</code></pre>
+<p>We have achieved almost <strong>89%</strong> accuracy!</p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

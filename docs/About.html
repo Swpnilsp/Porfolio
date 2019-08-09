@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Swapnil" />
+
+
+<title>Introduction</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Portfolio</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="About.html">About</a>
+</li>
+<li>
+  <a href="binaryClassification.html">BinaryClassification</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Introduction</h1>
+<h4 class="author"><em>Swapnil</em></h4>
+
+</div>
+
+
+<style>
+.column-left{
+  float: left;
+  width: 50%;
+  text-align: left;
+  font-size: 5;
+  
+}
+
+.column-right{
+  float: right;
+  width: 50%;
+  text-align: right;
+  font-size: 3;
+}
+</style>
+<div class="column-left">
+
+<p>Hello! I am Swapnil, a Software Engineer turned analytics professional. I have a graduate degree in Business Analytics and enjoy solving complex business problems using data. I enjoy photography and cannot sleep without watching at least one episode of <em>The Office!</em></p>
+<p><strong><a href="http://www.linkedin.com/in/swapnilsp">Connect with me here!</a></strong></p>
+<div id="academic-background" class="section level1">
+<h1>Academic Background</h1>
+<ul>
+<li><p><strong>M.S. in Business Analytics</strong> at <a href="https://business.uc.edu/graduate/masters/ms-business-analytics.html">University of Cincinnati</a></p></li>
+<li><p><strong>Post Graduate Certificate in Finance and International Trade</strong> at <a href="http://www.iift.edu">Indian Institute of Foreign Trade</a></p></li>
+<li><p><strong>Bachelor of Engineering</strong> in <em>Computer Science</em> at <a href="http://www.geca.ac.in/">Government College of Engineering</a></p></li>
+</ul>
+<div id="professional-background" class="section level3">
+<h3>Professional Background</h3>
+<p>Over the years, I have worked in air logitics, supply chain, marketing and eCommerce industries.</p>
+<p><strong>Senior Marketing Analyst- Strategy, Lifecycle and Customer Experience, zulily -</strong></p>
+<ul>
+<li>Strategizing, management, financial modelling and reporting of zulily’s product returns program</li>
+<li>Utilized analytics to recommend product returns process improvements resulting in $8.1M annual cost savings</li>
+<li>Performing experiment design, power analysis and running A/B tests to improve customer experience and prevent churn</li>
+<li>Providing analytics support and building audience for Email and Offers campaigns</li>
+<li>Statistical analysis of user behavior on web and app using clickstream, orders and customer data</li>
+<li>Running price sensitivity tests for offers audience to optimize offers spend</li>
+<li>Answering ad-hoc business questions using advanced analytics techniques</li>
+</ul>
+<p><strong>Graduate Student Consultant</strong></p>
+<p>Worked as a graduate student consultant to help increase the annual revenue of a national food delivery company. The major tasks involved in the data-driven project -</p>
+<ul>
+<li>Customer Segmentation</li>
+<li>Market Basket Analysis</li>
+<li>Seasonality Analysis</li>
+<li>Creating Buyer Personas</li>
+<li>Measuring success of coupon campaigns</li>
+</ul>
+<p><strong>Business Analyst-</strong></p>
+<ul>
+<li>Performed customer segmentation using K-Means clustering leading to better customer service and increased customer satisfaction</li>
+<li>Developed customer churn prediction model using Logistic Regression based on key metrics and developed retention strategies leading to a 12% increase in customer retention</li>
+<li>Led the design of Key Performance focused interactive dashboards in Tableau for Sales, Customer Support and Billing teams</li>
+<li>Provided technical consultation to air freight forwarders for setting up their business</li>
+<li>Developed competitive shared service models for small freight forwarders</li>
+<li>Consulting Airlines, Ground Handling agents, and the Freight Forwarders to help set up their business</li>
+<li>Working as a communication channel between <a href="https://www.gov.uk/guidance/chief-trader-import-and-export-processing-system">HM Revenue &amp; Customs Office</a> and the group of Freight Forwarders, Airlines, and Ground Handling Agents</li>
+<li>Performing Descriptive analytics of the air cargo data</li>
+<li>Generating interactive reports for Sales, Customer Support and the Management teams in Tableau</li>
+<li>Visiting shed operators around London Heathrow and understanding their ground handling operations</li>
+</ul>
+<p><strong>Software Engineer</strong></p>
+<ul>
+<li>Performed descriptive analytics in R and suggested cargo message tariff changes leading to an increase of 15% in quarterly revenues</li>
+<li>Developed Extract, Transform and Load (ETL) applications in Java to extract air cargo transaction data</li>
+<li>Led a team of four to design, develop and maintain the International Air Transport Authority air cargo message database in SQL, catering 0.2-0.3 million air cargo messages per day</li>
+<li>Developed SQL queries for Oracle Business Intelligence Discoverer dashboards for different teams</li>
+<li>Fine-tuned SQL queries to maximize efficiency and performance</li>
+<li>Managed client engagements and client visits to understand ground handling operations</li>
+</ul>
+<p><strong>Technical Associate</strong></p>
+<ul>
+<li>Generated KPI focused Oracle Business Intelligence Discoverer reports for sales, customer support and billing teams</li>
+<li>Performed end-to-end white box testing of IATA air cargo message database</li>
+</ul>
+</div>
+<div id="tools-and-languages" class="section level3">
+<h3>Tools and Languages</h3>
+<ul>
+<li>R Programming</li>
+<li>SQL</li>
+<li>Python</li>
+<li>BigQuery</li>
+<li>SPSS</li>
+<li>Google Compute Engine</li>
+<li>SAS</li>
+</ul>
+</div>
+<div id="skills" class="section level3">
+<h3>Skills</h3>
+<p>On a day-to-day basis, I mostly work on R, SQL, Python and Tableau</p>
+<p>Analytical Skills-</p>
+<ul>
+<li>Simulation</li>
+<li>Exploratory Data Analysis</li>
+<li>Regression</li>
+<li>Text Mining</li>
+<li>Sentiment Analysis</li>
+<li>Clustering</li>
+<li>Hypothesis Testing</li>
+<li>Association Rules</li>
+<li>Classification</li>
+<li>Optimization</li>
+<li>Statistical Modeling</li>
+<li>Bagging, Boosting</li>
+<li>Reporting and Visualization</li>
+<li>Information Filtering</li>
+<li>Geospatial Analysis</li>
+<li>Google Analytics</li>
+</ul>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
