@@ -81,13 +81,29 @@ This blog is aimed at comparing top machine learning algorithm performance in so
 * **Linear discriminant analysis** 
 * **Boosting Algorithms**
 
-<a href="docs/binaryClassification.html">
+<a href="binaryClassification.html">
 ![contnue reading..]
 </a>
 
-## Second level header
 
-You can add more headers by adding more hashtags. These won't be put into the table of contents
+
+# Exploratory Data Analysis
+
+Exploratory data analysis of SF Bay area **[Fordgobike](https://www.fordgobike.com/)** bike share data.
+
+**Following major steps are discussed :**
+
+
+* **Data cleaning**
+* **Exploratory Data Analysis**
+* **Implementation of interactive graphs in R**
+* **Embedding Tableau workbooks in R**
+* **Geospatial Analysis**
+* **Business Recommendations**
+
+<a href="fordGobike.html">
+![contnue reading..]
+</a>
 
 ### third level header
 
