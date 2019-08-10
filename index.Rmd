@@ -81,7 +81,7 @@ without watching at least one episode of **The Office!**
 
 <div class="column-right" style="padding-bottom: 20px;>
 
-<img src="images/Swap.png" title="MyImage" alt="testing" width="300px" height="850px" style="display: block; margin: 25px;"/>
+<img src="images/Swap.png" title="MyImage" alt="testing" width="300px" height="900px" style="display: block; margin: 25px;"/>
 
 ### [Connect with me!](http://www.linkedin.com/in/swapnilsp)
 

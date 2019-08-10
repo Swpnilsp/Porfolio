@@ -445,7 +445,7 @@ rules &lt;- apriori(s, parameter = list(supp = 0.02,conf = 0.7))</code></pre>
 ## Absolute minimum support count: 441 
 ## 
 ## set item appearances ...[0 item(s)] done [0.00s].
-## set transactions ...[4195 item(s), 22060 transaction(s)] done [0.06s].
+## set transactions ...[4195 item(s), 22060 transaction(s)] done [0.07s].
 ## sorting and recoding items ... [247 item(s)] done [0.01s].
 ## creating transaction tree ... done [0.01s].
 ## checking subsets of size 1 2 3 done [0.01s].
@@ -470,6 +470,13 @@ rules &lt;- apriori(s, parameter = list(supp = 0.02,conf = 0.7))</code></pre>
 <p><img src="retail_files/figure-html/unnamed-chunk-14-1.png" width="960" /> Below is the visualization of the rules that have been identified. For the purpose of readability, the complete description of the product is shown in the below graph. In the below graph, size and the colour of the circles represent support and lift respectively.</p>
 <pre class="r"><code>plot(rules, method=&quot;graph&quot;)</code></pre>
 <p><img src="retail_files/figure-html/unnamed-chunk-15-1.png" width="960" /></p>
+</div>
+<div id="tableau-dashboard" class="section level3">
+<h3>Tableau Dashboard</h3>
+<p>Based on all the analysis done so far in project, tableau dashboard is designed for the management to get the report of the business at a glance. The dashboard that has been designed is interactive, the results change in real time as the mouse curser is hover over the geographical map. Give it a moment to load</p>
+<iframe align = "center" width = "1000" height = "800"
+src=https://public.tableau.com/views/RetailViz_0/Dashboard1?:embed=y&:display_count=yes&:origin=viz_share_link
+/>
 </div>
 </div>
 
