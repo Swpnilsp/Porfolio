@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Swapnil" />
+
+
+<title>Predicting Landing Distance of Aircraft</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.2/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.8.0/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-1.39.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-1.39.2/plotly-latest.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Portfolio</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="About.html">About</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Predicting Landing Distance of Aircraft</h1>
+<h4 class="author"><em>Swapnil</em></h4>
+
+</div>
+
+
+<div id="prediction-of-the-landing-distance-of-the-aircrafts" class="section level2">
+<h2>Prediction of the landing distance of the Aircrafts</h2>
+<p>The purpose of this project is to solve a problem using linear regression and understand various feature selection and model selection techniques. In this project we predict the landing distance of the aircrafts based on different details. There have been many major mishaps during the landing of the aircraft, resulting in the loss of many lives. The data used in this project can be found <strong><a href="">here.</a></strong></p>
+<p>Information about various parameters such as, pitch, ground speed, air speed, height etc. of <strong>Airbus</strong> and <strong>Boeing</strong> aircrafts is given for the study.</p>
+<p>We have to come up with a robust regression model that can predict the landing distance.</p>
+</div>
+<div id="packages-required" class="section level2">
+<h2>Packages Required</h2>
+<pre class="r"><code>library(readxl)
+library(ggplot2)
+library(dplyr)
+library(GGally)
+library(leaps)
+library(gridExtra)
+library(plotly)
+library(mvinfluence)
+library(ggthemes)</code></pre>
+</div>
+<div id="loading-and-cleaning-the-data" class="section level2">
+<h2>Loading and cleaning the data</h2>
+<p>The data is stored in two excel sheets called FAA1 and FAA2 respectively. We need to load these sheets, analyse the data for completeness and then combine the two datasets into one.</p>
+<pre class="r"><code>str(faa1)</code></pre>
+<pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    800 obs. of  8 variables:
+##  $ aircraft    : chr  &quot;boeing&quot; &quot;boeing&quot; &quot;boeing&quot; &quot;boeing&quot; ...
+##  $ duration    : num  98.5 125.7 112 196.8 90.1 ...
+##  $ no_pasg     : num  53 69 61 56 70 55 54 57 61 56 ...
+##  $ speed_ground: num  107.9 101.7 71.1 85.8 59.9 ...
+##  $ speed_air   : num  109 103 NA NA NA ...
+##  $ height      : num  27.4 27.8 18.6 30.7 32.4 ...
+##  $ pitch       : num  4.04 4.12 4.43 3.88 4.03 ...
+##  $ distance    : num  3370 2988 1145 1664 1050 ...</code></pre>
+<pre class="r"><code>str(faa2)</code></pre>
+<pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    150 obs. of  7 variables:
+##  $ aircraft    : chr  &quot;boeing&quot; &quot;boeing&quot; &quot;boeing&quot; &quot;boeing&quot; ...
+##  $ no_pasg     : num  53 69 61 56 70 55 54 57 61 56 ...
+##  $ speed_ground: num  107.9 101.7 71.1 85.8 59.9 ...
+##  $ speed_air   : num  109 103 NA NA NA ...
+##  $ height      : num  27.4 27.8 18.6 30.7 32.4 ...
+##  $ pitch       : num  4.04 4.12 4.43 3.88 4.03 ...
+##  $ distance    : num  3370 2988 1145 1664 1050 ...</code></pre>
+<p>We can observe that the column <em>duration</em> is missing from FAA2 dataset. We need to introduce this column in order to merge two dataframes. We also check if we have any duplicate records in the combined dataframe.</p>
+<pre class="r"><code># the column &#39;duration&#39; is missing from faa2 dataframe
+faa2$duration&lt;-NA
+# Now, we can concatinate the two dataframes
+faa&lt;-rbind(faa1,faa2)
+str(faa)</code></pre>
+<pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    950 obs. of  8 variables:
+##  $ aircraft    : chr  &quot;boeing&quot; &quot;boeing&quot; &quot;boeing&quot; &quot;boeing&quot; ...
+##  $ duration    : num  98.5 125.7 112 196.8 90.1 ...
+##  $ no_pasg     : num  53 69 61 56 70 55 54 57 61 56 ...
+##  $ speed_ground: num  107.9 101.7 71.1 85.8 59.9 ...
+##  $ speed_air   : num  109 103 NA NA NA ...
+##  $ height      : num  27.4 27.8 18.6 30.7 32.4 ...
+##  $ pitch       : num  4.04 4.12 4.43 3.88 4.03 ...
+##  $ distance    : num  3370 2988 1145 1664 1050 ...</code></pre>
+<pre class="r"><code># Removing duplicates from the dataframe
+dim(unique(faa))</code></pre>
+<pre><code>## [1] 950   8</code></pre>
+</div>
+<div id="removing-outliers-" class="section level2">
+<h2>Removing outliers-</h2>
+<p>We have been given following information to decide whether an observation is an outlier or not:</p>
+<ul>
+<li>The duration of a normal flight should always be greater than 40 min.</li>
+<li>If Speed_ground is less than 30MPH or greater than 140MPH, then the landing would be considered as abnormal.</li>
+<li>If Speed_air is less than 30MPH or greater than 140MPH, then the landing would be considered as abnormal.</li>
+<li>The landing aircraft is required to be at least 6 meters high at the threshold of the runway.</li>
+<li>Landing distance should be less than 6000 feet</li>
+</ul>
+<p>Based on this information, we clean the dataset.</p>
+<pre class="r"><code>faa&lt;-faa%&gt;%filter(duration&gt;40,speed_ground &gt;= 30, speed_ground &lt;=140,speed_air &gt;= 30, speed_air &lt;=140,height &gt;=6,distance&lt;6000)
+summary(faa)</code></pre>
+<pre><code>##    aircraft            duration        no_pasg       speed_ground   
+##  Length:195         Min.   : 45.5   Min.   :41.00   Min.   : 88.69  
+##  Class :character   1st Qu.:115.9   1st Qu.:56.00   1st Qu.: 95.28  
+##  Mode  :character   Median :149.3   Median :60.00   Median :100.75  
+##                     Mean   :150.9   Mean   :59.83   Mean   :103.43  
+##                     3rd Qu.:185.4   3rd Qu.:65.00   3rd Qu.:109.57  
+##                     Max.   :287.0   Max.   :80.00   Max.   :132.78  
+##    speed_air          height           pitch          distance   
+##  Min.   : 90.00   Min.   : 9.697   Min.   :2.702   Min.   :1741  
+##  1st Qu.: 96.15   1st Qu.:23.365   1st Qu.:3.636   1st Qu.:2161  
+##  Median :100.89   Median :29.837   Median :4.070   Median :2526  
+##  Mean   :103.50   Mean   :30.359   Mean   :4.043   Mean   :2784  
+##  3rd Qu.:109.42   3rd Qu.:36.590   3rd Qu.:4.442   3rd Qu.:3186  
+##  Max.   :132.91   Max.   :58.228   Max.   :5.311   Max.   :5382</code></pre>
+<p>Once the data is cleaned, we sample 80% of the observation for training the regression model and the rest 20% for testing the model-</p>
+<pre class="r"><code>rows&lt;-sample(195,0.8*195,replace = FALSE)
+train&lt;-faa[rows,]
+test&lt;-faa[-rows,]
+
+# checking the correlation among variables
+ggpairs(train) </code></pre>
+<p><img src="landingDistance_files/figure-html/unnamed-chunk-6-1.png" width="960" /></p>
+<p>Since the dataset is small, we can use best subset selection for variable selection. Best subset selection algorithm will look for best subset of predictors that closely relate with the response variable. This method may not be best suited when the number of variables are too large.</p>
+<p>We will use-</p>
+<ul>
+<li>Adjusted R Squared</li>
+<li>CP</li>
+<li>BIC</li>
+</ul>
+<p>As creterion for selecting the best subset of predictors for our linear model.</p>
+<pre class="r"><code>#Best subset variable selection
+best.subset&lt;-regsubsets(distance~.,data = train,nvmax = 7)
+best.subset.summary &lt;- summary(best.subset)
+
+# Now, we will use different criterion to select the best subset of the predictors for our problem
+# 1. Adjused R squared
+p1&lt;-ggplot(data = NULL,aes(x=1:7,y = best.subset.summary$adjr2))+geom_line(color=&#39;white&#39;)+labs(x=&#39;Index&#39;,y=&#39;Adjusted R Squared&#39;,title=&#39;Adjusted R Squared&#39;)+
+  theme_hc(bgcolor = &quot;darkunica&quot;)
+
+# 2. CP
+p2&lt;-ggplot(data = NULL,aes(x=1:7,y = best.subset.summary$cp))+geom_line(color=&#39;white&#39;)+labs(x=&#39;Index&#39;,y=&#39;CP&#39;,title=&#39;CP&#39;)+
+  theme_hc(bgcolor = &quot;darkunica&quot;)
+
+# 3. BIC
+p3&lt;-ggplot(data = NULL,aes(x=1:7,y = best.subset.summary$bic))+geom_line(color=&#39;white&#39;)+labs(x=&#39;Index&#39;,y=&#39;BIC&#39;,title=&#39;BIC&#39;)+
+  theme_hc(bgcolor = &quot;darkunica&quot;)
+
+grid.arrange(p1,p2,p3)</code></pre>
+<p><img src="landingDistance_files/figure-html/unnamed-chunk-7-1.png" width="960" /></p>
+<p>From above graphs, it is visible that-</p>
+<ul>
+<li>Adjusted R Squared increases with index upto index 3, then almost stays constant</li>
+<li>CP gets reduced with index up to 3, then almost stays constant</li>
+<li>BIC reduces with index up to 3, later increases gradually</li>
+</ul>
+<p>Thus,subset with index 3, is the best subset that leads to optimum results. We will use this subset for our linear model.</p>
+<pre class="r"><code># The best model is model with index 3.
+best.subset.summary$outmat[3,]</code></pre>
+<pre><code>## aircraftboeing       duration        no_pasg   speed_ground      speed_air 
+##            &quot;*&quot;            &quot; &quot;            &quot; &quot;            &quot; &quot;            &quot;*&quot; 
+##         height          pitch 
+##            &quot;*&quot;            &quot; &quot;</code></pre>
+<p>The best subset contains predictors- Aircraft, speed_air and height.</p>
+<p>Before model the building, we try to visualise the relationship among the variables in a 3D graph just to get a sense of the data-</p>
+<pre class="r"><code>p &lt;- plot_ly(train, x = ~speed_air, y = ~distance, z = ~height, color = ~aircraft, colors = c(&#39;red&#39;, &#39;blue&#39;),alpha=0.5) %&gt;%
+  add_markers() %&gt;%
+  layout(scene = list(xaxis = list(title = &#39;Air Speed&#39;),
+                      yaxis = list(title = &#39;Landing Distance&#39;),
+                      zaxis = list(title = &#39;Height&#39;)))
+p</code></pre>
+<div id="htmlwidget-e1d8ae1cbc263f634dfb" style="width:960px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e1d8ae1cbc263f634dfb">{"x":{"visdat":{"3d242bf2d591":["function () ","plotlyVisDat"]},"cur_data":"3d242bf2d591","attrs":{"3d242bf2d591":{"x":{},"y":{},"z":{},"color":{},"colors":["red","blue"],"alpha":0.5,"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","mode":"markers","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"xaxis":{"title":"Air Speed"},"yaxis":{"title":"Landing Distance"},"zaxis":{"title":"Height"}},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":[{"name":"Collaborate","icon":{"width":1000,"ascent":500,"descent":-50,"path":"M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z"},"click":"function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == '?viewer_pane=1') {\n          alert('To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html');\n        } else {\n          window.open('https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html', '_blank');\n        }\n      }"}],"cloud":false},"data":[{"x":[131.337948502676,107.786658424804,98.2219208905136,98.7240636071424,96.9784367011139,95.2874466099357,98.0858831427314,99.8369510880614,113.5705503152,110.038572431885,110.569647665393,95.7629816165776,99.9606344677714,112.190183231568,98.8714198615157,103.634971270849,112.531781518016,99.459199838927,105.187095494404,98.5616985367351,98.1479322757899,124.39076753909,100.669306005426,109.854301969024,106.70400079672,105.685119916027,98.9387009422516,102.412471425337,96.3128816082973,117.654233377655,103.671535795642,118.484703983024,102.110147744852,125.138548934074,99.1602663450463,114.162516348297,99.4216887659352,98.1160741547752,113.170862667275,106.760253598456,100.836793958416,105.110068206722,98.8757524722823,101.353834077019,97.6313417181187,97.5667381974497,101.806429081189,105.559366518933,104.962611044318,97.4907852316099,96.9137377669133,105.313028690714,98.1299286363434,96.1269653774055,96.5150446531811,111.332362285079,100.877461586764,108.216239479604,108.231985325899,95.5705467071786,100.511431096164,99.3973645361049,100.891677002416,96.1749987294411],"y":[4896.29460829994,2340.58279734007,2481.25812476625,2404.74309285939,2167.757691534,1882.94124911878,2008.22072322821,2093.99659560819,3296.36495269747,2919.57931291465,3054.41240617653,1955.30349107129,2640.37884461496,3313.06722072869,2268.78269889393,2524.56766173855,3437.6566748821,2032.77425481545,2837.08084983287,2299.95237103495,1885.7456024239,4295.90061309319,2119.31359548959,3156.52616362788,2435.82450902006,2542.33562610028,2189.99572858812,2623.6512567909,1740.90188941261,3469.14676668298,2488.99848422614,3470.58382889299,2454.20317212598,4254.93326368633,2116.08091901105,3541.57775536381,2440.38121804203,2330.9880709348,3665.80386928545,2770.42961673312,2123.14708774864,2762.47605155096,2283.19494512119,2028.96758187434,2017.6011485756,2376.80097893146,2461.98791351481,2711.463616685,2606.24956632817,1783.81291544735,2060.16942487025,2493.1981649082,2167.27276882029,1816.59414489962,1975.11056767822,3311.83695846735,1990.85322817881,2808.99112306867,2810.69576376677,1868.16524105438,2369.08403787992,2059.53773770141,2554.83306233624,1790.23912759183],"z":[28.2779655413614,9.6972160001814,39.3196474215863,39.5204256491805,38.4091929533732,38.7319181510485,29.1780951211086,21.4188554290946,33.4667740603763,39.8172809660733,10.0999908021015,23.7848971833535,45.1489667506353,30.2025588673171,36.195843364389,23.0116217477807,50.7657990953572,28.9708638994413,54.1985403464622,48.8470226190055,16.0971394400197,22.3271758146777,24.3475162077279,42.8324974488219,21.4444633253195,21.8335643484967,40.2147494185639,38.5340208293582,27.6863304444612,25.7850691427845,23.7835871138746,31.2634455317389,32.9773735803808,22.5247788965283,35.1870300917426,35.6402815164767,40.9930528378833,42.3077318441384,58.2277997357578,26.9278595917524,19.0287110719094,42.9727763163227,35.5612554933238,21.4052358506057,33.0583655169843,45.4578655473866,32.9522801020692,38.1273019670529,27.3173813809799,24.0887429964738,33.1442456578044,32.7803672170269,20.1166035987388,20.4728163471928,29.6251932924516,36.0428028881591,20.2886546650984,35.4796824906314,21.2491049016602,25.8269061197147,35.489404508158,36.7826828613271,41.0330106840669,19.2392723022815],"type":"scatter3d","mode":"markers","name":"airbus","marker":{"color":"rgba(255,0,0,0.5)","line":{"color":"rgba(255,0,0,1)"}},"textfont":{"color":"rgba(255,0,0,0.5)"},"error_y":{"color":"rgba(255,0,0,0.5)"},"error_x":{"color":"rgba(255,0,0,0.5)"},"line":{"color":"rgba(255,0,0,0.5)"},"frame":null},{"x":[102.846763393107,91.1193374994354,108.360910408099,94.4057653133987,114.69029120625,94.5206244393377,92.8695612141137,107.519902640324,103.096436278446,109.382300523387,108.500900060566,96.1964605851299,94.7352614059765,106.733175952511,110.659915594573,95.3224445547434,128.417730984783,105.104478421845,110.20457763832,107.441693718839,92.4251350060798,94.524363883707,107.654271492931,105.913144816306,91.2769141147216,123.049332422399,99.4339068349461,101.095118560867,119.40214631337,93.2077753710653,100.260669799957,127.964142826297,96.9280134790398,93.6758162907957,103.353114846743,99.1358307268515,112.264954891999,92.1534577297363,97.1850505096146,90.3674037268561,120.444707969307,104.624401300661,109.751789091434,91.1420688392116,92.6457892623216,110.604121138147,96.0333978588139,132.911464904647,107.872622353917,113.445483218543,90.7304730560209,120.397035159324,104.704143851966,96.5523785897608,101.335614167204,93.3431735726711,103.868457935414,125.98691462052,123.882572870907,101.722138757731,99.9445099778416,92.7525764065988,104.437706731744,100.661558088823,108.177469684744,93.186235850483,90.76799986178,96.2624160930171,90.4767237227249,98.6377181966045,122.18668469209,94.2151607684202,126.118648179867,92.9176992828765,118.011417404714,90.6261814284236,93.0548343520195,90.0028585819823,97.1033618078766,120.192322188209,109.821621602166,94.9701962969463,96.0841986685308,104.13467734688,92.8777355312871,90.7907099451277,91.586299118749,101.849800190593,113.863937384216,111.435069215902,98.7160477142753,93.9352802950947],"y":[2637.53243589737,2110.29103173555,3097.06540149698,2101.7677931331,3873.09565837634,2135.78629584529,2128.70828502933,3011.37973780211,2689.15969416558,3188.26815964752,3545.25277664685,2304.8575740138,2022.73229418497,2785.85529497633,3405.35070591438,1987.81701110861,5381.9588622353,2984.02368785679,3164.46835526148,3062.06500800987,2144.5845632639,2104.08968451577,3447.36150424975,2652.8024210459,2051.21876102908,4455.64777504246,2652.95610674868,2560.76108927438,4217.129451828,2186.62212888961,2771.13126469848,5031.38631564568,2556.59525447959,2370.00720396636,3152.59650198108,2586.66508639305,3741.06771618546,1995.36554320843,2526.4748975306,2001.05442693263,4524.27886214427,2774.45416232166,3723.05475281922,2182.22073736574,1977.1171934104,3435.39180220716,2149.55671861494,5343.20095392101,3133.34792291407,3785.65441812738,2073.15515639802,4279.56721102084,2930.20950043064,2206.67532308939,2498.8167044958,2020.27315722617,3213.98526500404,5147.41012436125,4807.87980687654,2830.43760720667,2578.23766017521,2174.6991645653,2792.97119916445,2478.60892002003,3158.87766679875,2157.41884273841,1852.00098984,2444.52858856943,2196.47272106291,2628.53631586084,4483.85963674371,2233.04896237811,4736.60458106521,2272.09743565609,4129.04226038465,2148.10792870163,2482.65631377117,2187.23456622158,2217.83088967433,4292.16751182291,3439.72546694153,2238.35953514279,2183.79836283846,2924.84058797973,2351.07095692479,1880.29466599267,2072.90728028667,2573.05324745045,3668.8878406268,3479.13280840852,2503.7000626538,2342.77324185317],"z":[27.83361522969,33.6581582062273,15.5387661607665,29.6129450044255,45.0776662931437,23.5944765674488,32.22348927081,25.2000254985597,32.6595336147526,12.9906611481039,42.9523957617797,33.6612261557619,23.5298691930118,18.3462015832568,34.443424964131,18.5864533902692,33.9489988252725,37.3256998259963,10.2552253637582,25.4439202998953,34.1077574207777,20.9125768693149,36.4856760646989,15.3262072743628,31.4413206245604,27.5580246117927,34.0822667268277,19.8529039909859,19.8561922146485,29.8368846374292,48.6028248384991,23.7642314260617,36.6943474575618,35.1869888819596,28.6337736679239,28.1529913159446,35.9100358226536,19.5743809984516,47.5866221823594,40.2790431152197,38.5585360069548,28.7885690717604,58.0817896462206,39.4762987836496,20.3861407797595,25.8170529270195,24.5312036406413,18.1770302189238,31.3882035556807,33.4553758469579,38.0278487371036,15.0493485094869,38.2143503072975,27.4035672809824,20.8345499659722,26.3292347211072,43.8827318960347,40.1011219670186,30.2165682424328,40.0385543699028,33.9456670891609,31.3636824995601,27.6158297762612,17.8841476632985,27.4079507665979,26.4708771218693,16.2928939915898,29.6335988208246,39.5637144038289,38.4411531222146,26.3675471269981,30.2701001891336,20.5478338479294,40.4904631570895,13.2632399104554,35.4947429037648,44.601461257165,45.024391550448,29.9115157674338,25.1827626492722,28.8833460024753,35.5516039362097,17.3766603379769,42.895159856686,33.0464241494915,28.2750395460798,28.3110083538451,18.1693940706892,25.4681385601356,19.7157721002014,25.3203018020271,41.4233754303314],"type":"scatter3d","mode":"markers","name":"boeing","marker":{"color":"rgba(0,0,255,0.5)","line":{"color":"rgba(0,0,255,1)"}},"textfont":{"color":"rgba(0,0,255,0.5)"},"error_y":{"color":"rgba(0,0,255,0.5)"},"error_x":{"color":"rgba(0,0,255,0.5)"},"line":{"color":"rgba(0,0,255,0.5)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"base_url":"https://plot.ly"},"evals":["config.modeBarButtonsToAdd.0.click"],"jsHooks":[]}</script>
+</div>
+<div id="building-the-model-" class="section level1">
+<h1>Building the model-</h1>
+<p>We go ahead with building the model-</p>
+<pre class="r"><code># Building linear regression model
+model&lt;-lm(data=train, distance~speed_air+aircraft+height)
+summary(model)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = distance ~ speed_air + aircraft + height, data = train)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -282.69 -100.70   19.50   92.79  343.84 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)    -6406.368    129.300  -49.55   &lt;2e-16 ***
+## speed_air         82.128      1.136   72.30   &lt;2e-16 ***
+## aircraftboeing   434.082     22.230   19.53   &lt;2e-16 ***
+## height            13.659      1.148   11.90   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 135.8 on 152 degrees of freedom
+## Multiple R-squared:  0.973,  Adjusted R-squared:  0.9724 
+## F-statistic:  1823 on 3 and 152 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div id="model-diagnostics" class="section level2">
+<h2>Model Diagnostics</h2>
+<pre class="r"><code>par(mfrow=c(2,2))
+plot(model)</code></pre>
+<p><img src="landingDistance_files/figure-html/unnamed-chunk-11-1.png" width="960" /></p>
+<pre class="r"><code>par(mfrow=c(1,1))
+infIndexPlot(model, var=&quot;cook&quot;, main=&quot;Index Influence Plot&quot;)</code></pre>
+<p><img src="landingDistance_files/figure-html/unnamed-chunk-11-2.png" width="960" /> From the graphs we can see that- * The residuals are normally distributed (Q-Q plot) * The residuals have constant variance * There are no obvious high laverage or high influence points</p>
+<p>Observation with index 6, has high <em>Cook’s Distance</em>, 0.11. Let’s take a closer look at this observation-</p>
+<pre class="r"><code># point has high Studentized Residual &gt; 2 but &lt; 3
+a&lt;-as.numeric(train[6,5])
+b&lt;-as.numeric(train[6,8])
+ggplot(data = train,aes(x = speed_air,y = distance,color=aircraft))+geom_point()+geom_smooth(method=&#39;lm&#39;)+
+  geom_point(aes(x=a,y=b),color=&#39;Purple&#39;)+annotate(&quot;text&quot;, x = 125, y = 5400, label = &quot;Possible Outlier&quot;,col=&#39;Purple&#39;)+
+  theme_hc(bgcolor = &quot;darkunica&quot;)</code></pre>
+<p><img src="landingDistance_files/figure-html/unnamed-chunk-12-1.png" width="960" /></p>
+<pre class="r"><code>influencePlot(model)</code></pre>
+<p><img src="landingDistance_files/figure-html/unnamed-chunk-12-2.png" width="960" /></p>
+<pre><code>##       StudRes        Hat        CookD
+## 26  2.6613084 0.05881641 0.1063932807
+## 90 -0.1349164 0.07658111 0.0003798453</code></pre>
+<p>However, the <em>Studentized Residual</em> for that observation is less than 3. Thus, we will not consider that point to be an outlier.</p>
+</div>
+<div id="prediction-on-the-test-data-" class="section level2">
+<h2>Prediction on the Test data-</h2>
+<p>Now we try to predict the landing distance of the observations from test data.</p>
+<pre class="r"><code>test$predictedDistance&lt;-predict(model,test)
+cor.test(test$distance,test$predictedDistance)</code></pre>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  test$distance and test$predictedDistance
+## t = 46.015, df = 37, p-value &lt; 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.9834906 0.9955034
+## sample estimates:
+##       cor 
+## 0.9913758</code></pre>
+<pre class="r"><code>ggplot(data = test,aes(distance,y=predictedDistance,color=aircraft))+geom_point()+labs(x=&#39;Actual Distance&#39;,
+      y=&#39;Predicted Distance&#39;,title=&#39;Prediction Graph&#39;)+theme_hc(bgcolor = &quot;darkunica&quot;)</code></pre>
+<p><img src="landingDistance_files/figure-html/unnamed-chunk-13-1.png" width="960" /></p>
+<p>We can se that the correlation coefficient between actual landing distance and the predicted landing distance is <strong>0.9891462</strong> with 95% Confidence Interval being <strong>0.9792438, 0.9943379</strong>. The prediction is fairly accurate as it predicts with close to 98% accuracy.</p>
+<p>Thus, we can say that the Liner Regression model does a good job of predicting the landing distance.</p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

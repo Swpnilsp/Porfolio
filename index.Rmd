@@ -48,10 +48,25 @@ pre { /* Code block - determines code spacing between lines */
     font-size: 14px;
 }
 
+.column-left{
+  float: left;
+  width: 50%;
+  text-align: left;
+  font-size: 5;
+  
+}
+
+.column-right{
+  float: right;
+  width: 50%;
+  text-align: right;
+  font-size: 3;
+}
+
 </style>
 
 <div class="row" style="padding-top: 10px;">
-<div class="col-sm-9">
+<div class="col-sm-6">
 
 ## **Project Portfolio**
 
@@ -97,6 +112,29 @@ This blog is aimed at comparing top machine learning algorithm performance in so
 
 
 <a href="binaryClassification.html">
+![contnue reading..]
+</a>
+
+
+
+# Linear Regression Diagnostics
+
+The purpose of this project is to solve a simple problem using linear regression and understand various feature selection and model selection techniques along the way. In this project we predict the landing distance of the aircrafts based on different details. There have been many major mishaps during the landing of the aircraft, resulting in the loss of many lives.
+
+<div class="column-left">
+<img src="images/ldistance1.png" title="Index influence plot" alt="testing" height="320px" width="430px" style="display: block; margin: auto;"/>
+</div>
+<div class="column-right">
+<img src="images/ldistance2.png" title="Studentized Residuals" alt="testing" height="320px" width="430px" style="display: block; margin: auto;"/>
+</div>
+
+ **Following major steps are discussed :**
+
+* **Exploratory Data Analysis**
+* **Model building**
+* **Regression model diagnostics**
+
+<a href="landingDistance.html">
 ![contnue reading..]
 </a>
 

@@ -12,7 +12,7 @@
 <meta name="author" content="Swapnil" />
 
 
-<title>MachineLearning algorithm performance benchmarking in solving a binary classification problem</title>
+<title>Machine Learning algorithm benchmarking</title>
 
 <script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -195,9 +195,6 @@ $(document).ready(function () {
 <li>
   <a href="About.html">About</a>
 </li>
-<li>
-  <a href="binaryClassification.html">BinaryClassification</a>
-</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -210,9 +207,8 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">MachineLearning algorithm performance benchmarking in solving a binary classification problem</h1>
+<h1 class="title toc-ignore">Machine Learning algorithm benchmarking</h1>
 <h4 class="author"><em>Swapnil</em></h4>
-<h4 class="date"><em>3/10/2018</em></h4>
 
 </div>
 
@@ -281,8 +277,8 @@ colSums(is.na(bankruptcy))</code></pre>
 ##  $ R10  : num  0.1589 0.7934 2.4846 0.0478 0.7911 ...
 ##  - attr(*, &quot;.internal.selfref&quot;)=&lt;externalptr&gt;</code></pre>
 <pre class="r"><code>datatable(head(bankruptcy))</code></pre>
-<p><div id="htmlwidget-2e2bc35ccb8438bea3b2" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2e2bc35ccb8438bea3b2">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],[1999,1999,1999,1994,1999,1999],[0,0,0,1,0,0],["00036020","00036110","00037520","00078110","00079X10","00086T10"],[0.307139483,0.760736496,-0.513596083,-0.466129332,2.023422271,0.907498517],[0.887005715,0.592493372,0.337614773,0.370746659,0.214876406,0.386879734],[1.647680762,0.453002755,0.299014546,0.496066653,0.182594782,0.477891386],[-0.199157597,-0.369890143,-0.029079962,-0.373428966,6.6953604,-0.34715872],[1.092963959,0.186153945,-0.432604675,-0.267423988,-1.148338079,1.407989257],[-0.313288673,0.039619071,0.82999324,0.977798881,-1.505889267,-0.483902305],[-0.196793318,0.327497319,-0.707786127,-0.610975074,2.876476871,0.070259441],[1.206762812,0.428418062,0.476153279,0.456809847,0.287374933,0.52781095],[0.282470912,1.106965205,2.179175451,0.15195105,-0.986442053,0.502465945],[0.158896251,0.793442755,2.4845845,0.047788514,0.791076735,-0.164648016]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>FYEAR<\/th>\n      <th>DLRSN<\/th>\n      <th>CUSIP<\/th>\n      <th>R1<\/th>\n      <th>R2<\/th>\n      <th>R3<\/th>\n      <th>R4<\/th>\n      <th>R5<\/th>\n      <th>R6<\/th>\n      <th>R7<\/th>\n      <th>R8<\/th>\n      <th>R9<\/th>\n      <th>R10<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,4,5,6,7,8,9,10,11,12,13]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script> There are no missing values in the data, all columns are integer or numeric except for CUSIP</p>
+<p><div id="htmlwidget-5971d76bc60f224b997e" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5971d76bc60f224b997e">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],[1999,1999,1999,1994,1999,1999],[0,0,0,1,0,0],["00036020","00036110","00037520","00078110","00079X10","00086T10"],[0.307139483,0.760736496,-0.513596083,-0.466129332,2.023422271,0.907498517],[0.887005715,0.592493372,0.337614773,0.370746659,0.214876406,0.386879734],[1.647680762,0.453002755,0.299014546,0.496066653,0.182594782,0.477891386],[-0.199157597,-0.369890143,-0.029079962,-0.373428966,6.6953604,-0.34715872],[1.092963959,0.186153945,-0.432604675,-0.267423988,-1.148338079,1.407989257],[-0.313288673,0.039619071,0.82999324,0.977798881,-1.505889267,-0.483902305],[-0.196793318,0.327497319,-0.707786127,-0.610975074,2.876476871,0.070259441],[1.206762812,0.428418062,0.476153279,0.456809847,0.287374933,0.52781095],[0.282470912,1.106965205,2.179175451,0.15195105,-0.986442053,0.502465945],[0.158896251,0.793442755,2.4845845,0.047788514,0.791076735,-0.164648016]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>FYEAR<\/th>\n      <th>DLRSN<\/th>\n      <th>CUSIP<\/th>\n      <th>R1<\/th>\n      <th>R2<\/th>\n      <th>R3<\/th>\n      <th>R4<\/th>\n      <th>R5<\/th>\n      <th>R6<\/th>\n      <th>R7<\/th>\n      <th>R8<\/th>\n      <th>R9<\/th>\n      <th>R10<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,4,5,6,7,8,9,10,11,12,13]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script> There are no missing values in the data, all columns are integer or numeric except for CUSIP</p>
 <p>We change DLRSN, which is the dependent variable, to factor</p>
 <pre class="r"><code>bankruptcy$DLRSN&lt;-as.factor(bankruptcy$DLRSN)
 summary(bankruptcy)</code></pre>
@@ -929,7 +925,7 @@ print(imp)</code></pre>
                                        lda.predicted,gbm.model.prediction,xgb_prediction.train),legend = T,
                                         leg.text = c(&quot;Logistic&quot;,&quot;Lasso&quot;,&quot;DecisionTree&quot;,
                                          &quot;RandomForest&quot;,&quot;G. Additive Model&quot;,&quot;NeuralNets&quot;,&quot;LDA&quot;,
-                                         &quot;GBM&quot;,&quot;XGB&quot;),thresholds = thresh)$roc.vol</code></pre>
+                                         &quot;GBM&quot;,&quot;XGB&quot;),thresholds = thresh,show.thres = FALSE)$roc.vol</code></pre>
 <p><img src="binaryClassification_files/figure-html/unnamed-chunk-32-1.png" width="960" /></p>
 <pre><code>##      Model      Area       p.value binorm.area
 ## 1 Model  1 0.8741200 2.704709e-193          NA
@@ -959,7 +955,7 @@ roc.plot(x=test$DLRSN==&quot;1&quot;,pred=cbind(logit.test.pred,lasso.test.pred,
                                       rpart.test.pred[,2],rf.test.pred,gam.test.pred,nnet.test.pred,
                                       lda.test.pred,gbm.test.prediction,xgb_prediction),legend = T,
          leg.text = c(&quot;Logistic&quot;,&quot;Lasso&quot;,&quot;DecisionTree&quot;,
-                      &quot;RandomForest&quot;,&quot;G. Additive Model&quot;,&quot;NeuralNets&quot;,&quot;LDA&quot;,&quot;GBM&quot;,&quot;XGB&quot;),thresholds = thresh)$roc.vol</code></pre>
+                      &quot;RandomForest&quot;,&quot;G. Additive Model&quot;,&quot;NeuralNets&quot;,&quot;LDA&quot;,&quot;GBM&quot;,&quot;XGB&quot;),thresholds = thresh,show.thres = FALSE)$roc.vol</code></pre>
 <p><img src="binaryClassification_files/figure-html/unnamed-chunk-33-1.png" width="960" /></p>
 <pre><code>##      Model      Area      p.value binorm.area
 ## 1 Model  1 0.8942223 8.180486e-60          NA
@@ -987,8 +983,8 @@ TestAuc&lt;-c(cost2(test$DLRSN,as.numeric(logit.test.pred)),cost2(test$DLRSN,as.
 results&lt;-as.data.frame(cbind(models,TrainAuc,TestAuc))
 results&lt;-results%&gt;%arrange(desc(TestAuc))
 datatable(results)</code></pre>
-<div id="htmlwidget-234236ba1e40b8f511d2" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-234236ba1e40b8f511d2">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9"],["GBM","XGB","RandomForest","Lasso Reg","Additive Model","Neural Net","Logistic Reg","LDA","DecisionTree"],["0.937237457782156","0.957544680551647","0.891079061708415","0.871676224317478","0.898867154517309","0.909379397692091","0.874120021812553","0.864993051646496","0.801807451449479"],["0.911374223602484","0.902905020703934","0.901879528985507","0.897761387163561","0.895775103519669","0.894241718426501","0.894222308488613","0.882569875776398","0.812040631469979"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>models<\/th>\n      <th>TrainAuc<\/th>\n      <th>TestAuc<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-10532a8125032cbe93d0" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-10532a8125032cbe93d0">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9"],["GBM","XGB","RandomForest","Lasso Reg","Additive Model","Neural Net","Logistic Reg","LDA","DecisionTree"],["0.937237457782156","0.957544680551647","0.891079061708415","0.871676224317478","0.898867154517309","0.909379397692091","0.874120021812553","0.864993051646496","0.801807451449479"],["0.911374223602484","0.902905020703934","0.901879528985507","0.897761387163561","0.895775103519669","0.894241718426501","0.894222308488613","0.882569875776398","0.812040631469979"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>models<\/th>\n      <th>TrainAuc<\/th>\n      <th>TestAuc<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}]}},"evals":[],"jsHooks":[]}</script>
 <p>As we can see, GBM has the highest AUC for test data.</p>
 </div>
 <div id="defining-optimum-cutoff-probability-for-minimizing-the-cost-function-" class="section level3">
