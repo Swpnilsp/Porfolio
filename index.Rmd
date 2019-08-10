@@ -50,7 +50,7 @@ pre { /* Code block - determines code spacing between lines */
 
 .column-left{
   float: left;
-  width: 50%;
+  width: 60%;
   text-align: left;
   font-size: 5;
   
@@ -58,39 +58,42 @@ pre { /* Code block - determines code spacing between lines */
 
 .column-right{
   float: right;
-  width: 50%;
+  width: 40%;
   text-align: right;
-  font-size: 3;
+  font-size: 5;
 }
 
 </style>
 
-<div class="row" style="padding-top: 10px;">
-<div class="col-sm-6">
+<div class="column-left">
 
-## **Project Portfolio**
+## **Hello World!**
 
-Hello! I am Swapnil, a Software Engineer turned analytics professional.
+I am Swapnil, a Software Engineer turned analytics professional.
 I have a graduate degree in Business Analytics and I enjoy solving complex
 business problems using data. I love photography and cannot sleep
 without watching at least one episode of **The Office!**
 
+<img src="https://media.giphy.com/media/5wWf7GR2nhgamhRnEuA/giphy.gif" title="It's true! lol" alt="testing" height="100px" width="400px" style="display: block; margin: auto;"/>
+
+
+</div>
+
+<div class="column-right" style="padding-bottom: 20px;>
+
+<img src="images/Swap.png" title="MyImage" alt="testing" width="500px" height="900px" style="display: block; margin: 8px;"/>
 
 ### [Connect with me!](http://www.linkedin.com/in/swapnilsp)
 
 </div>
 
-<div class="column-right">
-
-<img src="images/Swap.png" title="testing" alt="testing" width="300px" height="700px" style="display: block; margin: auto;"/>
-
-</div>
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=TRUE)
 ```
 
 This is a repository of some of the projects I worked on. 
+
 
 # ML Algorithm benchmarking
 
