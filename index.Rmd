@@ -50,7 +50,7 @@ pre { /* Code block - determines code spacing between lines */
 
 .column-left{
   float: left;
-  width: 60%;
+  width: 50%;
   text-align: left;
   font-size: 5;
   
@@ -58,7 +58,7 @@ pre { /* Code block - determines code spacing between lines */
 
 .column-right{
   float: right;
-  width: 40%;
+  width: 50%;
   text-align: right;
   font-size: 5;
 }
@@ -118,6 +118,24 @@ This blog is aimed at comparing top machine learning algorithm performance in so
 ![contnue reading..]
 </a>
 
+# Unsupervised learning
+
+Data Science and Analytics is nowadays widely used in retail industry. With the advent of bid data tools and higher computing power, sophisticated algorithms can crunch huge volumes of transactional data to extract meaningful insights. Companies such as Kroger invest heavily to transform more than a hundred-year-old retail industry through analytics.
+
+This project is an attempt to apply unsupervised learning algorithms on the transactional data to formulate strategies to improve the sales of the products.
+
+<img src="images/aRules.png" title="Association rules" alt="testing" height="400px" width="800px" style="display: block; margin: auto;"/>
+
+**Following steps are discussed:**
+
+
+* **Customer Segmentation**
+* **Deciding optimum number of clustes**
+* **Market Basket Analysis**
+
+<a href="retail.html">
+![contnue reading..]
+</a>
 
 
 # Linear Regression Diagnostics
@@ -125,13 +143,15 @@ This blog is aimed at comparing top machine learning algorithm performance in so
 The purpose of this project is to solve a simple problem using linear regression and understand various feature selection and model selection techniques along the way. In this project we predict the landing distance of the aircrafts based on different details. There have been many major mishaps during the landing of the aircraft, resulting in the loss of many lives.
 
 <div class="column-left">
-<img src="images/ldistance1.png" title="Index influence plot" alt="testing" height="320px" width="430px" style="display: block; margin: auto;"/>
-</div>
-<div class="column-right">
-<img src="images/ldistance2.png" title="Studentized Residuals" alt="testing" height="320px" width="430px" style="display: block; margin: auto;"/>
+<img src="images/ldistance1.png" title="Index influence plot" alt="testing" height="320px" width="420px" style="display: block; margin: auto;"/>
 </div>
 
- **Following major steps are discussed :**
+<div class="column-right">
+<img src="images/ldistance2.png" title="Studentized Residuals" alt="testing" height="320px" width="420px" style="display: block; margin: auto;"/>
+</div>
+
+
+**Following major steps are discussed :**
 
 * **Exploratory Data Analysis**
 * **Model building**

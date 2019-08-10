@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Swapnil" />
+
+
+<title>Unsupervised Machine Learning</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Portfolio</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="About.html">About</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Unsupervised Machine Learning</h1>
+<h4 class="author"><em>Swapnil</em></h4>
+
+</div>
+
+
+<div id="applications-of-unsupervised-machine-learning-algorithms-on-retail-data" class="section level2 tabset">
+<h2>Applications of unsupervised machine learning algorithms on retail data</h2>
+<p>Data Science and Analytics is nowadays widely used in retail industry. With the advent of bid data tools and higher computing power, sophisticated algorithms can crunch huge volumes of transactional data to extract meaningful insights. Companies such as Kroger invest heavily to transform more than a hundred-year-old retail industry through analytics.</p>
+<p>This project is an attempt to apply unsupervised learning algorithms on the transactional data to formulate strategies to improve the sales of the products.</p>
+<p>This project deals with online retail store data taken from UCI Machine Learning Repository2. The data pertains to a UK-based registered online retail store’s transaction between <em>01/12/2010 and 09/12/2011</em>. The retail store mostly sells different gift items to wholesalers around the globe.</p>
+<p>The objective of the project is to apply statistical techniques such as clustering, association rules and collaborative filtering to come up with different business strategies that may lead to an increase in the sales of the products. Microsoft Excel, R Studio and Tableau are the major tools used in this project.</p>
+<div id="variable-dictionary" class="section level3">
+<h3>Variable Dictionary</h3>
+<p>The data contains 541909 observations and 8 columns. Following is the variable dictionary</p>
+<ul>
+<li><strong>InvoiceNo:</strong> Invoice number. Nominal, a 6-digit integral number uniquely assigned to each transaction. If this code starts with letter ‘c’, it indicates a cancellation.</li>
+<li><strong>StockCode:</strong> Product (item) code. Nominal, a 5-digit integral number uniquely assigned to each distinct product.</li>
+<li><strong>Description:</strong> Product (item) name. Nominal.</li>
+<li><strong>Quantity:</strong> The quantities of each product (item) per transaction. Numeric.</li>
+<li><strong>InvoiceDate:</strong> Invoice Date and time. Numeric, the day and time when each transaction was generated.</li>
+<li><strong>UnitPrice:</strong> Unit price. Numeric, Product price per unit in sterling.</li>
+<li><strong>CustomerID:</strong> Customer number. Nominal, a 5-digit integral number uniquely assigned to each customer.</li>
+<li><strong>Country:</strong> Country name. Nominal, the name of the country where each customer resides.</li>
+</ul>
+<pre class="r"><code>head(retail)</code></pre>
+<pre><code>## # A tibble: 6 x 8
+##   InvoiceNo StockCode Description Quantity InvoiceDate         UnitPrice
+##   &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;          &lt;dbl&gt; &lt;dttm&gt;                  &lt;dbl&gt;
+## 1 536365    85123A    WHITE HANG…        6 2010-12-01 08:26:00      2.55
+## 2 536365    71053     WHITE META…        6 2010-12-01 08:26:00      3.39
+## 3 536365    84406B    CREAM CUPI…        8 2010-12-01 08:26:00      2.75
+## 4 536365    84029G    KNITTED UN…        6 2010-12-01 08:26:00      3.39
+## 5 536365    84029E    RED WOOLLY…        6 2010-12-01 08:26:00      3.39
+## 6 536365    22752     SET 7 BABU…        2 2010-12-01 08:26:00      7.65
+## # … with 2 more variables: CustomerID &lt;dbl&gt;, Country &lt;chr&gt;</code></pre>
+</div>
+<div id="eda" class="section level3">
+<h3>EDA</h3>
+<ul>
+<li><strong>Missing values</strong> Description and CustomerID are the variables that have missing values. These are taken care of in the following sections of the project. For instance, missing CustomerID observations are not considered during segmentation.</li>
+</ul>
+<pre class="r"><code>colSums(is.na(retail))</code></pre>
+<pre><code>##   InvoiceNo   StockCode Description    Quantity InvoiceDate   UnitPrice 
+##           0           0        1454           0           0           0 
+##  CustomerID     Country 
+##      135080           0</code></pre>
+<ul>
+<li><strong>Quantity</strong> Quantity variable has extreme values middle 50 percentile values lie between 1 and 10. For imputation, any observations with quantity that is higher than 10000 or lower than -10000 is removed. Please note, negative values of quantity reflect orders that have been cancelled.</li>
+</ul>
+<pre class="r"><code>summary(retail$Quantity)</code></pre>
+<pre><code>##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+## -80995.00      1.00      3.00      9.55     10.00  80995.00</code></pre>
+<pre class="r"><code>plot.ecdf(retail$Quantity)</code></pre>
+<p><img src="retail_files/figure-html/unnamed-chunk-4-1.png" width="960" /></p>
+<ul>
+<li><strong>Unit Price</strong> Similar to Quantity, Unit Price has many outliers. The middle 50 percentile values lie between 1.25 and 4.13.</li>
+</ul>
+<pre class="r"><code># Anything that has quantity greater than 10k and less than -10k should be removed
+retail&lt;-retail%&gt;%
+  filter(Quantity&lt;10000,Quantity&gt;-10000)
+#table(retail$Description)
+
+## Unit Price
+summary(retail$UnitPrice)</code></pre>
+<pre><code>##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+## -11062.06      1.25      2.08      4.61      4.13  38970.00</code></pre>
+<pre class="r"><code>plot.ecdf(retail$UnitPrice)</code></pre>
+<p><img src="retail_files/figure-html/unnamed-chunk-5-1.png" width="960" /></p>
+<p>Upon investigation, it has been found that all the values where the unit price was exceptionally higher are the cancelled orders. These orders are removed from the data.</p>
+<pre class="r"><code>as.data.frame(retail[which(retail$UnitPrice&gt;10000),c(1,2,3,4,6)])</code></pre>
+<pre><code>##    InvoiceNo StockCode     Description Quantity UnitPrice
+## 1    C537630 AMAZONFEE      AMAZON FEE       -1  13541.33
+## 2     537632 AMAZONFEE      AMAZON FEE        1  13541.33
+## 3    C537644 AMAZONFEE      AMAZON FEE       -1  13474.79
+## 4    C537651 AMAZONFEE      AMAZON FEE       -1  13541.33
+## 5    C540117 AMAZONFEE      AMAZON FEE       -1  16888.02
+## 6    C540118 AMAZONFEE      AMAZON FEE       -1  16453.71
+## 7    C556445         M          Manual       -1  38970.00
+## 8    A563185         B Adjust bad debt        1  11062.06
+## 9    C580604 AMAZONFEE      AMAZON FEE       -1  11586.50
+## 10   C580605 AMAZONFEE      AMAZON FEE       -1  17836.46</code></pre>
+<pre class="r"><code>## Removing cancelled orders
+retail&lt;-retail[!startsWith(retail$InvoiceNo,&#39;C&#39;),]</code></pre>
+<ul>
+<li><strong>Date</strong> Making sure there is no missing data for a any period.</li>
+</ul>
+<pre class="r"><code>### Date
+ts&lt;-retail%&gt;%
+  group_by(as.Date(InvoiceDate))%&gt;%
+  summarise(orders=n())
+colnames(ts)&lt;-c(&#39;Day&#39;,&#39;Orders&#39;)
+
+ggplot(data = ts,aes(x = Day,y = Orders))+geom_line()</code></pre>
+<p><img src="retail_files/figure-html/unnamed-chunk-7-1.png" width="960" /></p>
+<pre class="r"><code>ts2&lt;-retail%&gt;%
+  group_by(as.Date(InvoiceDate))%&gt;%
+  summarise(revenue=sum(Quantity*UnitPrice))
+
+colnames(ts2)&lt;-c(&#39;Day&#39;,&#39;Revenue&#39;)
+
+ggplot(data = ts2,aes(x = Day,y = Revenue))+geom_line()</code></pre>
+<p><img src="retail_files/figure-html/unnamed-chunk-7-2.png" width="960" /></p>
+</div>
+<div id="customer-segmentation" class="section level3">
+<h3>Customer Segmentation</h3>
+<p>Customer segmentation is a way of clustering the customers in different groups based on their buying behaviour, demographics, lines of business, location etc. enabling the organization to share relevant communication to each customer segment. Segmentation when coupled with demographic data, also helps organizations define user personas that can be used to explore new geographies, businesses or products to introduce in the market.</p>
+<p><strong>RFM</strong> segmentation is a widely used method that is based on purchase pattern of the customers. RFM stands for Recency, Frequency and Monetary.</p>
+<ul>
+<li><strong>Recency-</strong> How much time has passed since the customer made the last purchase</li>
+<li><strong>Frequency-</strong> What is the frequency of purchase by the customer in a given period</li>
+<li><strong>Monetary-</strong> How much money does a customer spend on average per purchase</li>
+</ul>
+<p>Based on the above metrics, the data is aggregated for every customer. This aggregated data is used for segmentation. Also note that the observations with missing CustomerID values are not considered for segmentation.</p>
+<p>For calculation of Recency, it has been assumed that the segmentation was done in early 2012 and an arbitrary date of 2nd Jan 2012 is assumed to calculate recency. The recency metric will measure how many days have passed since the last order was made until 2nd Jan. Deciding optimum number of clusters is one of the major questions that rise during customer segmentation. For the purpose of deciding optimum number of clusters, following 3 methods are used.</p>
+<pre class="r"><code>aggregated&lt;-retail%&gt;%
+  filter(!is.na(CustomerID))%&gt;%
+  group_by(CustomerID)%&gt;%
+  summarise(frequency=n(),latest=max(InvoiceDate),monetory=mean(UnitPrice*Quantity))
+
+aggregated&lt;-as.data.frame(aggregated)
+head(aggregated)</code></pre>
+<pre><code>##   CustomerID frequency              latest monetory
+## 1      12347       182 2011-12-07 15:52:00 23.68132
+## 2      12348        31 2011-09-25 13:13:00 57.97548
+## 3      12349        73 2011-11-21 09:51:00 24.07603
+## 4      12350        17 2011-02-02 16:01:00 19.67059
+## 5      12352        85 2011-11-03 14:37:00 29.48282
+## 6      12353         4 2011-05-19 17:47:00 22.25000</code></pre>
+<p>we need to express recency in the number of days since the last purchase has been made.</p>
+<pre class="r"><code>#The latest date is 9th Dec 2011. 
+max(aggregated$latest)</code></pre>
+<pre><code>## [1] &quot;2011-12-09 12:50:00 UTC&quot;</code></pre>
+<pre class="r"><code># We can assume that this analysis was done in early 2012 and proceed accordingly.
+today&lt;-as.POSIXct(&quot;2012-01-02 00:00:00 UTC&quot;)
+aggregated&lt;-aggregated%&gt;%
+  mutate(recency=today-latest)
+aggregated$latest&lt;-NULL
+aggregated$recency&lt;-as.numeric(aggregated$recency)
+#head(aggregated)
+summary(aggregated)</code></pre>
+<pre><code>##    CustomerID      frequency          monetory           recency      
+##  Min.   :12347   Min.   :   1.00   Min.   :    1.45   Min.   : 23.80  
+##  1st Qu.:13814   1st Qu.:  17.00   1st Qu.:   12.34   1st Qu.: 40.88  
+##  Median :15300   Median :  41.00   Median :   17.71   Median : 73.89  
+##  Mean   :15301   Mean   :  91.75   Mean   :   37.59   Mean   :115.84  
+##  3rd Qu.:16779   3rd Qu.: 100.00   3rd Qu.:   24.84   3rd Qu.:165.74  
+##  Max.   :18287   Max.   :7847.00   Max.   :13305.50   Max.   :396.92</code></pre>
+<p>There are observations with negative monetory value. These could be because of some errors. We can remove those observations and scale data.</p>
+<pre class="r"><code>aggregated&lt;-aggregated%&gt;%
+  filter(monetory&gt;=0)
+test&lt;-scale(aggregated[,-1])</code></pre>
+<p>For deciding optimum number of clusters, we use following three approaches and decide the best option.</p>
+<p>Silhouette Distance Method, Elbow curve method and Gap Statistic</p>
+<pre class="r"><code># 1. Silhouette method
+fviz_nbclust(test, kmeans, method = &quot;silhouette&quot;)+
+  labs(subtitle = &quot;Silhouette Distance Method&quot;)</code></pre>
+<p><img src="retail_files/figure-html/unnamed-chunk-11-1.png" width="960" /></p>
+<pre class="r"><code># 2. Elbow method
+fviz_nbclust(test, kmeans, method = &quot;wss&quot;) +
+  geom_vline(xintercept = 3, linetype = 2)+
+  labs(subtitle = &quot;Elbow Curve Method&quot;)</code></pre>
+<p><img src="retail_files/figure-html/unnamed-chunk-11-2.png" width="960" /></p>
+<pre class="r"><code># 3. Gap statistic
+set.seed(22334455)
+fviz_nbclust(test, kmeans, nstart = 25,  method = &quot;gap_stat&quot;, nboot =100)+
+  labs(subtitle = &quot;Gap Statistic Method&quot;)</code></pre>
+<p><img src="retail_files/figure-html/unnamed-chunk-11-3.png" width="960" /></p>
+<p>We will create 3 clusters of the data.</p>
+<pre class="r"><code>test&lt;-aggregated
+test$frequency&lt;-scale(test$frequency)
+test$recency&lt;-scale(test$recency)
+test$monetory&lt;-scale(test$monetory)
+#head(test)
+
+km&lt;-kmeans(test[,-1],centers = 3,iter.max = 30)
+test$segment&lt;-km$cluster
+
+## Writing back for dashboard
+aggregated&lt;-sqldf(&#39;select aggregated.*,test.segment from aggregated inner join test
+      on aggregated.CustomerID=test.CustomerID&#39;)
+
+as.data.frame(aggregated%&gt;%
+  group_by(segment)%&gt;%
+  summarise(customers=n(),freq=mean(frequency),rec=mean(recency),money=mean(monetory)))</code></pre>
+<pre><code>##   segment customers       freq       rec      money
+## 1       1      3261  105.79485  64.85538   32.37201
+## 2       2      1071   27.72176 271.33926   41.18455
+## 3       3         5 4646.80000  61.32347 2671.22904</code></pre>
+</div>
+<div id="market-basket-analysis" class="section level3">
+<h3>Market Basket Analysis</h3>
+<p>Market basket analysis is a statistical technique that is used to find association among the products that are sold to come up with baskets of similar products. Following are the major concepts on which market basket analysis is based on.</p>
+<ul>
+<li><strong>1.Support</strong> Support of a product or combination of products is defined as the ratio of number of transactions where the product or combination of products was purchased to the total number of transactions.</li>
+</ul>
+<p><span class="math display">\[support = \frac{Transactions \ in\ which\ product\ was\ purchased }{Total \ Transactions}\]</span></p>
+<ul>
+<li><strong>2.Confidence</strong> Confidence of rule A-&gt;B, where A and B are two different products is defined as the ratio of transactions where both products A and B were purchased to the number of transactions where only product A without product B was purchased.</li>
+</ul>
+<p><span class="math display">\[Confidence = \frac{Support (A,B) }{Support (B)}\]</span></p>
+<ul>
+<li><strong>3.Lift</strong> Lift for any rule A-&gt;B is the ratio of support of A and B to the product of support of A and support of B.</li>
+</ul>
+<p><span class="math display">\[Lift = \frac{Support (A,B) }{Support(A)*Support (B)}\]</span></p>
+<p>For the purpose of this analysis, we have used apriori method from arules8 package in R. Deciding minimum support and confidence values is a strategic decision made based on the number of rules the organization wants to create and the total number of distinct products that are sold. For the purpose of this project, we have used minimum support as 0.02 and minimum confidence of 0.7. Meaning that, for any rule A-&gt;B we define, we will be 70% confident that any customer buying product A will also buy product B.</p>
+<pre class="r"><code>### Association Rules
+test&lt;-retail%&gt;%group_by(InvoiceNo,Description)%&gt;%summarise(Value=1)
+test&lt;-test[!startsWith(test$InvoiceNo,&#39;C&#39;),]
+#head(test)
+test&lt;-test%&gt;%spread(Description,Value,fill = 0)
+test&lt;-as.data.frame(test)
+#head(test)
+#str(test)
+#rowSums(test[,-1])
+#colSums(is.na(test))
+
+### Association Rules
+Mat&lt;-as.matrix(test[-1,-1])
+dim(Mat)</code></pre>
+<pre><code>## [1] 22060  4195</code></pre>
+<pre class="r"><code>class(Mat[2,3])</code></pre>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<pre class="r"><code>## Takes forever to run!!
+#buckets &lt;- eclat (Mat[,-1], parameter = list(supp = 0.0015, minlen = 2)) 
+#inspect(buckets)
+
+
+### 9 rules 0.02 conf=0.7 based on testing done, creating transaction matrix
+s&lt;-as(Mat,&quot;transactions&quot;)
+rules &lt;- apriori(s, parameter = list(supp = 0.02,conf = 0.7))</code></pre>
+<pre><code>## Apriori
+## 
+## Parameter specification:
+##  confidence minval smax arem  aval originalSupport maxtime support minlen
+##         0.7    0.1    1 none FALSE            TRUE       5    0.02      1
+##  maxlen target   ext
+##      10  rules FALSE
+## 
+## Algorithmic control:
+##  filter tree heap memopt load sort verbose
+##     0.1 TRUE TRUE  FALSE TRUE    2    TRUE
+## 
+## Absolute minimum support count: 441 
+## 
+## set item appearances ...[0 item(s)] done [0.00s].
+## set transactions ...[4195 item(s), 22060 transaction(s)] done [0.06s].
+## sorting and recoding items ... [247 item(s)] done [0.01s].
+## creating transaction tree ... done [0.01s].
+## checking subsets of size 1 2 3 done [0.01s].
+## writing ... [9 rule(s)] done [0.00s].
+## creating S4 object  ... done [0.01s].</code></pre>
+<pre class="r"><code>inspect(rules)</code></pre>
+<pre><code>##     lhs                                    rhs                                   support confidence     lift count
+## [1] {PINK REGENCY TEACUP AND SAUCER}    =&gt; {ROSES REGENCY TEACUP AND SAUCER}  0.02715322  0.7819843 16.18253   599
+## [2] {PINK REGENCY TEACUP AND SAUCER}    =&gt; {GREEN REGENCY TEACUP AND SAUCER}  0.02869447  0.8263708 17.96033   633
+## [3] {GARDENERS KNEELING PAD CUP OF TEA} =&gt; {GARDENERS KNEELING PAD KEEP CALM} 0.02475068  0.7203166 17.40436   546
+## [4] {CHARLOTTE BAG PINK POLKADOT}       =&gt; {RED RETROSPOT CHARLOTTE BAG}      0.02366274  0.7025572 14.98879   522
+## [5] {ROSES REGENCY TEACUP AND SAUCER}   =&gt; {GREEN REGENCY TEACUP AND SAUCER}  0.03481414  0.7204503 15.65826   768
+## [6] {GREEN REGENCY TEACUP AND SAUCER}   =&gt; {ROSES REGENCY TEACUP AND SAUCER}  0.03481414  0.7566502 15.65826   768
+## [7] {PINK REGENCY TEACUP AND SAUCER,                                                                              
+##      ROSES REGENCY TEACUP AND SAUCER}   =&gt; {GREEN REGENCY TEACUP AND SAUCER}  0.02456936  0.9048414 19.66581   542
+## [8] {GREEN REGENCY TEACUP AND SAUCER,                                                                             
+##      PINK REGENCY TEACUP AND SAUCER}    =&gt; {ROSES REGENCY TEACUP AND SAUCER}  0.02456936  0.8562401 17.71919   542
+## [9] {GREEN REGENCY TEACUP AND SAUCER,                                                                             
+##      ROSES REGENCY TEACUP AND SAUCER}   =&gt; {PINK REGENCY TEACUP AND SAUCER}   0.02456936  0.7057292 20.32426   542</code></pre>
+<p>Support and confidence of the 9 rules that have been identified are plotted in the below graph. The intensity of the red colour represents the lift of the rule. Higher the lift darker the colour. Minimum lift and support for the rules is a business decision and is dependent on SKU diversity, transaction volume etc. For a retail giant like Walmart or Amazon, lower support rules can also be useful.</p>
+<pre class="r"><code>plot(rules)</code></pre>
+<p><img src="retail_files/figure-html/unnamed-chunk-14-1.png" width="960" /> Below is the visualization of the rules that have been identified. For the purpose of readability, the complete description of the product is shown in the below graph. In the below graph, size and the colour of the circles represent support and lift respectively.</p>
+<pre class="r"><code>plot(rules, method=&quot;graph&quot;)</code></pre>
+<p><img src="retail_files/figure-html/unnamed-chunk-15-1.png" width="960" /></p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
