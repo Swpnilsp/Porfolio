@@ -192,7 +192,7 @@ There has been so much buzz about Crypto Currencies and their long-term validity
 Based on the data available at **[Cryptocurrency Market Capitalizations](https://coinmarketcap.com/)**, top three Crypto Currencies with highest market capitalization were selected for analysis.
 
 <div>
-<img src="images/cryptowordcloud.png" title="Weather" alt="Leaflet" height="800px" width="800" style="display: block; margin: auto;"/>
+<img src="images/cryptowordcloud.png" title="Weather" alt="Weather" height="800px" width="800" style="display: block; margin: auto;"/>
 <div/>
 
 Following three Crypto Currencies were selected-
@@ -201,7 +201,22 @@ Following three Crypto Currencies were selected-
 * **Ripple (XRP)**
 * **Ethereum (ETH)**
 
-<a href="cryptocurrency.html">
+<a href="cyptocurrrency.html">
 ![contnue reading..]
 </a>
+
+# iPhoneX vs Galaxy Note8
+
+This is an old analysis done sometime after both Note8 and iPhoneX were launched. One limitation of Twitter free API is that you cannot extract historical tweets. So the sentiments may not be relevant today but what the heck, data is always good for understanding the process! 
+<div>
+<img src="images/iPhoneVsNote.png" title="iPhoneSentiments" alt="iPhone" height="400px" width="810" style="display: block; margin: 10px;"/>
+<div/>
+
+
+<a href="iPhonexVsNote.html">
+![contnue reading..]
+</a>
+***iphoneX was launched on Sep 12, 2017** and it went on sale sometime on Nov'17. Galaxy Note8 was already out a few months before iPhoneX.
+
+
 
