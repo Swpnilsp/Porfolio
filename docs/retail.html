@@ -70,9 +70,7 @@ h6 {
 </style>
 
 
-</head>
 
-<body>
 
 <style type = "text/css">
 .main-container {
@@ -97,6 +95,9 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
+summary {
+  display: list-item;
+}
 </style>
 
 
@@ -111,7 +112,6 @@ body {
   padding-top: 56px;
   margin-top: -56px;
 }
-
 .section h2 {
   padding-top: 56px;
   margin-top: -56px;
@@ -131,6 +131,43 @@ body {
 .section h6 {
   padding-top: 56px;
   margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
 }
 </style>
 
@@ -152,19 +189,85 @@ $(document).ready(function () {
 });
 </script>
 
-
-<div class="container-fluid main-container">
-
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
 });
 </script>
 
 <!-- code folding -->
 
 
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
 
 
 
@@ -200,7 +303,7 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Unsupervised Machine Learning</h1>
-<h4 class="author"><em>Swapnil</em></h4>
+<h4 class="author">Swapnil</h4>
 
 </div>
 
@@ -211,6 +314,7 @@ $(document).ready(function () {
 <p>This project is an attempt to apply unsupervised learning algorithms on the transactional data to formulate strategies to improve the sales of the products.</p>
 <p>This project deals with online retail store data taken from UCI Machine Learning Repository2. The data pertains to a UK-based registered online retail store’s transaction between <em>01/12/2010 and 09/12/2011</em>. The retail store mostly sells different gift items to wholesalers around the globe.</p>
 <p>The objective of the project is to apply statistical techniques such as clustering, association rules and collaborative filtering to come up with different business strategies that may lead to an increase in the sales of the products. Microsoft Excel, R Studio and Tableau are the major tools used in this project.</p>
+<p><strong><a href="https://github.com/Swpnilsp/Capstone/blob/master/Retail.pdf">Project Report</a></strong></p>
 <div id="variable-dictionary" class="section level3">
 <h3>Variable Dictionary</h3>
 <p>The data contains 541909 observations and 8 columns. Following is the variable dictionary</p>
@@ -445,8 +549,8 @@ rules &lt;- apriori(s, parameter = list(supp = 0.02,conf = 0.7))</code></pre>
 ## Absolute minimum support count: 441 
 ## 
 ## set item appearances ...[0 item(s)] done [0.00s].
-## set transactions ...[4195 item(s), 22060 transaction(s)] done [0.07s].
-## sorting and recoding items ... [247 item(s)] done [0.01s].
+## set transactions ...[4195 item(s), 22060 transaction(s)] done [0.06s].
+## sorting and recoding items ... [247 item(s)] done [0.00s].
 ## creating transaction tree ... done [0.01s].
 ## checking subsets of size 1 2 3 done [0.01s].
 ## writing ... [9 rule(s)] done [0.00s].

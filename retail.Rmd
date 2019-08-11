@@ -19,6 +19,8 @@ This project deals with online retail store data taken from UCI Machine Learning
 The objective of the project is to apply statistical techniques such as clustering, association rules and collaborative filtering to come up with different business strategies that may lead to an increase in the sales of the products.
 Microsoft Excel, R Studio and Tableau are the major tools used in this project.
 
+**[Project Report](https://github.com/Swpnilsp/Capstone/blob/master/Retail.pdf)**
+
 
 ### Variable Dictionary
 
