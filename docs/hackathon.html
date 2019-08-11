@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Swapnil" />
+
+
+<title>Hackathon</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Portfolio</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="About.html">About</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Hackathon</h1>
+<h4 class="author"><em>Swapnil</em></h4>
+
+</div>
+
+
+<div id="hackathon" class="section level2">
+<h2>Hackathon</h2>
+<p>This is a code for an online hackathon to predict likelihood of someone suffering from stroke. Various algorithms are used to get predictions. Since the time was limited, the documentation in this code is sloppy.</p>
+<pre class="r"><code>library(tidyverse)
+library(data.table)
+library(verification)
+library(randomForest)
+library(nnet)
+library(caret)
+library(gbm)
+library(xgboost)
+library(MatrixModels)
+library(Matrix)
+library(MASS)
+library(neuralnet)
+library(&#39;h2o&#39;)
+h2o.init(ip=&#39;localhost&#39;,port=54321,max_mem_size = &#39;2600m&#39;)</code></pre>
+<pre><code>##  Connection successful!
+## 
+## R is connected to the H2O cluster: 
+##     H2O cluster uptime:         9 minutes 35 seconds 
+##     H2O cluster timezone:       America/Los_Angeles 
+##     H2O data parsing timezone:  UTC 
+##     H2O cluster version:        3.26.0.2 
+##     H2O cluster version age:    15 days  
+##     H2O cluster name:           H2O_started_from_R_Swapnil_gmu724 
+##     H2O cluster total nodes:    1 
+##     H2O cluster total memory:   2.25 GB 
+##     H2O cluster total cores:    4 
+##     H2O cluster allowed cores:  4 
+##     H2O cluster healthy:        TRUE 
+##     H2O Connection ip:          localhost 
+##     H2O Connection port:        54321 
+##     H2O Connection proxy:       NA 
+##     H2O Internal Security:      FALSE 
+##     H2O API Extensions:         Amazon S3, XGBoost, Algos, AutoML, Core V3, Core V4 
+##     R Version:                  R version 3.4.3 (2017-11-30)</code></pre>
+<pre class="r"><code>dim(train)</code></pre>
+<pre><code>## [1] 43400    12</code></pre>
+<pre class="r"><code>str(train)</code></pre>
+<pre><code>## Classes &#39;data.table&#39; and &#39;data.frame&#39;:   43400 obs. of  12 variables:
+##  $ id               : int  30669 30468 16523 56543 46136 32257 52800 41413 15266 28674 ...
+##  $ gender           : chr  &quot;Male&quot; &quot;Male&quot; &quot;Female&quot; &quot;Female&quot; ...
+##  $ age              : num  3 58 8 70 14 47 52 75 32 74 ...
+##  $ hypertension     : int  0 1 0 0 0 0 0 0 0 1 ...
+##  $ heart_disease    : int  0 0 0 0 0 0 0 1 0 0 ...
+##  $ ever_married     : chr  &quot;No&quot; &quot;Yes&quot; &quot;No&quot; &quot;Yes&quot; ...
+##  $ work_type        : chr  &quot;children&quot; &quot;Private&quot; &quot;Private&quot; &quot;Private&quot; ...
+##  $ Residence_type   : chr  &quot;Rural&quot; &quot;Urban&quot; &quot;Urban&quot; &quot;Rural&quot; ...
+##  $ avg_glucose_level: num  95.1 88 110.9 69 161.3 ...
+##  $ bmi              : num  18 39.2 17.6 35.9 19.1 50.1 17.7 27 32.3 54.6 ...
+##  $ smoking_status   : chr  &quot;&quot; &quot;never smoked&quot; &quot;&quot; &quot;formerly smoked&quot; ...
+##  $ stroke           : int  0 0 0 0 0 0 0 0 0 0 ...
+##  - attr(*, &quot;.internal.selfref&quot;)=&lt;externalptr&gt;</code></pre>
+<pre class="r"><code>## Formattin##
+train$gender&lt;-as.factor(train$gender)
+train$ever_married&lt;-as.factor(train$ever_married)
+train$work_type&lt;-as.factor(train$work_type)
+train$Residence_type&lt;-as.factor(train$Residence_type)
+#train$smoking_status&lt;-as.factor(train$smoking_status)
+train$hypertension&lt;-as.factor(train$hypertension)
+train$heart_disease&lt;-as.factor(train$heart_disease)
+train$stroke&lt;-as.factor(train$stroke)
+summary(train)</code></pre>
+<pre><code>##        id           gender           age        hypertension heart_disease
+##  Min.   :    1   Female:25665   Min.   : 0.08   0:39339      0:41338      
+##  1st Qu.:18038   Male  :17724   1st Qu.:24.00   1: 4061      1: 2062      
+##  Median :36352   Other :   11   Median :44.00                             
+##  Mean   :36326                  Mean   :42.22                             
+##  3rd Qu.:54514                  3rd Qu.:60.00                             
+##  Max.   :72943                  Max.   :82.00                             
+##                                                                           
+##  ever_married         work_type     Residence_type avg_glucose_level
+##  No :15462    children     : 6156   Rural:21644    Min.   : 55.00   
+##  Yes:27938    Govt_job     : 5440   Urban:21756    1st Qu.: 77.54   
+##               Never_worked :  177                  Median : 91.58   
+##               Private      :24834                  Mean   :104.48   
+##               Self-employed: 6793                  3rd Qu.:112.07   
+##                                                    Max.   :291.05   
+##                                                                     
+##       bmi        smoking_status     stroke   
+##  Min.   :10.10   Length:43400       0:42617  
+##  1st Qu.:23.20   Class :character   1:  783  
+##  Median :27.70   Mode  :character            
+##  Mean   :28.61                               
+##  3rd Qu.:32.90                               
+##  Max.   :97.60                               
+##  NA&#39;s   :1462</code></pre>
+<pre class="r"><code>colSums(is.na(train))</code></pre>
+<pre><code>##                id            gender               age      hypertension 
+##                 0                 0                 0                 0 
+##     heart_disease      ever_married         work_type    Residence_type 
+##                 0                 0                 0                 0 
+## avg_glucose_level               bmi    smoking_status            stroke 
+##                 0              1462                 0                 0</code></pre>
+<pre class="r"><code>## Test##
+str(test)</code></pre>
+<pre><code>## Classes &#39;data.table&#39; and &#39;data.frame&#39;:   18601 obs. of  11 variables:
+##  $ id               : int  36306 61829 14152 12997 40801 9348 51550 60512 31309 39199 ...
+##  $ gender           : chr  &quot;Male&quot; &quot;Female&quot; &quot;Female&quot; &quot;Male&quot; ...
+##  $ age              : num  80 74 14 28 63 66 49 46 75 75 ...
+##  $ hypertension     : int  0 0 0 0 0 1 0 0 0 0 ...
+##  $ heart_disease    : int  0 1 0 0 0 0 0 0 0 0 ...
+##  $ ever_married     : chr  &quot;Yes&quot; &quot;Yes&quot; &quot;No&quot; &quot;No&quot; ...
+##  $ work_type        : chr  &quot;Private&quot; &quot;Self-employed&quot; &quot;children&quot; &quot;Private&quot; ...
+##  $ Residence_type   : chr  &quot;Urban&quot; &quot;Rural&quot; &quot;Rural&quot; &quot;Urban&quot; ...
+##  $ avg_glucose_level: num  83.8 179.5 95.2 94.8 83.6 ...
+##  $ bmi              : num  21.1 26 21.2 23.4 27.6 32.2 25.1 32.5 28 25.7 ...
+##  $ smoking_status   : chr  &quot;formerly smoked&quot; &quot;formerly smoked&quot; &quot;&quot; &quot;&quot; ...
+##  - attr(*, &quot;.internal.selfref&quot;)=&lt;externalptr&gt;</code></pre>
+<pre class="r"><code>test$gender&lt;-as.factor(test$gender)
+test$ever_married&lt;-as.factor(test$ever_married)
+test$work_type&lt;-as.factor(test$work_type)
+test$Residence_type&lt;-as.factor(test$Residence_type)
+#train$smoking_status&lt;-as.factor(train$smoking_status)
+test$hypertension&lt;-as.factor(test$hypertension)
+test$heart_disease&lt;-as.factor(test$heart_disease)
+
+summary(test)</code></pre>
+<pre><code>##        id           gender           age        hypertension heart_disease
+##  Min.   :    2   Female:10957   Min.   : 0.08   0:16868      0:17707      
+##  1st Qu.:18542   Male  : 7642   1st Qu.:24.00   1: 1733      1:  894      
+##  Median :36717   Other :    2   Median :43.00                             
+##  Mean   :36747                  Mean   :42.06                             
+##  3rd Qu.:55114                  3rd Qu.:60.00                             
+##  Max.   :72942                  Max.   :82.00                             
+##                                                                           
+##  ever_married         work_type     Residence_type avg_glucose_level
+##  No : 6662    children     : 2613   Rural:9291     Min.   : 55.00   
+##  Yes:11939    Govt_job     : 2302   Urban:9310     1st Qu.: 77.55   
+##               Never_worked :   75                  Median : 91.83   
+##               Private      :10750                  Mean   :104.39   
+##               Self-employed: 2861                  3rd Qu.:112.31   
+##                                                    Max.   :275.72   
+##                                                                     
+##       bmi        smoking_status    
+##  Min.   :10.20   Length:18601      
+##  1st Qu.:23.30   Class :character  
+##  Median :27.70   Mode  :character  
+##  Mean   :28.55                     
+##  3rd Qu.:32.80                     
+##  Max.   :88.30                     
+##  NA&#39;s   :591</code></pre>
+<pre class="r"><code>colSums(is.na(test))</code></pre>
+<pre><code>##                id            gender               age      hypertension 
+##                 0                 0                 0                 0 
+##     heart_disease      ever_married         work_type    Residence_type 
+##                 0                 0                 0                 0 
+## avg_glucose_level               bmi    smoking_status 
+##                 0               591                 0</code></pre>
+<pre class="r"><code>testBmi&lt;-test%&gt;%filter(!is.na(bmi))%&gt;%
+  group_by(work_type)%&gt;%
+  summarise(med=median(bmi))
+testBmi</code></pre>
+<pre><code>## # A tibble: 5 x 2
+##   work_type       med
+##   &lt;fct&gt;         &lt;dbl&gt;
+## 1 children       18.7
+## 2 Govt_job       29.5
+## 3 Never_worked   24.4
+## 4 Private        28.7
+## 5 Self-employed  29.2</code></pre>
+<pre class="r"><code>bmiCommplete&lt;-test[!is.na(test$bmi),c(7,10)]
+test$bmi[is.na(test$bmi) &amp; test$work_type==&#39;children&#39;] &lt;- 18.7
+test$bmi[is.na(test$bmi) &amp; test$work_type==&#39;Govt_job&#39;] &lt;- 29.50
+test$bmi[is.na(test$bmi) &amp; test$work_type==&#39;Never_worked&#39;] &lt;- 24.40
+test$bmi[is.na(test$bmi) &amp; test$work_type==&#39;Private&#39;] &lt;- 28.70
+test$bmi[is.na(test$bmi) &amp; test$work_type==&#39;Self-employed&#39;] &lt;- 29.20
+summary(test)</code></pre>
+<pre><code>##        id           gender           age        hypertension heart_disease
+##  Min.   :    2   Female:10957   Min.   : 0.08   0:16868      0:17707      
+##  1st Qu.:18542   Male  : 7642   1st Qu.:24.00   1: 1733      1:  894      
+##  Median :36717   Other :    2   Median :43.00                             
+##  Mean   :36747                  Mean   :42.06                             
+##  3rd Qu.:55114                  3rd Qu.:60.00                             
+##  Max.   :72942                  Max.   :82.00                             
+##  ever_married         work_type     Residence_type avg_glucose_level
+##  No : 6662    children     : 2613   Rural:9291     Min.   : 55.00   
+##  Yes:11939    Govt_job     : 2302   Urban:9310     1st Qu.: 77.55   
+##               Never_worked :   75                  Median : 91.83   
+##               Private      :10750                  Mean   :104.39   
+##               Self-employed: 2861                  3rd Qu.:112.31   
+##                                                    Max.   :275.72   
+##       bmi        smoking_status    
+##  Min.   :10.20   Length:18601      
+##  1st Qu.:23.40   Class :character  
+##  Median :28.00   Mode  :character  
+##  Mean   :28.54                     
+##  3rd Qu.:32.60                     
+##  Max.   :88.30</code></pre>
+<pre class="r"><code>plot.ecdf(train$bmi)</code></pre>
+<p><img src="hackathon_files/figure-html/unnamed-chunk-3-1.png" width="960" /></p>
+<pre class="r"><code>plot.ecdf(train$avg_glucose_level)</code></pre>
+<p><img src="hackathon_files/figure-html/unnamed-chunk-3-2.png" width="960" /></p>
+<pre class="r"><code>plot.ecdf(train$age)</code></pre>
+<p><img src="hackathon_files/figure-html/unnamed-chunk-3-3.png" width="960" /></p>
+<pre class="r"><code>summary(train$bmi)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##   10.10   23.20   27.70   28.61   32.90   97.60    1462</code></pre>
+<pre class="r"><code>quantile(train$bm, 0.95,na.rm = T)</code></pre>
+<pre><code>##  95% 
+## 42.6</code></pre>
+<pre class="r"><code>quantile(train$avg_glucose_level, 0.95)</code></pre>
+<pre><code>##      95% 
+## 212.0415</code></pre>
+<pre class="r"><code>length(train$bmi[train$bmi&gt;60])</code></pre>
+<pre><code>## [1] 1551</code></pre>
+<pre class="r"><code>summary(train$avg_glucose_level)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   55.00   77.54   91.58  104.48  112.07  291.05</code></pre>
+<pre class="r"><code>ggplot(data = train,aes(x = stroke,y = bmi))+geom_boxplot()</code></pre>
+<p><img src="hackathon_files/figure-html/unnamed-chunk-3-4.png" width="960" /></p>
+<pre class="r"><code>## Smoking
+test$smoking_status[test$smoking_status==&#39;&#39;] &lt;- &#39;Unknown&#39;
+test$smoking_status&lt;-as.factor(test$smoking_status)
+summary(test)</code></pre>
+<pre><code>##        id           gender           age        hypertension heart_disease
+##  Min.   :    2   Female:10957   Min.   : 0.08   0:16868      0:17707      
+##  1st Qu.:18542   Male  : 7642   1st Qu.:24.00   1: 1733      1:  894      
+##  Median :36717   Other :    2   Median :43.00                             
+##  Mean   :36747                  Mean   :42.06                             
+##  3rd Qu.:55114                  3rd Qu.:60.00                             
+##  Max.   :72942                  Max.   :82.00                             
+##  ever_married         work_type     Residence_type avg_glucose_level
+##  No : 6662    children     : 2613   Rural:9291     Min.   : 55.00   
+##  Yes:11939    Govt_job     : 2302   Urban:9310     1st Qu.: 77.55   
+##               Never_worked :   75                  Median : 91.83   
+##               Private      :10750                  Mean   :104.39   
+##               Self-employed: 2861                  3rd Qu.:112.31   
+##                                                    Max.   :275.72   
+##       bmi                smoking_status
+##  Min.   :10.20   formerly smoked:3260  
+##  1st Qu.:23.40   never smoked   :6833  
+##  Median :28.00   smokes         :2757  
+##  Mean   :28.54   Unknown        :5751  
+##  3rd Qu.:32.60                         
+##  Max.   :88.30</code></pre>
+<pre class="r"><code>## BMI ##
+
+medianBmi&lt;-train%&gt;%filter(!is.na(bmi))%&gt;%
+  group_by(work_type)%&gt;%
+  summarise(med=median(bmi))
+
+bmiCommplete&lt;-train[!is.na(train$bmi),c(7,10)]
+train$bmi[is.na(train$bmi) &amp; train$work_type==&#39;children&#39;] &lt;- 18.80
+train$bmi[is.na(train$bmi) &amp; train$work_type==&#39;Govt_job&#39;] &lt;- 29.50
+train$bmi[is.na(train$bmi) &amp; train$work_type==&#39;Never_worked&#39;] &lt;- 24.20
+train$bmi[is.na(train$bmi) &amp; train$work_type==&#39;Private&#39;] &lt;- 28.75
+train$bmi[is.na(train$bmi) &amp; train$work_type==&#39;Self-employed&#39;] &lt;- 29.20
+
+summary(train)</code></pre>
+<pre><code>##        id           gender           age        hypertension heart_disease
+##  Min.   :    1   Female:25665   Min.   : 0.08   0:39339      0:41338      
+##  1st Qu.:18038   Male  :17724   1st Qu.:24.00   1: 4061      1: 2062      
+##  Median :36352   Other :   11   Median :44.00                             
+##  Mean   :36326                  Mean   :42.22                             
+##  3rd Qu.:54514                  3rd Qu.:60.00                             
+##  Max.   :72943                  Max.   :82.00                             
+##  ever_married         work_type     Residence_type avg_glucose_level
+##  No :15462    children     : 6156   Rural:21644    Min.   : 55.00   
+##  Yes:27938    Govt_job     : 5440   Urban:21756    1st Qu.: 77.54   
+##               Never_worked :  177                  Median : 91.58   
+##               Private      :24834                  Mean   :104.48   
+##               Self-employed: 6793                  3rd Qu.:112.07   
+##                                                    Max.   :291.05   
+##       bmi        smoking_status     stroke   
+##  Min.   :10.10   Length:43400       0:42617  
+##  1st Qu.:23.40   Class :character   1:  783  
+##  Median :28.00   Mode  :character            
+##  Mean   :28.59                               
+##  3rd Qu.:32.60                               
+##  Max.   :97.60</code></pre>
+<pre class="r"><code>## Smoking
+table(train$smoking_status,train$work_type)</code></pre>
+<pre><code>##                  
+##                   children Govt_job Never_worked Private Self-employed
+##                       5525     1094           76    5249          1348
+##   formerly smoked      104     1091            9    4629          1660
+##   never smoked         518     2291           85   10452          2707
+##   smokes                 9      964            7    4504          1078</code></pre>
+<pre class="r"><code>table(train$heart_disease,train$smoking_status)</code></pre>
+<pre><code>##    
+##           formerly smoked never smoked smokes
+##   0 12908            6846        15449   6135
+##   1   384             647          604    427</code></pre>
+<pre class="r"><code>train$smoking_status[train$smoking_status==&#39;&#39;] &lt;- &#39;Unknown&#39;
+train$smoking_status&lt;-as.factor(train$smoking_status)
+
+summary(train)</code></pre>
+<pre><code>##        id           gender           age        hypertension heart_disease
+##  Min.   :    1   Female:25665   Min.   : 0.08   0:39339      0:41338      
+##  1st Qu.:18038   Male  :17724   1st Qu.:24.00   1: 4061      1: 2062      
+##  Median :36352   Other :   11   Median :44.00                             
+##  Mean   :36326                  Mean   :42.22                             
+##  3rd Qu.:54514                  3rd Qu.:60.00                             
+##  Max.   :72943                  Max.   :82.00                             
+##  ever_married         work_type     Residence_type avg_glucose_level
+##  No :15462    children     : 6156   Rural:21644    Min.   : 55.00   
+##  Yes:27938    Govt_job     : 5440   Urban:21756    1st Qu.: 77.54   
+##               Never_worked :  177                  Median : 91.58   
+##               Private      :24834                  Mean   :104.48   
+##               Self-employed: 6793                  3rd Qu.:112.07   
+##                                                    Max.   :291.05   
+##       bmi                smoking_status  stroke   
+##  Min.   :10.10   formerly smoked: 7493   0:42617  
+##  1st Qu.:23.40   never smoked   :16053   1:  783  
+##  Median :28.00   smokes         : 6562            
+##  Mean   :28.59   Unknown        :13292            
+##  3rd Qu.:32.60                                    
+##  Max.   :97.60</code></pre>
+<pre class="r"><code>## Write##
+write.csv(train,&#39;trainclean.csv&#39;)
+#write.csv(test,&#39;test.csv&#39;)
+
+### Logistic ##
+logtrain&lt;-train
+logtrain$bmi&lt;-log(logtrain$bmi)
+logModel &lt;- glm(data = logtrain[,-1],stroke~.-ever_married,family=binomial(link=&quot;logit&quot;))
+summary(logModel)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = stroke ~ . - ever_married, family = binomial(link = &quot;logit&quot;), 
+##     data = logtrain[, -1])
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -0.8054  -0.1972  -0.1045  -0.0514   4.1376  
+## 
+## Coefficients:
+##                              Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)                -8.386e+00  9.102e-01  -9.213  &lt; 2e-16 ***
+## genderMale                  7.716e-02  7.608e-02   1.014 0.310445    
+## genderOther                -1.111e+01  6.930e+02  -0.016 0.987206    
+## age                         7.024e-02  3.134e-03  22.411  &lt; 2e-16 ***
+## hypertension1               3.088e-01  8.766e-02   3.523 0.000427 ***
+## heart_disease1              6.185e-01  9.429e-02   6.560 5.38e-11 ***
+## work_typeGovt_job           2.949e-01  7.449e-01   0.396 0.692222    
+## work_typeNever_worked      -9.477e+00  1.712e+02  -0.055 0.955861    
+## work_typePrivate            4.054e-01  7.399e-01   0.548 0.583764    
+## work_typeSelf-employed      3.692e-01  7.453e-01   0.495 0.620363    
+## Residence_typeUrban         2.687e-02  7.392e-02   0.364 0.716210    
+## avg_glucose_level           3.675e-03  6.571e-04   5.592 2.24e-08 ***
+## bmi                        -1.837e-01  1.888e-01  -0.973 0.330634    
+## smoking_statusnever smoked -4.508e-02  9.434e-02  -0.478 0.632752    
+## smoking_statussmokes        1.935e-01  1.154e-01   1.677 0.093613 .  
+## smoking_statusUnknown      -1.276e-02  1.116e-01  -0.114 0.908967    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 7839.4  on 43399  degrees of freedom
+## Residual deviance: 6446.7  on 43384  degrees of freedom
+## AIC: 6478.7
+## 
+## Number of Fisher Scoring iterations: 15</code></pre>
+<pre class="r"><code>logPredict&lt;-predict(logModel,type = &#39;response&#39;)
+summary(logPredict)</code></pre>
+<pre><code>##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+## 0.000000 0.001473 0.005992 0.018041 0.020766 0.319165</code></pre>
+<pre class="r"><code>roc.plot(x = logtrain$stroke==&#39;1&#39;,pred =logPredict,thresholds = seq(0,1,0.001))$roc.vol</code></pre>
+<p><img src="hackathon_files/figure-html/unnamed-chunk-3-5.png" width="960" /></p>
+<pre><code>##      Model      Area       p.value binorm.area
+## 1 Model  1 0.8523632 2.098851e-251          NA</code></pre>
+<pre class="r"><code>probitModel &lt;- glm(data = train[,-1],stroke~.,family=binomial(link=&quot;probit&quot;))
+summary(probitModel)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = stroke ~ ., family = binomial(link = &quot;probit&quot;), 
+##     data = train[, -1])
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -0.7420  -0.2026  -0.0996  -0.0418   4.2078  
+## 
+## Coefficients:
+##                              Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)                -3.722e+00  2.077e-01 -17.921  &lt; 2e-16 ***
+## genderMale                  3.439e-02  3.369e-02   1.021 0.307386    
+## genderOther                -2.831e+00  1.730e+02  -0.016 0.986947    
+## age                         2.917e-02  1.310e-03  22.266  &lt; 2e-16 ***
+## hypertension1               1.500e-01  4.081e-02   3.676 0.000237 ***
+## heart_disease1              3.070e-01  4.616e-02   6.650 2.93e-11 ***
+## ever_marriedYes            -5.622e-02  5.459e-02  -1.030 0.303008    
+## work_typeGovt_job          -1.727e-01  2.158e-01  -0.801 0.423333    
+## work_typeNever_worked      -2.735e+00  4.201e+01  -0.065 0.948089    
+## work_typePrivate           -1.136e-01  2.120e-01  -0.536 0.592078    
+## work_typeSelf-employed     -1.214e-01  2.158e-01  -0.563 0.573589    
+## Residence_typeUrban         2.047e-02  3.277e-02   0.625 0.532140    
+## avg_glucose_level           1.697e-03  3.034e-04   5.591 2.25e-08 ***
+## bmi                        -4.041e-03  2.639e-03  -1.531 0.125744    
+## smoking_statusnever smoked -2.978e-02  4.230e-02  -0.704 0.481367    
+## smoking_statussmokes        7.644e-02  5.129e-02   1.491 0.136084    
+## smoking_statusUnknown      -8.582e-03  4.976e-02  -0.172 0.863061    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 7839.4  on 43399  degrees of freedom
+## Residual deviance: 6430.6  on 43383  degrees of freedom
+## AIC: 6464.6
+## 
+## Number of Fisher Scoring iterations: 15</code></pre>
+<pre class="r"><code>probitPredict&lt;-predict(probitModel,type = &#39;response&#39;)
+summary(probitPredict)</code></pre>
+<pre><code>##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+## 0.0000000 0.0009931 0.0055093 0.0180496 0.0219777 0.2648691</code></pre>
+<pre class="r"><code>roc.plot(x = train$stroke==&#39;1&#39;,pred =probitPredict,thresholds = seq(0,1,0.001))$roc.vol</code></pre>
+<p><img src="hackathon_files/figure-html/unnamed-chunk-3-6.png" width="960" /></p>
+<pre><code>##      Model      Area       p.value binorm.area
+## 1 Model  1 0.8530403 2.312941e-252          NA</code></pre>
+<pre class="r"><code>probitModel &lt;- glm(data = train[,-1],stroke~.,family=binomial(link=&quot;cloglog&quot;))
+summary(probitModel)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = stroke ~ ., family = binomial(link = &quot;cloglog&quot;), 
+##     data = train[, -1])
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -0.8276  -0.1961  -0.1054  -0.0539   4.1346  
+## 
+## Coefficients:
+##                              Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)                -8.751e+00  7.285e-01 -12.013  &lt; 2e-16 ***
+## genderMale                  7.399e-02  7.368e-02   1.004 0.315318    
+## genderOther                -1.105e+01  6.642e+02  -0.017 0.986729    
+## age                         6.896e-02  3.069e-03  22.472  &lt; 2e-16 ***
+## hypertension1               2.952e-01  8.431e-02   3.501 0.000464 ***
+## heart_disease1              5.833e-01  8.987e-02   6.491 8.55e-11 ***
+## ever_marriedYes            -7.612e-02  1.204e-01  -0.632 0.527369    
+## work_typeGovt_job           4.309e-01  7.463e-01   0.577 0.563649    
+## work_typeNever_worked      -9.343e+00  1.653e+02  -0.057 0.954919    
+## work_typePrivate            5.352e-01  7.412e-01   0.722 0.470274    
+## work_typeSelf-employed      4.937e-01  7.460e-01   0.662 0.508085    
+## Residence_typeUrban         2.324e-02  7.160e-02   0.325 0.745508    
+## avg_glucose_level           3.589e-03  6.332e-04   5.669 1.44e-08 ***
+## bmi                        -8.027e-03  5.980e-03  -1.342 0.179515    
+## smoking_statusnever smoked -4.069e-02  9.131e-02  -0.446 0.655859    
+## smoking_statussmokes        1.897e-01  1.116e-01   1.700 0.089174 .  
+## smoking_statusUnknown      -1.198e-02  1.082e-01  -0.111 0.911810    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 7839.4  on 43399  degrees of freedom
+## Residual deviance: 6448.2  on 43383  degrees of freedom
+## AIC: 6482.2
+## 
+## Number of Fisher Scoring iterations: 15</code></pre>
+<pre class="r"><code>probitPredict&lt;-predict(probitModel,type = &#39;response&#39;)
+summary(probitPredict)</code></pre>
+<pre><code>##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+## 0.000000 0.001605 0.006060 0.018008 0.020605 0.343364</code></pre>
+<pre class="r"><code>roc.plot(x = train$stroke==&#39;1&#39;,pred =probitPredict,thresholds = seq(0,1,0.001))$roc.vol</code></pre>
+<p><img src="hackathon_files/figure-html/unnamed-chunk-3-7.png" width="960" /></p>
+<pre><code>##      Model      Area       p.value binorm.area
+## 1 Model  1 0.8524762 1.452702e-251          NA</code></pre>
+<pre class="r"><code>## test prediction
+log.test.pred&lt;-predict(logModel,test[,-1],type=&#39;response&#39;)
+summary(log.test.pred)</code></pre>
+<pre><code>##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+## 0.000e+00 1.651e-05 4.546e-05 2.380e-04 1.761e-04 1.532e-02</code></pre>
+<pre class="r"><code>submission&lt;-cbind(test$id,log.test.pred)
+#write.csv(as.data.frame(submission),&#39;SwapnilSub.csv&#39;)
+###RandomForest
+logtrain&lt;-train
+logtrain$a&lt;-logtrain$bmi*logtrain$avg_glucose_level
+logtrain$b&lt;-logtrain$bmi/logtrain$avg_glucose_level
+logtrain$c&lt;-logtrain$bmi*logtrain$age
+logtrain$d&lt;-logtrain$avg_glucose_level*logtrain$age
+rfmodel&lt;-randomForest(data=logtrain[,-1],stroke~.,ntree=100)
+summary(rfmodel)</code></pre>
+<pre><code>##                 Length Class  Mode     
+## call                4  -none- call     
+## type                1  -none- character
+## predicted       43400  factor numeric  
+## err.rate          300  -none- numeric  
+## confusion           6  -none- numeric  
+## votes           86800  matrix numeric  
+## oob.times       43400  -none- numeric  
+## classes             2  -none- character
+## importance         14  -none- numeric  
+## importanceSD        0  -none- NULL     
+## localImportance     0  -none- NULL     
+## proximity           0  -none- NULL     
+## ntree               1  -none- numeric  
+## mtry                1  -none- numeric  
+## forest             14  -none- list     
+## y               43400  factor numeric  
+## test                0  -none- NULL     
+## inbag               0  -none- NULL     
+## terms               3  terms  call</code></pre>
+<pre class="r"><code>predicted.rf&lt;-predict(rfmodel,type = &#39;prob&#39;)
+roc.plot(x = logtrain$stroke == &quot;1&quot;, pred = predicted.rf[,2],thresholds = seq(0,1,0.001))$roc.vol</code></pre>
+<p><img src="hackathon_files/figure-html/unnamed-chunk-3-8.png" width="960" /></p>
+<pre><code>##      Model     Area       p.value binorm.area
+## 1 Model  1 0.751206 3.511642e-204          NA</code></pre>
+<pre class="r"><code>varImpPlot(rfmodel)</code></pre>
+<p><img src="hackathon_files/figure-html/unnamed-chunk-3-9.png" width="960" /></p>
+<pre class="r"><code>## Neural network
+nntrain&lt;-train
+nntrain$work_type&lt;-as.character(nntrain$work_type)
+nntrain$smoking_status&lt;-as.character(nntrain$smoking_status)
+nntrain$work_type[nntrain$work_type==&#39;Self-employed&#39;]&lt;-&#39;self_employed&#39;
+nntrain$smoking_status[nntrain$smoking_status==&#39;formerly smoked&#39;]&lt;-&#39;formerly_smoked&#39;
+nntrain$smoking_status[nntrain$smoking_status==&#39;never smoked&#39;]&lt;-&#39;never_smoked&#39;
+nntrain$work_type&lt;-as.factor(nntrain$work_type)
+nntrain$smoking_status&lt;-as.factor(nntrain$smoking_status)
+nntrain$age&lt;-scale(nntrain$age)
+nntrain$bmi&lt;-scale(nntrain$bmi)
+nntrain$avg_glucose_level&lt;-scale(nntrain$avg_glucose_level)
+summary(nntrain)</code></pre>
+<pre><code>##        id           gender           age           hypertension
+##  Min.   :    1   Female:25665   Min.   :-1.87116   0:39339     
+##  1st Qu.:18038   Male  :17724   1st Qu.:-0.80898   1: 4061     
+##  Median :36352   Other :   11   Median : 0.07914               
+##  Mean   :36326                  Mean   : 0.00000               
+##  3rd Qu.:54514                  3rd Qu.: 0.78963               
+##  Max.   :72943                  Max.   : 1.76655               
+##  heart_disease ever_married         work_type     Residence_type
+##  0:41338       No :15462    children     : 6156   Rural:21644   
+##  1: 2062       Yes:27938    Govt_job     : 5440   Urban:21756   
+##                             Never_worked :  177                 
+##                             Private      :24834                 
+##                             self_employed: 6793                 
+##                                                                 
+##  avg_glucose_level      bmi                   smoking_status  stroke   
+##  Min.   :-1.1478   Min.   :-2.41683   formerly_smoked: 7493   0:42617  
+##  1st Qu.:-0.6250   1st Qu.:-0.67881   never_smoked   :16053   1:  783  
+##  Median :-0.2993   Median :-0.07769   smokes         : 6562            
+##  Mean   : 0.0000   Mean   : 0.00000   Unknown        :13292            
+##  3rd Qu.: 0.1760   3rd Qu.: 0.52343                                    
+##  Max.   : 4.3275   Max.   : 9.01751</code></pre>
+<pre class="r"><code>nntrain_mat&lt;-model.matrix(data = nntrain[,-1],stroke~.-1)
+head(nntrain_mat)</code></pre>
+<pre><code>##   genderFemale genderMale genderOther        age hypertension1
+## 1            0          1           0 -1.7414967             0
+## 2            0          1           0  0.7008149             1
+## 3            1          0           0 -1.5194684             0
+## 4            1          0           0  1.2336829             0
+## 5            0          1           0 -1.2530344             0
+## 6            1          0           0  0.2123526             0
+##   heart_disease1 ever_marriedYes work_typeGovt_job work_typeNever_worked
+## 1              0               0                 0                     0
+## 2              0               1                 0                     0
+## 3              0               0                 0                     0
+## 4              0               1                 0                     0
+## 5              0               0                 0                     1
+## 6              0               1                 0                     0
+##   work_typePrivate work_typeself_employed Residence_typeUrban
+## 1                0                      0                   0
+## 2                1                      0                   1
+## 3                1                      0                   1
+## 4                1                      0                   0
+## 5                0                      0                   0
+## 6                1                      0                   1
+##   avg_glucose_level        bmi smoking_statusnever_smoked
+## 1        -0.2171740 -1.3844702                          0
+## 2        -0.3832540  1.3859071                          1
+## 3         0.1486196 -1.4367415                          0
+## 4        -0.8221134  0.9546691                          0
+## 5         1.3174424 -1.2407242                          0
+## 6         2.4695645  2.8102992                          0
+##   smoking_statussmokes smoking_statusUnknown
+## 1                    0                     1
+## 2                    0                     0
+## 3                    0                     1
+## 4                    0                     0
+## 5                    0                     1
+## 6                    0                     1</code></pre>
+<pre class="r"><code>stroke&lt;-as.numeric(nntrain$stroke)-1
+nntrain_mat&lt;-cbind(nntrain_mat,stroke)
+head(nntrain_mat)</code></pre>
+<pre><code>##   genderFemale genderMale genderOther        age hypertension1
+## 1            0          1           0 -1.7414967             0
+## 2            0          1           0  0.7008149             1
+## 3            1          0           0 -1.5194684             0
+## 4            1          0           0  1.2336829             0
+## 5            0          1           0 -1.2530344             0
+## 6            1          0           0  0.2123526             0
+##   heart_disease1 ever_marriedYes work_typeGovt_job work_typeNever_worked
+## 1              0               0                 0                     0
+## 2              0               1                 0                     0
+## 3              0               0                 0                     0
+## 4              0               1                 0                     0
+## 5              0               0                 0                     1
+## 6              0               1                 0                     0
+##   work_typePrivate work_typeself_employed Residence_typeUrban
+## 1                0                      0                   0
+## 2                1                      0                   1
+## 3                1                      0                   1
+## 4                1                      0                   0
+## 5                0                      0                   0
+## 6                1                      0                   1
+##   avg_glucose_level        bmi smoking_statusnever_smoked
+## 1        -0.2171740 -1.3844702                          0
+## 2        -0.3832540  1.3859071                          1
+## 3         0.1486196 -1.4367415                          0
+## 4        -0.8221134  0.9546691                          0
+## 5         1.3174424 -1.2407242                          0
+## 6         2.4695645  2.8102992                          0
+##   smoking_statussmokes smoking_statusUnknown stroke
+## 1                    0                     1      0
+## 2                    0                     0      0
+## 3                    0                     1      0
+## 4                    0                     0      0
+## 5                    0                     1      0
+## 6                    0                     1      0</code></pre>
+<pre class="r"><code>#nntrain_dMatrix&lt;-as.matrix(data = nntrain_mat,label=train_label)
+a&lt;-paste(colnames(nntrain_mat[,-18]),collapse=&quot; + &quot;)
+b&lt;-paste(&#39;stroke&#39;,a,sep=&#39;~&#39;)
+f&lt;-as.formula(b)
+
+nnet.full&lt;-neuralnet(f,data=nntrain_mat,hidden=c(1,1),linear.output=F)
+plot(nnet.full)
+
+nnet.pred&lt;-nnet.full$net.result
+nnet.pred&lt;-as.numeric(nnet.pred[[1]])
+roc.plot(x = train$stroke == &quot;1&quot;, pred = nnet.pred,thresholds = seq(0,1,0.001))$roc.vol</code></pre>
+<pre><code>##      Model         Area          p.value binorm.area
+## 1 Model  1 0.8521605205 4.057303567e-251          NA</code></pre>
+<pre class="r"><code>### GBM boosting
+gbm.model&lt;-gbm(data=train[,-1],as.character(stroke)~.,distribution = &quot;bernoulli&quot;,n.trees = 1000,
+     interaction.depth = 8)
+gbm.model.pred&lt;-predict(gbm.model,newdata = train[,-1],n.trees = 1000,type = &#39;response&#39;)
+summary(gbm.model.pred)</code></pre>
+<pre><code>##        Min.     1st Qu.      Median        Mean     3rd Qu.        Max. 
+## 0.009061867 0.009061867 0.010256984 0.018009278 0.016631662 0.233936250</code></pre>
+<pre class="r"><code>roc.plot(x = train$stroke == &quot;1&quot;, pred = gbm.model.pred,thresholds = seq(0,1,0.001))$roc.vol</code></pre>
+<pre><code>##      Model         Area          p.value binorm.area
+## 1 Model  1 0.8624224661 2.349628625e-280          NA</code></pre>
+<pre class="r"><code>## XGB boosting
+set.seed(22334455)
+logtrain&lt;-train
+logtrain$bmi[logtrain$bmi&gt;42.5 &amp; logtrain$work_type==&#39;children&#39;] &lt;- 18.80
+logtrain$bmi[logtrain$bmi&gt;42.5 &amp; logtrain$work_type==&#39;Govt_job&#39;] &lt;- 29.50
+logtrain$bmi[logtrain$bmi&gt;42.5 &amp; logtrain$work_type==&#39;Never_worked&#39;] &lt;- 24.20
+logtrain$bmi[logtrain$bmi&gt;42.5 &amp; logtrain$work_type==&#39;Private&#39;] &lt;- 28.75
+logtrain$bmi[logtrain$bmi&gt;42.5 &amp; logtrain$work_type==&#39;Self-employed&#39;] &lt;- 29.20
+
+logtrain$avg_glucose_level[logtrain$avg_glucose_level&gt;213] &lt;- 91.58
+
+#bt&lt;-sample(nrow(train),6200,replace = T)
+#xgtrain&lt;-train[bt,]
+flag&lt;-sample(nrow(logtrain),0.8*nrow(logtrain),replace = F)
+xtrain&lt;-logtrain[flag,]
+xtest&lt;-logtrain[-flag,]
+train_mat&lt;-sparse.model.matrix(data = xtrain[,-1],stroke~.-1)
+head(train_mat)</code></pre>
+<pre><code>## 6 x 17 sparse Matrix of class &quot;dgCMatrix&quot;
+##                                            
+## 1 1 . . 23 . . 1 . . 1 . 1 64.22 38.8 . 1 .
+## 2 . 1 . 27 . . . . . 1 . 1 90.41 22.7 . . 1
+## 3 1 . . 78 . . 1 1 . . . . 71.94 23.6 . . 1
+## 4 1 . . 20 . . . . . 1 . . 96.57 34.1 1 . .
+## 5 . 1 . 12 . . . . . . . . 74.34 20.0 1 . .
+## 6 1 . . 18 . . . . . . 1 . 64.56 26.1 1 . .</code></pre>
+<pre class="r"><code>test_mat&lt;-sparse.model.matrix(data = xtest[,-1],stroke~.-1)
+head(test_mat)</code></pre>
+<pre><code>## 6 x 17 sparse Matrix of class &quot;dgCMatrix&quot;
+##                                             
+## 1 1 . . 74 1 . 1 . . . 1 1 205.84 29.2 1 . .
+## 2 1 . . 44 . . 1 1 . . . 1  57.33 24.6 . 1 .
+## 3 1 . . 79 . 1 1 . . . 1 1  67.84 25.2 . 1 .
+## 4 1 . . 65 1 . 1 . . 1 . .  75.70 41.8 . . 1
+## 5 1 . . 49 . . 1 . . 1 . .  60.22 31.5 . 1 .
+## 6 1 . . 25 . . 1 . . 1 . 1  60.84 24.5 1 . .</code></pre>
+<pre class="r"><code>train_label&lt;-as.numeric(xtrain$stroke)-1
+test_label&lt;-as.numeric(xtest$stroke)-1
+
+# We need to conver data to DMatrix form
+train_dMatrix&lt;-xgb.DMatrix(data = as.matrix(train_mat),label=train_label)
+test_dMatrix&lt;-xgb.DMatrix(data = as.matrix(test_mat),label=test_label)
+
+
+## Modeling
+params &lt;- list(&quot;objective&quot; = &quot;reg:logistic&quot;,
+               &quot;eval_metric&quot; = &quot;auc&quot;)
+watchlist &lt;- list(train = train_dMatrix, test = test_dMatrix)</code></pre>
+<pre class="r"><code># eXtreme Gradient Boosting Model.
+## outputs a LONG list of results. hiding it for readability
+xgb_model &lt;- xgb.train(params = params,
+                       data = train_dMatrix,
+                       nrounds = 500,
+                       watchlist = watchlist,
+                       eta = 0.015,
+                       max.depth = 5,
+                       gamma = 0,
+                       subsample = 1,
+                       colsample_bytree = 1,
+                       missing = NA)</code></pre>
+<pre class="r"><code>tunning&lt;-as.data.frame(xgb_model$evaluation_log)
+ggplot(data = NULL,aes(x = tunning$iter,y = tunning$train_auc,col=&#39;train&#39;))+geom_line()+
+  geom_line(aes(y = tunning$test_auc,col=&#39;test&#39;))</code></pre>
+<p><img src="hackathon_files/figure-html/unnamed-chunk-5-1.png" width="960" /></p>
+<pre class="r"><code>### Training prediction-
+train_matrix&lt;-sparse.model.matrix(data = logtrain[,-1],stroke~.-1)
+train_label&lt;-as.numeric(train$stroke)-1
+train_matrix&lt;-xgb.DMatrix(data = as.matrix(train_matrix),label=train_label)
+
+xgb_prediction.train&lt;-predict(xgb_model, newdata = train_matrix)
+summary(xgb_prediction.train)</code></pre>
+<pre><code>##         Min.      1st Qu.       Median         Mean      3rd Qu. 
+## 0.0003822189 0.0004090883 0.0061154272 0.0185546014 0.0219228165 
+##         Max. 
+## 0.4289977252</code></pre>
+<pre class="r"><code>roc.plot(x = train$stroke == &quot;1&quot;, pred = xgb_prediction.train,thresholds = seq(0,1,0.001))$roc.vol</code></pre>
+<p><img src="hackathon_files/figure-html/unnamed-chunk-5-2.png" width="960" /></p>
+<pre><code>##      Model         Area p.value binorm.area
+## 1 Model  1 0.8926586777       0          NA</code></pre>
+<pre class="r"><code>## Prediction on test data-
+# creating test Matrix
+xgtest&lt;-test
+xgtest$bmi[xgtest$bmi&gt;42.5 &amp; xgtest$work_type==&#39;children&#39;] &lt;- 18.7
+xgtest$bmi[xgtest$bmi&gt;42.5 &amp; xgtest$work_type==&#39;Govt_job&#39;] &lt;- 29.50
+xgtest$bmi[xgtest$bmi&gt;42.5 &amp; xgtest$work_type==&#39;Never_worked&#39;] &lt;- 24.40
+xgtest$bmi[xgtest$bmi&gt;42.5 &amp; xgtest$work_type==&#39;Private&#39;] &lt;- 28.70
+xgtest$bmi[xgtest$bmi&gt;42.5 &amp; xgtest$work_type==&#39;Self-employed&#39;] &lt;- 29.20
+quantile(xgtest$avg_glucose_level,0.95)</code></pre>
+<pre><code>##    95% 
+## 210.89</code></pre>
+<pre class="r"><code>xgtest$avg_glucose_level[xgtest$bmi&gt;211] &lt;- median(xgtest$avg_glucose_level)
+
+
+xgtest$stroke&lt;-0
+test_matrix&lt;-sparse.model.matrix(data = xgtest[,-1],stroke~.-1)
+test_label&lt;-as.numeric(test$stroke)
+test_matrix&lt;-xgb.DMatrix(data = as.matrix(test_matrix))
+
+test_xgb_prediction&lt;-predict(xgb_model, newdata = test_matrix)
+summary(test_xgb_prediction)</code></pre>
+<pre><code>##         Min.      1st Qu.       Median         Mean      3rd Qu. 
+## 0.0003822189 0.0004090883 0.0059279129 0.0171217211 0.0213156752 
+##         Max. 
+## 0.3133027852</code></pre>
+<pre class="r"><code>submission&lt;-cbind(test$id,test_xgb_prediction)
+#colnames(submission)&lt;c(&#39;id&#39;,&#39;stroke&#39;)
+write.csv(as.data.frame(submission),&#39;SwapnilSub.csv&#39;)</code></pre>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

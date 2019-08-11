@@ -1,0 +1,289 @@
+---
+title: "Hackathon"
+author: "Swapnil"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Hackathon
+
+This is a code for an online hackathon to predict likelihood of someone suffering from stroke. Various algorithms are used to get predictions. Since the time was limited, the documentation in this code is sloppy.
+
+```{r echo=TRUE, message=FALSE,warning=FALSE,fig.width=10}
+
+library(tidyverse)
+library(data.table)
+library(verification)
+library(randomForest)
+library(nnet)
+library(caret)
+library(gbm)
+library(xgboost)
+library(MatrixModels)
+library(Matrix)
+library(MASS)
+library(neuralnet)
+library('h2o')
+h2o.init(ip='localhost',port=54321,max_mem_size = '2600m')
+```
+
+```{r echo=FALSE, message=FALSE,warning=FALSE,fig.width=10}
+train<-fread('/Users/swapnilpatil/Study/MS-Bana/Projects/McKinsey Stroke Hackathon/train_ajEneEa.csv')
+test<-fread('/Users/swapnilpatil/Study/MS-Bana/Projects/McKinsey Stroke Hackathon/test_v2akXPA.csv')
+```
+
+```{r echo=TRUE, message=FALSE,warning=FALSE,fig.width=10}
+
+dim(train)
+str(train)
+
+## Formattin##
+train$gender<-as.factor(train$gender)
+train$ever_married<-as.factor(train$ever_married)
+train$work_type<-as.factor(train$work_type)
+train$Residence_type<-as.factor(train$Residence_type)
+#train$smoking_status<-as.factor(train$smoking_status)
+train$hypertension<-as.factor(train$hypertension)
+train$heart_disease<-as.factor(train$heart_disease)
+train$stroke<-as.factor(train$stroke)
+summary(train)
+colSums(is.na(train))
+
+## Test##
+str(test)
+test$gender<-as.factor(test$gender)
+test$ever_married<-as.factor(test$ever_married)
+test$work_type<-as.factor(test$work_type)
+test$Residence_type<-as.factor(test$Residence_type)
+#train$smoking_status<-as.factor(train$smoking_status)
+test$hypertension<-as.factor(test$hypertension)
+test$heart_disease<-as.factor(test$heart_disease)
+
+summary(test)
+colSums(is.na(test))
+testBmi<-test%>%filter(!is.na(bmi))%>%
+  group_by(work_type)%>%
+  summarise(med=median(bmi))
+testBmi
+
+bmiCommplete<-test[!is.na(test$bmi),c(7,10)]
+test$bmi[is.na(test$bmi) & test$work_type=='children'] <- 18.7
+test$bmi[is.na(test$bmi) & test$work_type=='Govt_job'] <- 29.50
+test$bmi[is.na(test$bmi) & test$work_type=='Never_worked'] <- 24.40
+test$bmi[is.na(test$bmi) & test$work_type=='Private'] <- 28.70
+test$bmi[is.na(test$bmi) & test$work_type=='Self-employed'] <- 29.20
+summary(test)
+
+plot.ecdf(train$bmi)
+plot.ecdf(train$avg_glucose_level)
+plot.ecdf(train$age)
+summary(train$bmi)
+quantile(train$bm, 0.95,na.rm = T)
+quantile(train$avg_glucose_level, 0.95)
+length(train$bmi[train$bmi>60])
+summary(train$avg_glucose_level)
+
+ggplot(data = train,aes(x = stroke,y = bmi))+geom_boxplot()
+## Smoking
+test$smoking_status[test$smoking_status==''] <- 'Unknown'
+test$smoking_status<-as.factor(test$smoking_status)
+summary(test)
+
+## BMI ##
+
+medianBmi<-train%>%filter(!is.na(bmi))%>%
+  group_by(work_type)%>%
+  summarise(med=median(bmi))
+
+bmiCommplete<-train[!is.na(train$bmi),c(7,10)]
+train$bmi[is.na(train$bmi) & train$work_type=='children'] <- 18.80
+train$bmi[is.na(train$bmi) & train$work_type=='Govt_job'] <- 29.50
+train$bmi[is.na(train$bmi) & train$work_type=='Never_worked'] <- 24.20
+train$bmi[is.na(train$bmi) & train$work_type=='Private'] <- 28.75
+train$bmi[is.na(train$bmi) & train$work_type=='Self-employed'] <- 29.20
+
+summary(train)
+
+
+## Smoking
+table(train$smoking_status,train$work_type)
+table(train$heart_disease,train$smoking_status)
+train$smoking_status[train$smoking_status==''] <- 'Unknown'
+train$smoking_status<-as.factor(train$smoking_status)
+
+summary(train)
+
+
+## Write##
+write.csv(train,'trainclean.csv')
+#write.csv(test,'test.csv')
+
+### Logistic ##
+logtrain<-train
+logtrain$bmi<-log(logtrain$bmi)
+logModel <- glm(data = logtrain[,-1],stroke~.-ever_married,family=binomial(link="logit"))
+summary(logModel)
+logPredict<-predict(logModel,type = 'response')
+summary(logPredict)
+roc.plot(x = logtrain$stroke=='1',pred =logPredict,thresholds = seq(0,1,0.001))$roc.vol
+
+probitModel <- glm(data = train[,-1],stroke~.,family=binomial(link="probit"))
+summary(probitModel)
+probitPredict<-predict(probitModel,type = 'response')
+summary(probitPredict)
+roc.plot(x = train$stroke=='1',pred =probitPredict,thresholds = seq(0,1,0.001))$roc.vol
+
+
+probitModel <- glm(data = train[,-1],stroke~.,family=binomial(link="cloglog"))
+summary(probitModel)
+probitPredict<-predict(probitModel,type = 'response')
+summary(probitPredict)
+roc.plot(x = train$stroke=='1',pred =probitPredict,thresholds = seq(0,1,0.001))$roc.vol
+
+## test prediction
+log.test.pred<-predict(logModel,test[,-1],type='response')
+summary(log.test.pred)
+
+submission<-cbind(test$id,log.test.pred)
+#write.csv(as.data.frame(submission),'SwapnilSub.csv')
+###RandomForest
+logtrain<-train
+logtrain$a<-logtrain$bmi*logtrain$avg_glucose_level
+logtrain$b<-logtrain$bmi/logtrain$avg_glucose_level
+logtrain$c<-logtrain$bmi*logtrain$age
+logtrain$d<-logtrain$avg_glucose_level*logtrain$age
+rfmodel<-randomForest(data=logtrain[,-1],stroke~.,ntree=100)
+summary(rfmodel)
+predicted.rf<-predict(rfmodel,type = 'prob')
+roc.plot(x = logtrain$stroke == "1", pred = predicted.rf[,2],thresholds = seq(0,1,0.001))$roc.vol
+varImpPlot(rfmodel)
+
+## Neural network
+nntrain<-train
+nntrain$work_type<-as.character(nntrain$work_type)
+nntrain$smoking_status<-as.character(nntrain$smoking_status)
+nntrain$work_type[nntrain$work_type=='Self-employed']<-'self_employed'
+nntrain$smoking_status[nntrain$smoking_status=='formerly smoked']<-'formerly_smoked'
+nntrain$smoking_status[nntrain$smoking_status=='never smoked']<-'never_smoked'
+nntrain$work_type<-as.factor(nntrain$work_type)
+nntrain$smoking_status<-as.factor(nntrain$smoking_status)
+nntrain$age<-scale(nntrain$age)
+nntrain$bmi<-scale(nntrain$bmi)
+nntrain$avg_glucose_level<-scale(nntrain$avg_glucose_level)
+summary(nntrain)
+nntrain_mat<-model.matrix(data = nntrain[,-1],stroke~.-1)
+head(nntrain_mat)
+stroke<-as.numeric(nntrain$stroke)-1
+nntrain_mat<-cbind(nntrain_mat,stroke)
+head(nntrain_mat)
+#nntrain_dMatrix<-as.matrix(data = nntrain_mat,label=train_label)
+a<-paste(colnames(nntrain_mat[,-18]),collapse=" + ")
+b<-paste('stroke',a,sep='~')
+f<-as.formula(b)
+
+nnet.full<-neuralnet(f,data=nntrain_mat,hidden=c(1,1),linear.output=F)
+plot(nnet.full)
+
+nnet.pred<-nnet.full$net.result
+nnet.pred<-as.numeric(nnet.pred[[1]])
+roc.plot(x = train$stroke == "1", pred = nnet.pred,thresholds = seq(0,1,0.001))$roc.vol
+
+
+  
+### GBM boosting
+gbm.model<-gbm(data=train[,-1],as.character(stroke)~.,distribution = "bernoulli",n.trees = 1000,
+     interaction.depth = 8)
+gbm.model.pred<-predict(gbm.model,newdata = train[,-1],n.trees = 1000,type = 'response')
+summary(gbm.model.pred)
+roc.plot(x = train$stroke == "1", pred = gbm.model.pred,thresholds = seq(0,1,0.001))$roc.vol
+
+## XGB boosting
+set.seed(22334455)
+logtrain<-train
+logtrain$bmi[logtrain$bmi>42.5 & logtrain$work_type=='children'] <- 18.80
+logtrain$bmi[logtrain$bmi>42.5 & logtrain$work_type=='Govt_job'] <- 29.50
+logtrain$bmi[logtrain$bmi>42.5 & logtrain$work_type=='Never_worked'] <- 24.20
+logtrain$bmi[logtrain$bmi>42.5 & logtrain$work_type=='Private'] <- 28.75
+logtrain$bmi[logtrain$bmi>42.5 & logtrain$work_type=='Self-employed'] <- 29.20
+
+logtrain$avg_glucose_level[logtrain$avg_glucose_level>213] <- 91.58
+
+#bt<-sample(nrow(train),6200,replace = T)
+#xgtrain<-train[bt,]
+flag<-sample(nrow(logtrain),0.8*nrow(logtrain),replace = F)
+xtrain<-logtrain[flag,]
+xtest<-logtrain[-flag,]
+train_mat<-sparse.model.matrix(data = xtrain[,-1],stroke~.-1)
+head(train_mat)
+test_mat<-sparse.model.matrix(data = xtest[,-1],stroke~.-1)
+head(test_mat)
+train_label<-as.numeric(xtrain$stroke)-1
+test_label<-as.numeric(xtest$stroke)-1
+
+# We need to conver data to DMatrix form
+train_dMatrix<-xgb.DMatrix(data = as.matrix(train_mat),label=train_label)
+test_dMatrix<-xgb.DMatrix(data = as.matrix(test_mat),label=test_label)
+
+
+## Modeling
+params <- list("objective" = "reg:logistic",
+               "eval_metric" = "auc")
+watchlist <- list(train = train_dMatrix, test = test_dMatrix)
+```
+
+```{r echo=TRUE, message=FALSE,warning=FALSE,results="hide",fig.width=10}
+# eXtreme Gradient Boosting Model.
+## outputs a LONG list of results. hiding it for readability
+xgb_model <- xgb.train(params = params,
+                       data = train_dMatrix,
+                       nrounds = 500,
+                       watchlist = watchlist,
+                       eta = 0.015,
+                       max.depth = 5,
+                       gamma = 0,
+                       subsample = 1,
+                       colsample_bytree = 1,
+                       missing = NA)
+```
+
+```{r echo=TRUE, message=FALSE,warning=FALSE,fig.width=10}
+
+tunning<-as.data.frame(xgb_model$evaluation_log)
+ggplot(data = NULL,aes(x = tunning$iter,y = tunning$train_auc,col='train'))+geom_line()+
+  geom_line(aes(y = tunning$test_auc,col='test'))
+
+### Training prediction-
+train_matrix<-sparse.model.matrix(data = logtrain[,-1],stroke~.-1)
+train_label<-as.numeric(train$stroke)-1
+train_matrix<-xgb.DMatrix(data = as.matrix(train_matrix),label=train_label)
+
+xgb_prediction.train<-predict(xgb_model, newdata = train_matrix)
+summary(xgb_prediction.train)
+roc.plot(x = train$stroke == "1", pred = xgb_prediction.train,thresholds = seq(0,1,0.001))$roc.vol
+
+## Prediction on test data-
+# creating test Matrix
+xgtest<-test
+xgtest$bmi[xgtest$bmi>42.5 & xgtest$work_type=='children'] <- 18.7
+xgtest$bmi[xgtest$bmi>42.5 & xgtest$work_type=='Govt_job'] <- 29.50
+xgtest$bmi[xgtest$bmi>42.5 & xgtest$work_type=='Never_worked'] <- 24.40
+xgtest$bmi[xgtest$bmi>42.5 & xgtest$work_type=='Private'] <- 28.70
+xgtest$bmi[xgtest$bmi>42.5 & xgtest$work_type=='Self-employed'] <- 29.20
+quantile(xgtest$avg_glucose_level,0.95)
+xgtest$avg_glucose_level[xgtest$bmi>211] <- median(xgtest$avg_glucose_level)
+
+
+xgtest$stroke<-0
+test_matrix<-sparse.model.matrix(data = xgtest[,-1],stroke~.-1)
+test_label<-as.numeric(test$stroke)
+test_matrix<-xgb.DMatrix(data = as.matrix(test_matrix))
+
+test_xgb_prediction<-predict(xgb_model, newdata = test_matrix)
+summary(test_xgb_prediction)
+submission<-cbind(test$id,test_xgb_prediction)
+#colnames(submission)<c('id','stroke')
+write.csv(as.data.frame(submission),'SwapnilSub.csv')
+```

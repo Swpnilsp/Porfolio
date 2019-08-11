@@ -4,10 +4,10 @@ output:
   html_document:
     toc: true
     toc_float: true
-    collapsed: false
-    number_sections: false
+    collapsed: true
+    number_sections: true
     toc_depth: 1
-    #code_folding: hide
+    code_folding: hide
 ---
 
 <style type="text/css">
@@ -161,6 +161,17 @@ The purpose of this project is to solve a simple problem using linear regression
 ![contnue reading..]
 </a>
 
+# Hackathon
+
+This is a code for an online hackathon to predict likelihood of someone suffering from stroke. Various algorithms are used to get predictions. Since the time was limited, the documentation in this code is sloppy.
+
+<img src="images/nnet.png" title="Neural Net" alt="nnet" height="400px" width="800px" style="display: block; margin: auto;"/>
+
+
+<a href="hackathon.html">
+![contnue reading..]
+</a>
+
 
 
 # Exploratory Data Analysis
@@ -185,6 +196,20 @@ Exploratory data analysis of SF Bay area **[Fordgobike](https://www.fordgobike.c
 ![contnue reading..]
 </a>
 
+
+# iPhoneX vs Galaxy Note8
+
+This is an old analysis done sometime after both Note8 and iPhoneX were launched. One limitation of Twitter free API is that you cannot extract historical tweets. So the sentiments may not be relevant today but what the heck, data is always good for understanding the process! 
+<div>
+<img src="images/iPhoneVsNote.png" title="iPhoneSentiments" alt="iPhone" height="400px" width="810" style="display: block; margin: 10px;"/>
+<div/>
+
+
+<a href="iPhonexVsNote.html">
+![contnue reading..]
+</a>
+***iphoneX was launched on Sep 12, 2017** and it went on sale sometime on Nov'17. Galaxy Note8 was already out a few months before iPhoneX.
+
 # Sentiment Analysis of cryptocurrencies
 
 There has been so much buzz about Crypto Currencies and their long-term validity these days. The world has been divided on the credibility of the Crypto Currency as an authentic investment. Some countries have even gone to the extent of banning the trade of Crypto Currencies. Let's explore what Twitterati think about this phenomenon. 
@@ -205,18 +230,15 @@ Following three Crypto Currencies were selected-
 ![contnue reading..]
 </a>
 
-# iPhoneX vs Galaxy Note8
+<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-145405323-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-This is an old analysis done sometime after both Note8 and iPhoneX were launched. One limitation of Twitter free API is that you cannot extract historical tweets. So the sentiments may not be relevant today but what the heck, data is always good for understanding the process! 
-<div>
-<img src="images/iPhoneVsNote.png" title="iPhoneSentiments" alt="iPhone" height="400px" width="810" style="display: block; margin: 10px;"/>
-<div/>
-
-
-<a href="iPhonexVsNote.html">
-![contnue reading..]
-</a>
-***iphoneX was launched on Sep 12, 2017** and it went on sale sometime on Nov'17. Galaxy Note8 was already out a few months before iPhoneX.
-
-
+  gtag('config', 'UA-145405323-1');
+</script>
+</head>
 
