@@ -11,7 +11,7 @@
 
 
 
-<title>My Portfolio</title>
+<title></title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -23,7 +23,6 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
@@ -73,9 +72,7 @@ h6 {
 </style>
 
 
-</head>
 
-<body>
 
 <style type = "text/css">
 .main-container {
@@ -100,6 +97,9 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
+summary {
+  display: list-item;
+}
 </style>
 
 
@@ -114,7 +114,6 @@ body {
   padding-top: 56px;
   margin-top: -56px;
 }
-
 .section h2 {
   padding-top: 56px;
   margin-top: -56px;
@@ -134,6 +133,43 @@ body {
 .section h6 {
   padding-top: 56px;
   margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
 }
 </style>
 
@@ -155,26 +191,75 @@ $(document).ready(function () {
 });
 </script>
 
-
-<div class="container-fluid main-container">
-
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
 });
-</script>
 
-<!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
-<script>
 $(document).ready(function () {
-  window.initializeCodeFolding("hide" === "show");
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
 });
 </script>
 
+<!-- code folding -->
 
 
 
@@ -188,7 +273,7 @@ $(document).ready(function ()  {
 
     // establish options
     var options = {
-      selectors: "h1",
+      selectors: "h1,h2,h3",
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
@@ -263,6 +348,16 @@ div.tocify {
 
 </style>
 
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row-fluid">
 <div class="col-xs-12 col-sm-4 col-md-3">
@@ -303,89 +398,36 @@ div.tocify {
 
 <div class="fluid-row" id="header">
 
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
-</ul>
-</div>
 
 
-
-<h1 class="title toc-ignore">My Portfolio</h1>
 
 </div>
 
 
-<style type="text/css">
-.title {
-  display: none;
-}
-
-#getting-started img {
-  margin-right: 8px;
-}
-body{ /* Normal  */
-      font-size: 14px;
+<script type="text/javascript" src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
+<style>
+  .col2 {
+    columns: 2 300px;         /* number of columns and width in pixels*/
+    -webkit-columns: 2 200px; /* chrome, safari */
+    -moz-columns: 2 200px;    /* firefox */
   }
-td {  /* Table  */
-  font-size: 8px;
-}
-h1.title {
-  font-size: 38px;
-  color: DarkRed;
-}
-h1 { /* Header 1 */
-  font-size: 28px;
-  color: DarkBlue;
-}
-h2 { /* Header 2 */
-    font-size: 22px;
-  color: DarkBlue;
-}
-h3 { /* Header 3 */
-  font-size: 18px;
-  font-family: "Times New Roman", Times, serif;
-  color: DarkBlue;
-}
-code.r{ /* Code block */
-    font-size: 12px;
-}
-pre { /* Code block - determines code spacing between lines */
-    font-size: 14px;
-}
-
-.column-left{
-  float: left;
-  width: 50%;
-  text-align: left;
-  font-size: 5;
-  
-}
-
-.column-right{
-  float: right;
-  width: 50%;
-  text-align: right;
-  font-size: 5;
-}
-
 </style>
-<div class="column-left">
-<h2 id="hello-world"><strong>Hello World!</strong></h2>
+<div class="col2">
+<h3 id="hello-world"><strong>Hello World!</strong></h3>
 <p>I am Swapnil, a Software Engineer turned analytics professional. I have a graduate degree in Business Analytics and I enjoy solving complex business problems using data. I love photography and cannot sleep without watching at least one episode of <strong>The Office!</strong></p>
-<p><img src="https://media.giphy.com/media/5wWf7GR2nhgamhRnEuA/giphy.gif" title="It's true! lol" alt="testing" height="100px" width="400px" style="display: block; margin: auto;"/></p>
+<p><img src="https://media.giphy.com/media/5wWf7GR2nhgamhRnEuA/giphy.gif" title="It's true! lol" alt="testing" height="100px" width="400px" style="display: block; margin: auto;"/> <br> <br></p>
+<img src="images/Swap.png" title="MyImage" alt="Avatar" width="200px" height="500px" style="display: block; margin: auto;
+border-radius: 50%;"/> <br>
+<div class="col2">
+<center>
+<a href="https://www.linkedin.com/in/swapnilsp"><img src="images/Li.png"  style="width:40px; height:30px" title="LinkedIn" alt="LinkedIn"></a> <a href="https://github.com/Swpnilsp"><img src="images/GitHub.png"  style="width:80px; height:30px" title="Git" alt="Git"></a> <a href="mailto:patilss@mail.uc.edu"><img src="images/mail.png"  style="width:30px; height:30px" title="mail" alt="mail"></a> <a href="https://twitter.com/SwpnilSP"><img src="images/twitter.png"  style="width:30px; height:30px" title="Twitter" alt="Twitter"></a>
+</center>
 </div>
-<div class="column-right" style="padding-bottom: 20px;&gt;
-
-&lt;img src=" images="" swap.png"="" title="MyImage" alt="testing" width="300px" height="900px" style="display: block; margin: 25px;">
-<p><img src="images/Swap.png" title="MyImage" alt="testing" width="300px" height="900px" style="display: block; margin: 25px;"/></p>
-<h3 id="connect-with-me"><a href="http://www.linkedin.com/in/swapnilsp">Connect with me!</a></h3>
 </div>
+<hr />
 <p>This is a repository of some of the projects I worked on.</p>
-<div id="ml-algorithm-benchmarking" class="section level1">
-<h1>ML Algorithm benchmarking</h1>
+<div id="ml-algorithm-benchmarking" class="section level2">
+<h2>ML Algorithm benchmarking</h2>
 <p>This blog is aimed at comparing top machine learning algorithm performance in solving a binary classification problem. The data used for this project pertains to bankruptcy. The objective is to predict if an organization will go bankrupt or not. False possitive predictions are penalized 15 times False negative prediction.</p>
 <p><img src="images/unnamed-chunk-32-1.png" title="AUC curve comparison" alt="testing" height="400px" width="800px" style="display: block; margin: auto;"/></p>
 <p><strong>Following are the alorithms that wil be considered for comparison :</strong></p>
@@ -399,52 +441,46 @@ pre { /* Code block - determines code spacing between lines */
 <li><strong>Linear discriminant analysis</strong></li>
 <li><strong>Boosting Algorithms</strong></li>
 </ul>
-<p><a href="binaryClassification.html"> [contnue reading..] </a></p>
+<p><br> <a href="binaryClassification.html"> [contnue reading..] </a> <br></p>
 </div>
-<div id="unsupervised-learning" class="section level1">
-<h1>Unsupervised learning</h1>
+<div id="unsupervised-learning" class="section level2">
+<h2>Unsupervised learning</h2>
 <p>Data Science and Analytics is nowadays widely used in retail industry. With the advent of bid data tools and higher computing power, sophisticated algorithms can crunch huge volumes of transactional data to extract meaningful insights. Companies such as Kroger invest heavily to transform more than a hundred-year-old retail industry through analytics.</p>
 <p>This project is an attempt to apply unsupervised learning algorithms on the transactional data to formulate strategies to improve the sales of the products.</p>
-<p><img src="images/aRules.png" title="Association rules" alt="testing" height="400px" width="800px" style="display: block; margin: auto;"/></p>
-<p><strong>Following steps are discussed:</strong></p>
+<p><img src="images/aRules.png" title="Association rules" alt="testing" height="400px" width="800px" style="display: block; margin: auto;"/> <br> <strong>Following steps are discussed:</strong></p>
 <ul>
 <li><strong>Customer Segmentation</strong></li>
 <li><strong>Deciding optimum number of clustes</strong></li>
 <li><strong>Market Basket Analysis</strong></li>
 </ul>
-<p><a href="retail.html"> [contnue reading..] </a></p>
+<p><a href="retail.html"> [contnue reading..] </a> <br></p>
 </div>
-<div id="linear-regression-diagnostics" class="section level1">
-<h1>Linear Regression Diagnostics</h1>
+<div id="regression-diagnostics" class="section level2">
+<h2>Regression Diagnostics</h2>
 <p>The purpose of this project is to solve a simple problem using linear regression and understand various feature selection and model selection techniques along the way. In this project we predict the landing distance of the aircrafts based on different details. There have been many major mishaps during the landing of the aircraft, resulting in the loss of many lives.</p>
-<div class="column-left">
-<p><img src="images/ldistance1.png" title="Index influence plot" alt="testing" height="320px" width="420px" style="display: block; margin: auto;"/></p>
+<div class="col2">
+<p><img src="images/ldistance1.png" title="Index influence plot" alt="testing" height="400px" width="800px" style="display: block; margin: auto;"/></p>
+<p><img src="images/ldistance2.png" title="Studentized Residuals" alt="testing" height="400px" width="800px" style="display: block; margin: auto;"/></p>
 </div>
-<div class="column-right">
-<p><img src="images/ldistance2.png" title="Studentized Residuals" alt="testing" height="320px" width="420px" style="display: block; margin: auto;"/></p>
-</div>
+<p><br></p>
 <p><strong>Following major steps are discussed :</strong></p>
 <ul>
 <li><strong>Exploratory Data Analysis</strong></li>
 <li><strong>Model building</strong></li>
 <li><strong>Regression model diagnostics</strong></li>
 </ul>
-<p><a href="landingDistance.html"> [contnue reading..] </a></p>
+<p><a href="landingDistance.html"> [contnue reading..] </a> <br></p>
 </div>
-<div id="hackathon" class="section level1">
-<h1>Hackathon</h1>
+<div id="ml-hackathon" class="section level2">
+<h2>ML Hackathon</h2>
 <p>This is a code for an online hackathon to predict likelihood of someone suffering from stroke. Various algorithms are used to get predictions. Since the time was limited, the documentation in this code is sloppy.</p>
-<p><img src="images/nnet.png" title="Neural Net" alt="nnet" height="400px" width="800px" style="display: block; margin: auto;"/></p>
-<p><a href="hackathon.html"> [contnue reading..] </a></p>
+<p><img src="images/nnet.png" title="Neural Net" alt="nnet" height="400px" width="800px" style="display: block; margin: auto;"/> <br></p>
+<p><a href="hackathon.html"> [contnue reading..] </a> <br></p>
 </div>
-<div id="exploratory-data-analysis" class="section level1">
-<h1>Exploratory Data Analysis</h1>
+<div id="exploratory-data-analysis" class="section level2">
+<h2>Exploratory Data Analysis</h2>
 <p>Exploratory data analysis of SF Bay area <strong><a href="https://www.fordgobike.com/">Fordgobike</a></strong> bike share data.</p>
-<div>
-<img src="images/fordweather.png" title="Weather" alt="Leaflet" height="400px" width="800" style="display: block; margin: auto;"/>
-<div/>
-
-
+<p><img src="images/fordweather.png" title="Weather" alt="Leaflet" height="400px" width="800" style="display: block; margin: auto;"/> <br></p>
 <p><strong>Following major steps are discussed :</strong></p>
 <ul>
 <li><strong>Data cleaning</strong></li>
@@ -454,33 +490,27 @@ pre { /* Code block - determines code spacing between lines */
 <li><strong>Geospatial Analysis</strong></li>
 <li><strong>Business Recommendations</strong></li>
 </ul>
-<p><a href="fordGobike.html"> [contnue reading..] </a></p>
+<p><a href="fordGobike.html"> [contnue reading..] </a> <br></p>
 </div>
-<div id="iphonex-vs-galaxy-note8" class="section level1">
-<h1>iPhoneX vs Galaxy Note8</h1>
-This is an old analysis done sometime after both Note8 and iPhoneX were launched. One limitation of Twitter free API is that you cannot extract historical tweets. So the sentiments may not be relevant today but what the heck, data is always good for understanding the process!
-<div>
-<img src="images/iPhoneVsNote.png" title="iPhoneSentiments" alt="iPhone" height="400px" width="810" style="display: block; margin: 10px;"/>
-<div/>
-
-
-<p><a href="iPhonexVsNote.html"> [contnue reading..] </a> *<strong>iphoneX was launched on Sep 12, 2017</strong> and it went on sale sometime on Nov’17. Galaxy Note8 was already out a few months before iPhoneX.</p>
+<div id="iphonex-vs-galaxy-note8" class="section level2">
+<h2>iPhoneX vs Galaxy Note8</h2>
+<p>This is an old analysis done sometime after both Note8 and iPhoneX were launched. One limitation of Twitter free API is that you cannot extract historical tweets. So the sentiments may not be relevant today but what the heck, data is always good for understanding the process!</p>
+<p><img src="images/iPhoneVsNote.png" title="iPhoneSentiments" alt="iPhone" height="400px" width="810" style="display: block; margin: 10px;"/> <br> *<strong>iphoneX was launched on Sep 12, 2017</strong> and it went on sale sometime on Nov’17. Galaxy Note8 was already out a few months before iPhoneX.</p>
+<p><a href="iPhonexVsNote.html"> [contnue reading..] </a></p>
+<p><br></p>
 </div>
-<div id="sentiment-analysis-of-cryptocurrencies" class="section level1">
-<h1>Sentiment Analysis of cryptocurrencies</h1>
+<div id="sentiment-analysis-of-cryptocurrencies" class="section level2">
+<h2>Sentiment Analysis of cryptocurrencies</h2>
 <p>There has been so much buzz about Crypto Currencies and their long-term validity these days. The world has been divided on the credibility of the Crypto Currency as an authentic investment. Some countries have even gone to the extent of banning the trade of Crypto Currencies. Let’s explore what Twitterati think about this phenomenon.</p>
 <p>Based on the data available at <strong><a href="https://coinmarketcap.com/">Cryptocurrency Market Capitalizations</a></strong>, top three Crypto Currencies with highest market capitalization were selected for analysis.</p>
-<div>
-<img src="images/cryptowordcloud.png" title="Weather" alt="Weather" height="800px" width="800" style="display: block; margin: auto;"/>
-<div/>
-
+<p><img src="images/cryptowordcloud.png" title="Weather" alt="Weather" height="800px" width="800" style="display: block; margin: auto;"/> <br></p>
 <p>Following three Crypto Currencies were selected-</p>
 <ul>
 <li><strong>Bitcoin (BTC)</strong></li>
 <li><strong>Ripple (XRP)</strong></li>
 <li><strong>Ethereum (ETH)</strong></li>
 </ul>
-<p><a href="cyptocurrrency.html"> [contnue reading..] </a></p>
+<p><a href="cyptocurrrency.html"> [contnue reading..] </a> <br></p>
 <head>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-145405323-1"></script>

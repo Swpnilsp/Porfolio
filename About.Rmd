@@ -1,45 +1,25 @@
 ---
-title: "About"
+title: "__"
 author: "Swapnil"
 output: html_document
 ---
 
-<style type="text/css">
-
-body{ /* Normal  */
-      font-size: 14px;
+<style>
+  .col2 {
+    columns: 2 300px;         /* number of columns and width in pixels*/
+    -webkit-columns: 2 200px; /* chrome, safari */
+    -moz-columns: 2 200px;    /* firefox */
+    column-gap: 40px;
   }
-td {  /* Table  */
-  font-size: 8px;
-}
-
-h1 { /* Header 1 */
-  font-size: 28px;
-  color: DarkBlue;
-}
-h2 { /* Header 2 */
-    font-size: 22px;
-  color: DarkBlue;
-}
-h3 { /* Header 3 */
-  font-size: 18px;
-  font-family: "Times New Roman", Times, serif;
-  color: DarkBlue;
-}
-code.r{ /* Code block */
-    font-size: 12px;
-}
-pre { /* Code block - determines code spacing between lines */
-    font-size: 14px;
-}
 </style>
+ 
+<div class="col2">
 
 
-Hello! I am Swapnil, a Software Engineer turned analytics professional. I have a graduate degree in Business Analytics and enjoy solving complex business problems using data. I enjoy photography and cannot sleep without watching at least one episode of *The Office!*
+My name is Swapnil and I am currently working at **[zulily](https://www.zulily.com/)**, Seattle in their Marketing Analytics and Strategy team. My major responsibility at zulily is to understand customer behavior, and help marketing and strategy team optimize their efforts. A typical day at work involves working with web-analytics, demographic, transaction and spend data, designing and running statstical experiments and closely working with stakeholders.
 
-**[Connect with me here!](http://www.linkedin.com/in/swapnilsp)**
 
-#Academic Background
+## Academic Background
 
 * **M.S. in Business Analytics** at [University of Cincinnati](https://business.uc.edu/graduate/masters/ms-business-analytics.html) 
 
@@ -47,8 +27,20 @@ Hello! I am Swapnil, a Software Engineer turned analytics professional. I have a
 
 * **Bachelor of Engineering** in *Computer Science* at [Government College of Engineering](http://www.geca.ac.in/)
 
+<br>
 
+<br>
+<img src="images/Swap2.png" title="MyImage" alt="Avatar" width="250px" height="500px" style="display: block; margin: auto;"/>
+<div class="col2">
+<center>
+<a href="https://www.linkedin.com/in/swapnilsp"><img src="images/Li.png"  style="width:40px; height:30px" title="LinkedIn" alt="LinkedIn"></a>
+<a href="https://github.com/Swpnilsp"><img src="images/GitHub.png"  style="width:80px; height:30px" title="Git" alt="Git"></a>
+<a href="mailto:patilss@mail.uc.edu"><img src="images/mail.png"  style="width:30px; height:30px" title="mail" alt="mail"></a>
+<a href="https://twitter.com/SwpnilSP"><img src="images/twitter.png"  style="width:30px; height:30px" title="Twitter" alt="Twitter"></a>
+</center>
+</div>
 
+</div>
 
 ## Professional Background
 
