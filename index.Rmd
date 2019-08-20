@@ -51,6 +51,43 @@ knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=FALSE)
                                                                                                                 
 This is a repository of some of the projects I worked on. 
 
+## Customer lifetime value modeling
+
+CLTV modeling has been gaining popularity in Marketing Analytics these days. Some of the models were proposed as early as 1987, however new work continues to improve predictions. This project is aimed at comaparing various CLTV models and their prediction accuracy. 
+
+Following models are discussed-
+
+**MLE based models-** These are the models in which parameter estimation happens based on maximum likelihood
+
+* NBD 
+* PNBD
+* MBG/NBD 
+* BG/CNBD-k 
+* MBG/CNBD-k 
+
+**Markov-Chain-Monte-Carlo based models-** These models use MCMC simulation for parameter estimation 
+
+* Pareto/NBD 
+* Pareto/GGG 
+
+<div class="col2">
+<img src="images/caliTest.png" title="Test vs caliberation period" alt="Test vs caliberation period" height="400px" width="800px" style="display: block; margin: auto;"/>
+
+
+<img src="images/transactions.png" title="Simulated Transactions"  alt="Simulated Transactions" height="400px" width="800px" style="display: block; margin: auto;"/>
+</div>
+<br>
+
+<img src="images/CLTVcomps.png" title="CLTVcomps" alt="CLTVcomps.png" height="400px" width="1600px" style="display: block; margin: auto;"/>
+
+
+
+<br>
+<a href="CLTV.html">
+![contnue reading..]
+</a>
+<br>
+
 
 ## ML Algorithm benchmarking
 

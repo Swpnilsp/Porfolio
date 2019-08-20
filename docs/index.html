@@ -7,11 +7,12 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
 
-<title></title>
+<title>index.utf8</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -247,48 +248,9 @@ $(document).ready(function () {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
 
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <style type="text/css">
 
@@ -337,8 +299,6 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
-  padding-left: 25px;
-  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -426,6 +386,31 @@ border-radius: 50%;"/> <br>
 </div>
 <hr />
 <p>This is a repository of some of the projects I worked on.</p>
+<div id="customer-lifetime-value-modeling" class="section level2">
+<h2>Customer lifetime value modeling</h2>
+<p>CLTV modeling has been gaining popularity in Marketing Analytics these days. Some of the models were proposed as early as 1987, however new work continues to improve predictions. This project is aimed at comaparing various CLTV models and their prediction accuracy.</p>
+<p>Following models are discussed-</p>
+<p><strong>MLE based models-</strong> These are the models in which parameter estimation happens based on maximum likelihood</p>
+<ul>
+<li>NBD</li>
+<li>PNBD</li>
+<li>MBG/NBD</li>
+<li>BG/CNBD-k</li>
+<li>MBG/CNBD-k</li>
+</ul>
+<p><strong>Markov-Chain-Monte-Carlo based models-</strong> These models use MCMC simulation for parameter estimation</p>
+<ul>
+<li>Pareto/NBD</li>
+<li>Pareto/GGG</li>
+</ul>
+<div class="col2">
+<p><img src="images/caliTest.png" title="Test vs caliberation period" alt="Test vs caliberation period" height="400px" width="800px" style="display: block; margin: auto;"/></p>
+<p><img src="images/transactions.png" title="Simulated Transactions"  alt="Simulated Transactions" height="400px" width="800px" style="display: block; margin: auto;"/></p>
+</div>
+<p><br></p>
+<p><img src="images/CLTVComps.png" title="CLTVcomps" alt="CLTVcomps.png" height="400px" width="1600px" style="display: block; margin: auto;"/></p>
+<p><br> <a href="CLTV.html"> [contnue reading..] </a> <br></p>
+</div>
 <div id="ml-algorithm-benchmarking" class="section level2">
 <h2>ML Algorithm benchmarking</h2>
 <p>This blog is aimed at comparing top machine learning algorithm performance in solving a binary classification problem. The data used for this project pertains to bankruptcy. The objective is to predict if an organization will go bankrupt or not. False possitive predictions are penalized 15 times False negative prediction.</p>
@@ -542,6 +527,49 @@ $(document).ready(function () {
 });
 
 
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
